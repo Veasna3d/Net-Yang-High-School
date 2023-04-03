@@ -1,6 +1,6 @@
 <?php
 
-    require './includes/dbConnection.php';
+    require '../includes/dbConnection.php';
     if($_GET["data"] == "get_class"){
         $sql = "select * from Class";
         $result = $conn->prepare($sql);

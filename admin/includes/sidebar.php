@@ -78,6 +78,30 @@
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="student.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>សិស្សទាំងអស់</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="read.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ទិន្នន័យអានសៀវភៅ</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="book.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>បញ្ចីសារពើភណ្ឌសៀវភៅ</p>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -85,17 +109,17 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-
   <script>
-    var url = window.location;
-    const allLinks = document.querySelectorAll('.nav-item a');
-    const currentLink = [...allLinks].filter(e => {
-        return e.href == url;
-    });
+  var url = window.location;
+  const allLinks = document.querySelectorAll('.nav-item a');
+  const currentLink = [...allLinks].filter(e => {
+    return e.href == url;
+  });
 
-    if (currentLink.length > 0) {
-        currentLink[0].classList.add("active");
-        currentLink[0].closest(".nav-treeview").style.display = "block";
-        currentLink[0].closest(".has-treeview").classList.add("active");
-    }
+  if (currentLink.length > 0) {
+    currentLink[0].classList.add("active");
+    currentLink[0].closest(".nav-treeview").style.display = "block";
+    currentLink[0].closest(".has-treeview").classList.add("active", "menu-open");
+  }
 </script>
+

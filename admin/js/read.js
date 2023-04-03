@@ -1,16 +1,20 @@
 
 function displayData() {
     $.ajax({
-        url: './controllers/class_json.php?data=get_class',
+        url: './controllers/read_json.php?data=get_read',
         type: 'GET',
         dataType: 'json',
         success: function(alldata) {
             var columns = [{
                 title: "ល.រ"
             }, {
-                title: "ថ្នាក់"
+                title: "សិស្ស"
+            }, {
+                title: "ភេទ"
             },{
-                title: "ថ្ងៃបង្កើត"
+                title: "កាលបរិច្ឆេទ"
+            },{
+                title: "សៀវភៅ"
             }, {
                 title: "សកម្មភាព"
             }];
@@ -21,7 +25,7 @@ function displayData() {
                 alldata[i][0] +
                 ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                 alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
-                data.push([alldata[i][0],alldata[i][1],alldata[i][2], option]);
+                data.push([alldata[i][0],alldata[i][1],alldata[i][2], alldata[i][3],alldata[i][4],option]);
             }
             console.log(data);
             $('#tableId').DataTable({
@@ -44,9 +48,34 @@ function displayData() {
     });
 }
 
+function setDataToSelect(myselect, myjson, caption) {
+    try {
+        var sel = $(myselect);
+        sel.empty();
+        sel.append('<option value="">' + caption + "</option>");
+        $.ajax({
+            url: myjson,
+            dataType: "json",
+            success: function (s) {
+                for (var i = 0; i < s.length; i++) {
+                    sel.append(
+                        '<option value="' + s[i][0] + '">' + s[i][3] +"|ភេទ: "+ s[i][5]+"</option>"
+                    );
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            },
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
 //Load
 $(document).ready(function() {
     displayData();
+    setDataToSelect("#ddlStudent", "./controllers/read_json.php?data=get_student", "ជ្រើសរើសសិស្ស");
 })
 
 $('#btnSave').click(function() {
@@ -58,7 +87,7 @@ $('#btnSave').click(function() {
     // Check if txtName already exists in database
     $.ajax({
         type: 'POST',
-        url: '././controllers/class_json.php?data=check_class_name',
+        url: '././controllers/read_json.php?data=check_class_name',
         data: {name: className.val()},
         dataType: 'json',
         success: function(data) {
@@ -71,7 +100,7 @@ $('#btnSave').click(function() {
                     // Insert
                     $.ajax({
                         type: 'POST',
-                        url: '././controllers/class_json.php?data=add_class',
+                        url: '././controllers/read_json.php?data=add_class',
                         data: form_data,
                         dataType: 'json',
                         success: function(data) {
@@ -88,7 +117,7 @@ $('#btnSave').click(function() {
                     // Update
                     $.ajax({
                         type: 'POST',
-                        url: '././controllers/class_json.php?data=update_class&id=' + class_id,
+                        url: '././controllers/read_json.php?data=update_class&id=' + class_id,
                         data: form_data,
                         dataType: 'json',
                         success: function(data) {
@@ -113,7 +142,9 @@ $('#btnSave').click(function() {
 
 
 $('#btnAdd').click(function() {
-    $('#txtName').val("");
+    $('#ddlStudent').val("");
+    $('#txtDate').val("");
+    $('#ddlBook').val("");
     $('#btnSave').text("រក្សាទុក");
 });
 
@@ -123,7 +154,7 @@ function editData(id) {
     $('#btnSave').text("កែប្រែ");
     class_id = id;
     $.ajax({
-        url: '././controllers/class_json.php?data=get_byid',
+        url: '././controllers/read_json.php?data=get_byid',
         data: '&id=' + id,
         type: 'GET',
         dataType: 'json',
@@ -151,7 +182,7 @@ function deleteData(id) {
       if (result.isConfirmed) {
         $.ajax({
           type: "GET",
-          url: "././controllers/class_json.php?data=delete_class&id=" + id,
+          url: "././controllers/read_json.php?data=delete_class&id=" + id,
           dataType: "json",
           success: function (data) {
             Swal.fire({

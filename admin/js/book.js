@@ -1,16 +1,39 @@
 
 function displayData() {
     $.ajax({
-        url: './controllers/class_json.php?data=get_class',
+        url: './controllers/book_json.php?data=get_book',
         type: 'GET',
         dataType: 'json',
-        success: function(alldata) {
+        success: function (alldata) {
             var columns = [{
-                title: "ល.រ"
+                title: "ល​.រ"
             }, {
-                title: "ថ្នាក់"
+                title: "សារពើភណ្ឌ"
+            },  {
+                title: "ថ្ងៃខែឆ្នាំទទួល"
             },{
-                title: "ថ្ងៃបង្កើត"
+                title: "ឈ្មោះអ្នកនិពន្ធ"
+            },{
+                title: "ចំណងជើង"
+            },{
+                title: "គ្រឹស្ថានបោះពុម្ភ"
+            },{
+                title: "ទីតាំងបោះពុម្ភ"
+            },{
+                title: "ឆ្នាំបោះពុម្ភ"
+            },{
+                title: "ម្ចាស់អំណោយ"
+            },{
+                title: "តម្លៃ"
+            },{
+                title: "សម្គាល់"
+            },{
+                title: "លេខបញ្ជី"
+            },
+            {
+                title: "ស្ថានភាព"
+            },{
+                title: "រូបភាព"
             }, {
                 title: "សកម្មភាព"
             }];
@@ -18,16 +41,33 @@ function displayData() {
             var option = '';
             for (var i in alldata) {
                 option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
-                alldata[i][0] +
-                ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-                alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
-                data.push([alldata[i][0],alldata[i][1],alldata[i][2], option]);
+                    alldata[i][0] +
+                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
+                data.push(
+                    [
+                        alldata[i][0],
+                        alldata[i][1],
+                        alldata[i][2],
+                        alldata[i][3],
+                        alldata[i][4],
+                        alldata[i][5],
+                        alldata[i][6],
+                        alldata[i][7],
+                        alldata[i][8],
+                        alldata[i][9],
+                        alldata[i][10],
+                        alldata[i][11],
+                        alldata[i][12],
+                        alldata[i][13],
+                        option
+                    ]);
             }
             console.log(data);
             $('#tableId').DataTable({
                 destroy: true,
                 data: data,
-                columns: columns, 
+                columns: columns,
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
@@ -38,20 +78,20 @@ function displayData() {
                     "<'row'<'col-md-5'i><'col-md-7'p>>",
             });
         },
-        error: function(e) {
+        error: function (e) {
             console.log(e.responseText);
         }
     });
 }
 
 //Load
-$(document).ready(function() {
+$(document).ready(function () {
     displayData();
 })
 
-$('#btnSave').click(function() {
+$('#btnSave').click(function () {
     var className = $('#txtName');
-    if(className.val() == ""){
+    if (className.val() == "") {
         className.focus();
         return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
     }
@@ -59,9 +99,9 @@ $('#btnSave').click(function() {
     $.ajax({
         type: 'POST',
         url: '././controllers/class_json.php?data=check_class_name',
-        data: {name: className.val()},
+        data: { name: className.val() },
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
             if (data.exists) {
                 className.focus();
                 toastr.warning("Name already exists in database!").css("margin-top", "2rem");
@@ -74,12 +114,12 @@ $('#btnSave').click(function() {
                         url: '././controllers/class_json.php?data=add_class',
                         data: form_data,
                         dataType: 'json',
-                        success: function(data) {
+                        success: function (data) {
                             toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                             displayData();
                             $('#myModal').modal('hide');
                         },
-                        error: function(ex) {
+                        error: function (ex) {
                             toastr.error("បរាជ័យ").css("margin-top", "2rem");
                             console.log(ex.responseText);
                         }
@@ -91,12 +131,12 @@ $('#btnSave').click(function() {
                         url: '././controllers/class_json.php?data=update_class&id=' + class_id,
                         data: form_data,
                         dataType: 'json',
-                        success: function(data) {
+                        success: function (data) {
                             toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                             displayData();
                             $('#myModal').modal('hide');
                         },
-                        error: function(ex) {
+                        error: function (ex) {
                             toastr.error("បរាជ័យ").css("margin-top", "2rem");
                             console.log(ex.responseText);
                         }
@@ -104,7 +144,7 @@ $('#btnSave').click(function() {
                 }
             }
         },
-        error: function(ex) {
+        error: function (ex) {
             toastr.error("Error checking name in database").css("margin-top", "2rem");
             console.log(ex.responseText);
         }
@@ -112,7 +152,7 @@ $('#btnSave').click(function() {
 });
 
 
-$('#btnAdd').click(function() {
+$('#btnAdd').click(function () {
     $('#txtName').val("");
     $('#btnSave').text("រក្សាទុក");
 });
@@ -127,10 +167,10 @@ function editData(id) {
         data: '&id=' + id,
         type: 'GET',
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
             $('#txtName').val(data[0][1]);
         },
-        error: function(ex) {
+        error: function (ex) {
             console.log(ex.responseText);
         }
     });
@@ -140,40 +180,39 @@ function editData(id) {
 //Delete
 function deleteData(id) {
     Swal.fire({
-      title: "តើអ្នកចង់លុបថ្នាក់នេះចេញពីប្រព័ន្ធ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "ទេ",
-      confirmButtonText: "បាទ!",
+        title: "តើអ្នកចង់លុបថ្នាក់នេះចេញពីប្រព័ន្ធ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "ទេ",
+        confirmButtonText: "បាទ!",
     }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type: "GET",
-          url: "././controllers/class_json.php?data=delete_class&id=" + id,
-          dataType: "json",
-          success: function (data) {
-            Swal.fire({
-              title: "ជោគជ័យ",
-              icon: "success",
-              showConfirmButton: false,
-              timer: 2000,
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: "././controllers/class_json.php?data=delete_class&id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    Swal.fire({
+                        title: "ជោគជ័យ",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    displayData();
+                },
+                error: function (ex) {
+                    Swal.fire({
+                        title: "បរាជ័យ",
+                        text: ex.responseText,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    console.log(ex.responseText);
+                },
             });
-            displayData();
-          },
-          error: function (ex) {
-            Swal.fire({
-              title: "បរាជ័យ",
-              text: ex.responseText,
-              icon: "error",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            console.log(ex.responseText);
-          },
-        });
-      }
+        }
     });
-  }
-  
+}
