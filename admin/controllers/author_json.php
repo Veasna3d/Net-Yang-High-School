@@ -1,20 +1,20 @@
 <?php
 
     require '../includes/dbConnection.php';
-    if($_GET["data"] == "get_class"){
-        $sql = "select * from Class";
+    if($_GET["data"] == "get_author"){
+        $sql = "select * from author";
         $result = $conn->prepare($sql);
 		$result->execute();
         $class = [];
         while($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $class[] = array($row["id"], $row["className"],$row["createdAt"]);
+            $class[] = array($row["id"], $row["authorName"],$row["createdAt"]);
         }
         echo json_encode($class);
     }
 
-    if ($_GET['data'] == 'check_class_name') {
+    if ($_GET['data'] == 'check_author_name') {
         $name = $_POST['name'];
-        $query = "SELECT COUNT(*) as count FROM Class WHERE className = :name";
+        $query = "SELECT COUNT(*) as count FROM author WHERE authorName = :name";
         $statement = $conn->prepare($query);
         $statement->bindValue(':name', $name);
         $statement->execute();
@@ -26,12 +26,12 @@
     
 
     //1-add_class
-    if($_GET["data"] == "add_class"){
+    if($_GET["data"] == "add_author"){
             $name = $_POST["txtName"];
 
-            $sql = "INSERT INTO class(className) VALUE(:className);";
+            $sql = "INSERT INTO author(authorName) VALUE(:authorName);";
             $insert = $conn->prepare($sql);
-            $insert->bindParam(':className', $name);
+            $insert->bindParam(':authorName', $name);
 
             if($insert->execute()){
                    echo json_encode("Insert Success");}
@@ -40,17 +40,17 @@
 
     //2-get_byID
     if($_GET['data'] == 'get_byid'){
-        $result = $conn->prepare("select * from Class where id=:id");
+        $result = $conn->prepare("select * from author where id=:id");
         $result->bindParam(':id', $_GET['id']);
         $result->execute();
         if($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $class[] = array($row['id'], $row['className'],$row['createdAt']);
+            $class[] = array($row['id'], $row['authorName'],$row['createdAt']);
         }
         echo json_encode($class);
     }
 
     //3-update
-    if($_GET['data'] == 'update_class'){
+    if($_GET['data'] == 'update_author'){
         if(empty($_POST['txtName'])){
             echo json_encode("please check the empty field!");
         }else{
@@ -58,10 +58,10 @@
             $id = $_GET['id'];
             $name = $_POST['txtName'];
 
-            $sql = "Update Class set className=:className where id=:id;";
+            $sql = "Update author set authorName=:authorName where id=:id;";
             $update = $conn->prepare($sql);
 
-            $update->bindParam(':className', $name);
+            $update->bindParam(':authorName', $name);
             $update->bindParam(':id', $id);
             if($update->execute()){
                 echo json_encode("Update Success");
@@ -72,9 +72,9 @@
     }
 
     //4-delete
-    if($_GET['data'] == 'delete_class'){
+    if($_GET['data'] == 'delete_author'){
         $id = $_GET['id'];
-        $delete = $conn->prepare("DELETE FROM Class WHERE id=:id;");
+        $delete = $conn->prepare("DELETE FROM author WHERE id=:id;");
         $delete->bindParam(':id', $id);
         if($delete->execute()){
             echo json_encode("Delete Success");

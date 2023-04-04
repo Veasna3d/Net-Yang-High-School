@@ -101,6 +101,42 @@
                   <p>បញ្ចីសារពើភណ្ឌសៀវភៅ</p>
                 </a>
               </li>
+              
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+          <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                អ្នកនិពន្ធ
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="teacher.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>គ្រូ</p>
+                </a>
+              <a href="category.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ប្រភេទ</p>
+                </a>
+              <a href="supplier.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>អ្នក​ផ្គត់ផ្គង់</p>
+                </a>
+                <a href="author.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>អ្នកនិពន្ធ</p>
+                </a>
+                <a href="print.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>បោះពុម្ព</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
