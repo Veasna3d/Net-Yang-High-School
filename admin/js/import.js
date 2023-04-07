@@ -1,54 +1,50 @@
+
 function displayData() {
     $.ajax({
-        url: "./controllers/read_json.php?data=get_read",
-        type: "GET",
-        dataType: "json",
+        url: './controllers/import_json.php?data=get_import',
+        type: 'GET',
+        dataType: 'json',
         success: function (alldata) {
-            var columns = [
-                {
-                    title: "ល.រ",
-                },
-                {
-                    title: "សិស្ស",
-                },
-                {
-                    title: "កាលបរិច្ឆេទ",
-                },
-                {
-                    title: "សៀវភៅ",
-                },
-                {
-                    title: "សកម្មភាព",
-                },
-            ];
+            var columns = [{
+                title: "ល.រ"
+            }, {
+                title: "ថ្ងៃខែឆ្នាំទទួល"
+            }, {
+                title: "សៀវភៅ"
+            }, {
+                title: "ម្នាស់អំណោយ"
+            },
+            {
+                title: "ចំនួនសៀវភៅ"
+            }, {
+                title: "សកម្មភាព"
+            }];
             var data = [];
-            var option = "";
+            var option = '';
             for (var i in alldata) {
-                option =
-                    "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-                    alldata[i][0] +
-                    ")'><i class='fa fa-trash'></i> </button> ";
-                data.push([
-                    alldata[i][0],
-                    alldata[i][1],
-                    alldata[i][2],
-                    alldata[i][3],
-                    option,
-                ]);
+                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
+                data.push(
+                    [
+                        alldata[i][0],
+                        alldata[i][1],
+                        alldata[i][2],
+                        alldata[i][3],
+                        alldata[i][4] + " ក្បាល",
+                        option]);
             }
             console.log(data);
-            $("#tableId").DataTable({
+            $('#tableId').DataTable({
                 destroy: true,
                 data: data,
                 columns: columns,
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ["print", "pdf"],
-                dom:
-                    "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                buttons: ['print', 'pdf'],
+                dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                     "<'row'<'col-md-12'tr>>" +
                     "<'row'<'col-md-5'l>>" +
                     "<'row'<'col-md-5'i><'col-md-7'p>>",
@@ -56,41 +52,10 @@ function displayData() {
         },
         error: function (e) {
             console.log(e.responseText);
-        },
+        }
     });
 }
 
-function setStudent(myselect, myjson, caption) {
-    try {
-        var sel = $(myselect);
-        sel.empty();
-        sel.append('<option value="">' + caption + "</option>");
-        $.ajax({
-            url: myjson,
-            dataType: "json",
-            success: function (s) {
-                for (var i = 0; i < s.length; i++) {
-                    sel.append(
-                        '<option value="' +
-                        s[i][0] +
-                        '">' +
-                        s[i][3] +
-                        "|ភេទ " +
-                        s[i][5] +
-                        "|ថ្នាក់ " +
-                        s[i][6] +
-                        "</option>"
-                    );
-                }
-            },
-            error: function (e) {
-                console.log(e.responseText);
-            },
-        });
-    } catch (err) {
-        console.log(err.message);
-    }
-}
 function setBook(myselect, myjson, caption) {
     try {
         var sel = $(myselect);
@@ -102,13 +67,30 @@ function setBook(myselect, myjson, caption) {
             success: function (s) {
                 for (var i = 0; i < s.length; i++) {
                     sel.append(
-                        '<option value="' +
-                        s[i][0] +
-                        '">' +
-                        s[i][2] +
-                        "|" +
-                        s[i][7] +
-                        "</option>"
+                        '<option value="' + s[i][0] + '">' + s[i][2] + "|" + s[i][7] + "</option>"
+                    );
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            },
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+function setSupplier(myselect, myjson, caption) {
+    try {
+        var sel = $(myselect);
+        sel.empty();
+        sel.append('<option value="">' + caption + "</option>");
+        $.ajax({
+            url: myjson,
+            dataType: "json",
+            success: function (s) {
+                for (var i = 0; i < s.length; i++) {
+                    sel.append(
+                        '<option value="' + s[i][0] + '">' + s[i][1] + "|" + s[i][2] + "</option>"
                     );
                 }
             },
@@ -121,107 +103,110 @@ function setBook(myselect, myjson, caption) {
     }
 }
 
+
+
 //Load
 $(document).ready(function () {
+    setBook("#ddlBook", "./controllers/import_json.php?data=get_book", "ជ្រើសរើស");
+    setSupplier("#ddlSupplier", "./controllers/import_json.php?data=get_supplier", "ជ្រើសរើស");
     displayData();
-    setStudent(
-        "#ddlStudent",
-        "./controllers/read_json.php?data=get_student",
-        "ជ្រើសរើស"
-    );
-    setBook(
-        "#ddlBook",
-        "./controllers/read_json.php?data=get_book",
-        "ជ្រើសរើស"
-    );
-});
+})
 
-$("#btnSave").click(function () {
+$('#btnSave').click(function () {
 
-    var student = $("#ddlStudent");
-    var date = $("#txtDate");
-    var book = $("#ddlBook");
+    var receivedDate = $('#txtReceivedDate');
+    var book = $('#ddlBook');
+    var supplier = $('#ddlSupplier');
+    var qty = $('#txtQty');
 
-    if (student.val() == "") {
-        student.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
-    } else if (date.val() == "") {
-        date.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
+    if (receivedDate.val() == "") {
+        receivedDate.focus();
+        return toastr.warning("បញ្ចូលថ្ងៃខែឆ្នាំទទួល!").css("margin-top", "2rem");
     } else if (book.val() == "") {
         book.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
+        return toastr.warning("ជ្រើសរើសសៀវភៅ!").css("margin-top", "2rem");
+    } else if (supplier.val() == "") {
+        supplier.focus();
+        return toastr.warning("ជ្រើសរើសម្ចាស់អំណោយ!").css("margin-top", "2rem");
+    } else if (qty.val() == "") {
+        qty.focus();
+        return toastr.warning("ចំនួនសៀវភៅ!").css("margin-top", "2rem");
     }
 
-    var form_data = $("#form").serialize();
-    if ($("#btnSave").text() == "រក្សាទុក") {
+
+    var form_data = $('#form').serialize();
+    if ($('#btnSave').text() == "រក្សាទុក") {
         // Insert
         $.ajax({
-            type: "POST",
-            url: "././controllers/read_json.php?data=add_read",
+            type: 'POST',
+            url: './controllers/import_json.php?data=add_import',
             data: form_data,
-            dataType: "json",
+            dataType: 'json',
             success: function (data) {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
-                $("#myModal").modal("hide");
+                $('#myModal').modal('hide');
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
                 console.log(ex.responseText);
-            },
+            }
         });
     } else {
         // Update
         $.ajax({
-            type: "POST",
-            url:
-                "././controllers/read_json.php?data=update_class&id=" + class_id,
+            type: 'POST',
+            url: './controllers/import_json.php?data=update_import&id=' + import_id,
             data: form_data,
-            dataType: "json",
+            dataType: 'json',
             success: function (data) {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
-                $("#myModal").modal("hide");
+                $('#myModal').modal('hide');
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
                 console.log(ex.responseText);
-            },
+            }
         });
     }
 });
 
-$("#btnAdd").click(function () {
-    $("#ddlStudent").val("");
-    $("#txtDate").val("");
-    $("#ddlBook").val("");
-    $("#btnSave").text("រក្សាទុក");
+$('#btnAdd').click(function () {
+    $('#txtReceivedDate').val("");
+    $('#ddlBook').val("");
+    $('#ddlSupplier').val("");
+    $('#txtQty').val("");
+    $('#btnSave').text("រក្សាទុក");
 });
 
-var class_id;
+var import_id;
 
 function editData(id) {
-    $("#btnSave").text("កែប្រែ");
-    class_id = id;
+    $('#btnSave').text("កែប្រែ");
+    import_id = id;
     $.ajax({
-        url: "././controllers/read_json.php?data=get_byid",
-        data: "&id=" + id,
-        type: "GET",
-        dataType: "json",
+        url: './controllers/import_json.php?data=get_byid',
+        data: '&id=' + id,
+        type: 'GET',
+        dataType: 'json',
         success: function (data) {
-            $("#txtName").val(data[0][1]);
+            $('#txtReceivedDate').val(data[0][1]);
+            $('#ddlBook').val(data[0][2]);
+            $('#ddlSupplier').val(data[0][3]);
+            $('#txtQty').val(data[0][4]);
         },
         error: function (ex) {
             console.log(ex.responseText);
-        },
+        }
     });
 }
+
 
 //Delete
 function deleteData(id) {
     Swal.fire({
-        title: "តើអ្នកចង់លុបថ្នាក់នេះចេញពីប្រព័ន្ធ?",
+        title: "តើអ្នកចង់លុបទិន្នន័យនេះចេញពីប្រព័ន្ធ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -232,7 +217,7 @@ function deleteData(id) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "GET",
-                url: "././controllers/read_json.php?data=delete_class&id=" + id,
+                url: "./controllers/import_json.php?data=delete_import&id=" + id,
                 dataType: "json",
                 success: function (data) {
                     Swal.fire({

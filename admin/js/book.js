@@ -6,34 +6,24 @@ function displayData() {
         dataType: 'json',
         success: function (alldata) {
             var columns = [{
-                title: "ល​.រ"
-            }, {
                 title: "សារពើភណ្ឌ"
-            },  {
-                title: "ថ្ងៃខែឆ្នាំទទួល"
-            },{
-                title: "ឈ្មោះអ្នកនិពន្ធ"
-            },{
+            }, {
                 title: "ចំណងជើង"
-            },{
-                title: "គ្រឹស្ថានបោះពុម្ភ"
-            },{
-                title: "ទីតាំងបោះពុម្ភ"
-            },{
+            }, {
+                title: "ឈ្មោះអ្នកនិពន្ធ"
+            }, {
+                title: "គ្រឹះស្ថានបោះពុម្ភ"
+            }, {
                 title: "ឆ្នាំបោះពុម្ភ"
-            },{
-                title: "ម្ចាស់អំណោយ"
-            },{
+            }, {
                 title: "តម្លៃ"
-            },{
-                title: "សម្គាល់"
-            },{
+            }, {
                 title: "លេខបញ្ជី"
             },
             {
-                title: "ស្ថានភាព"
-            },{
                 title: "រូបភាព"
+            }, {
+                title: "ស្ថានភាព"
             }, {
                 title: "សកម្មភាព"
             }];
@@ -46,20 +36,16 @@ function displayData() {
                     alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
                 data.push(
                     [
-                        alldata[i][0],
+                        //alldata[i][0],
                         alldata[i][1],
                         alldata[i][2],
                         alldata[i][3],
                         alldata[i][4],
                         alldata[i][5],
-                        alldata[i][6],
+                        alldata[i][6] + " ៛",
                         alldata[i][7],
+                        "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
                         alldata[i][8],
-                        alldata[i][9],
-                        alldata[i][10],
-                        alldata[i][11],
-                        alldata[i][12],
-                        alldata[i][13],
                         option
                     ]);
             }
@@ -84,103 +70,205 @@ function displayData() {
     });
 }
 
+function setDataToSelect(myselect, myjson, caption) {
+    try {
+        var sel = $(myselect);
+        sel.empty();
+        sel.append('<option value="">' + caption + "</option>");
+        $.ajax({
+            url: myjson,
+            dataType: "json",
+            success: function (s) {
+                for (var i = 0; i < s.length; i++) {
+                    sel.append(
+                        '<option value="' + s[i][0] + '">' + s[i][1] + "</option>"
+                    );
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            },
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+function setPrint(myselect, myjson, caption) {
+    try {
+        var sel = $(myselect);
+        sel.empty();
+        sel.append('<option value="">' + caption + "</option>");
+        $.ajax({
+            url: myjson,
+            dataType: "json",
+            success: function (s) {
+                for (var i = 0; i < s.length; i++) {
+                    sel.append(
+                        '<option value="' + s[i][0] + '">' + s[i][1] +"|"+ s[i][2]+"</option>"
+                    );
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            },
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+function setCategory(myselect, myjson, caption) {
+    try {
+        var sel = $(myselect);
+        sel.empty();
+        sel.append('<option value="">' + caption + "</option>");
+        $.ajax({
+            url: myjson,
+            dataType: "json",
+            success: function (s) {
+                for (var i = 0; i < s.length; i++) {
+                    sel.append(
+                        '<option value="' + s[i][0] + '">' + s[i][1] +"|"+ s[i][2]+"</option>"
+                    );
+                }
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            },
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
 //Load
 $(document).ready(function () {
     displayData();
-})
+    setDataToSelect("#ddlAuthor", "./controllers/book_json.php?data=get_author", "ជ្រើសរើស");
+    setCategory("#ddlCategory", "./controllers/book_json.php?data=get_category", "ជ្រើសរើស");
+    setPrint("#ddlPrint", "./controllers/book_json.php?data=get_print", "ជ្រើសរើស");
+});
 
-$('#btnSave').click(function () {
-    var className = $('#txtName');
-    if (className.val() == "") {
-        className.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
+//btnSave
+$("#btnSave").click(function () {
+    var bookTitle = $("#txtBookTitle");
+    var author = $("#txtAuthor");
+    var print = $("#ddlPrint");
+    var publishYear = $("#txtPublishYear");
+    var price = $("#txtPrice")
+    var category = $("#ddlCategory")
+
+    if (bookTitle.val() == "") {
+        bookTitle.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    } else if (bookTitle.val() == "") {
+        bookTitle.focus();
+        return toastr.warning("Book Title Require!").css("margin-top", "2rem");
+    } else if (author.val() == "") {
+        author.focus();
+        return toastr.warning("Author Require!").css("margin-top", "2rem");
     }
-    // Check if txtName already exists in database
-    $.ajax({
-        type: 'POST',
-        url: '././controllers/class_json.php?data=check_class_name',
-        data: { name: className.val() },
-        dataType: 'json',
-        success: function (data) {
-            if (data.exists) {
-                className.focus();
-                toastr.warning("Name already exists in database!").css("margin-top", "2rem");
-            } else {
-                var form_data = $('#form').serialize();
-                if ($('#btnSave').text() == "រក្សាទុក") {
-                    // Insert
-                    $.ajax({
-                        type: 'POST',
-                        url: '././controllers/class_json.php?data=add_class',
-                        data: form_data,
-                        dataType: 'json',
-                        success: function (data) {
-                            toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                            displayData();
-                            $('#myModal').modal('hide');
-                        },
-                        error: function (ex) {
-                            toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                            console.log(ex.responseText);
-                        }
-                    });
-                } else {
-                    // Update
-                    $.ajax({
-                        type: 'POST',
-                        url: '././controllers/class_json.php?data=update_class&id=' + class_id,
-                        data: form_data,
-                        dataType: 'json',
-                        success: function (data) {
-                            toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                            displayData();
-                            $('#myModal').modal('hide');
-                        },
-                        error: function (ex) {
-                            toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                            console.log(ex.responseText);
-                        }
-                    });
-                }
-            }
-        },
-        error: function (ex) {
-            toastr.error("Error checking name in database").css("margin-top", "2rem");
-            console.log(ex.responseText);
-        }
-    });
+    else if (print.val() == "") {
+        print.focus();
+        return toastr.warning("Print Require!").css("margin-top", "2rem");
+    }
+    else if (publishYear.val() == "") {
+        publishYear.focus();
+        return toastr.warning("Student Name Require!").css("margin-top", "2rem");
+    }
+    
+    else if (price.val() == "") {
+        price.focus();
+        return toastr.warning("Birthday Require!").css("margin-top", "2rem");
+    }else if (category.val() == "") {
+        category.focus();
+        return toastr.warning("Birthday Require!").css("margin-top", "2rem");
+    }
+
+    var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
+    if ($("#btnSave").text() == "រក្សាទុក") {
+        //Insert
+        $.ajax({
+            type: "POST",
+            url: "./controllers/book_json.php?data=add_book",
+            data: form_data,
+            dataType: "json",
+            contentType: false, // Set to false to let jQuery decide the content type
+            processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
+            success: function (data) {
+                toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+                displayData();
+                $("#myModal").modal("hide");
+            },
+            error: function (ex) {
+                toastr.error("បរាជ័យ").css("margin-top", "2rem");
+                console.log(ex.responseText);
+            },
+        });
+    } else {
+        //Update
+        $.ajax({
+            type: "POST",
+            url: "./controllers/book_json.php?data=update_book&id=" + book_id,
+            data: form_data,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+                displayData();
+                $("#myModal").modal("hide");
+            },
+            error: function (ex) {
+                toastr.error("បរាជ័យ").css("margin-top", "2rem");
+                console.log(ex.responseText);
+            },
+        });
+    }
 });
 
-
-$('#btnAdd').click(function () {
-    $('#txtName').val("");
-    $('#btnSave').text("រក្សាទុក");
+$("#btnAdd").click(function () {
+    $("#txtBookTitle").val("");
+    $("#txtAuthor").val("");
+    $("#ddlPrint").val("");
+    $("#ddlCategory").val("");
+    $("#txtPublishYear").val("");
+    $("#txtPrice").val("");
+    $("#image").val("");
+    $("#btnSave").text("រក្សាទុក");
 });
 
-var class_id;
+var book_id;
 
+//Edit Book
 function editData(id) {
-    $('#btnSave').text("កែប្រែ");
-    class_id = id;
+    $("#btnSave").text("កែប្រែ");
+    book_id = id;
     $.ajax({
-        url: '././controllers/class_json.php?data=get_byid',
-        data: '&id=' + id,
-        type: 'GET',
-        dataType: 'json',
+        url: "./controllers/book_json.php?data=get_byid",
+        data: "&id=" + id,
+        type: "GET",
+        dataType: "json",
+        contentType: false,
+        processData: false,
         success: function (data) {
-            $('#txtName').val(data[0][1]);
+            $("#txtBookTitle").val(data[0][2]);
+            $("#txtAuthor").val(data[0][3]);
+            $("#ddlPrint").val(data[0][4]);
+            $("#txtPublishYear").val(data[0][5]);
+            $("#txtPrice").val(data[0][6]);
+            $("#ddlCategory").val(data[0][7]);
+            $("#image").val(data[0][8]); 
         },
         error: function (ex) {
             console.log(ex.responseText);
-        }
+        },
     });
 }
 
-
-//Delete
+//Delete Book
 function deleteData(id) {
     Swal.fire({
-        title: "តើអ្នកចង់លុបថ្នាក់នេះចេញពីប្រព័ន្ធ?",
+        title: "តើអ្នកចង់លុបសិស្សនេះចេញពីប្រព័ន្ធ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -191,7 +279,7 @@ function deleteData(id) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "GET",
-                url: "././controllers/class_json.php?data=delete_class&id=" + id,
+                url: "./controllers/book_json.php?data=delete_book&id=" + id,
                 dataType: "json",
                 success: function (data) {
                     Swal.fire({

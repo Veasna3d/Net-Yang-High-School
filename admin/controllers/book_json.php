@@ -2,87 +2,200 @@
 
     require '../includes/dbConnection.php';
     if($_GET["data"] == "get_book"){
-        $sql = "select * from vbook";
+        $sql = "select * from vBook";
         $result = $conn->prepare($sql);
 		$result->execute();
-        $class = [];
+        $book = [];
         while($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $class[] = array($row["id"], $row["bookCode"],$row["receivedDate"],
-            $row["authorName"],$row["bookTitle"],$row["printPu"],$row["printPr"],
-            $row["publishYear"],$row["supplierName"],$row["price"],$row["unit"],
-            $row["categoryCode"],$row["image"],$row["status"],$row["createdAt"]);
-        }
-        echo json_encode($class);
-    }
-
-    if ($_GET['data'] == 'check_class_name') {
-        $name = $_POST['name'];
-        $query = "SELECT COUNT(*) as count FROM Class WHERE className = :name";
-        $statement = $conn->prepare($query);
-        $statement->bindValue(':name', $name);
-        $statement->execute();
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        $count = $row['count'];
-        echo json_encode(['exists' => $count > 0]);
-        exit;
-    }
-    
-
-    //1-add_class
-    if($_GET["data"] == "add_class"){
-            $name = $_POST["txtName"];
-
-            $sql = "INSERT INTO Class (className) VALUES (:className);";
-            $insert = $conn->prepare($sql);
-            $insert->bindParam(':className', $name);
-
-            if($insert->execute()){
-                   echo json_encode("Insert Success");}
-            else{ echo json_encode("Insert Faild");}    
-    }
-
-    //2-get_byID
-    if($_GET['data'] == 'get_byid'){
-        $result = $conn->prepare("select * from Class where id=:id");
-        $result->bindParam(':id', $_GET['id']);
-        $result->execute();
-        if($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $class[] = array($row['id'], $row['className'],$row['createdAt']);
-        }
-        echo json_encode($class);
-    }
-
-    //3-update
-    if($_GET['data'] == 'update_class'){
-        if(empty($_POST['txtName'])){
-            echo json_encode("please check the empty field!");
-        }else{
-
-            $id = $_GET['id'];
-            $name = $_POST['txtName'];
-
-            $sql = "Update Class set className=:className where id=:id;";
-            $update = $conn->prepare($sql);
-
-            $update->bindParam(':className', $name);
-            $update->bindParam(':id', $id);
-            if($update->execute()){
-                echo json_encode("Update Success");
+            if($row['status'] == 1){
+                $status = "<span class='badge badge-pill badge-primary'>មាន</span>"; 
             }else{
-                echo json_encode("Update Faild");
+                $status = "<span class='badge badge-pill badge-danger'>គ្មាន</span>"; 
             }
+            $book[] = array($row["id"], $row["bookCode"],
+            $row["bookTitle"],$row["authorName"],$row["publishingHouse"],
+            $row["publishYear"],$row["price"],$row["categoryCode"],$row["image"],
+            $status,$row["createdAt"]);
         }
+        echo json_encode($book);
     }
 
-    //4-delete
-    if($_GET['data'] == 'delete_class'){
+    //Get Print
+	if($_GET['data'] == "get_print"){
+        $sql = "SELECT * FROM Print";
+        $result = $conn->prepare($sql);
+        $result->execute();
+        $print = [];
+
+        while( $row = $result->fetch(PDO::FETCH_ASSOC)){
+
+                $print[] = array($row['id'],
+                    $row['publishingHouse'],$row['printingHouse'],$row['createdAt']);
+            
+        }
+        echo json_encode($print);
+    }
+    //Get Category
+	if($_GET['data'] == "get_category"){
+        $sql = "SELECT * FROM Category";
+        $result = $conn->prepare($sql);
+        $result->execute();
+        $print = [];
+
+        while( $row = $result->fetch(PDO::FETCH_ASSOC)){
+
+                $category[] = array($row['id'],
+                    $row['categoryCode'],$row['categoryName'],$row['createdAt']);
+            
+        }
+        echo json_encode($category);
+    }
+    if($_GET["data"] == "add_book"){
+    
+        //Get the last bookCode value from the database
+        $sql = "SELECT MAX(bookCode) as maxBookCode FROM Book";
+        $result = $conn->query($sql);
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        $maxBookCode = $row['maxBookCode'];
+    
+        //Increment the value by 1 to generate the next bookCode
+        if($maxBookCode == NULL){
+            $bookCode = 10000001;
+        } else {
+            $bookCode = $maxBookCode + 1;
+        }
+    
+        //Retrieve other form data
+        $bookTitle = $_POST["txtBookTitle"];
+        $print = $_POST["ddlPrint"];
+        $author = $_POST["txtAuthor"];
+        $category = $_POST["ddlCategory"];
+        $publishYear = $_POST["txtPublishYear"];
+        $price = $_POST["txtPrice"];
+        $image = $_FILES['image']['name'];
+
+    
+        //Move the uploaded image file to the specified folder
+        $target_dir = "../upload/";
+        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+    
+        //Prepare and execute the SQL INSERT statement
+        $sql = "INSERT INTO Book (bookCode, bookTitle, authorName, printId, publishYear, price, categoryId, image) VALUES 
+                                (:bookCode, :bookTitle, :authorName, :printId,  :publishYear, :price, :categoryId, :image)";
+        $insert = $conn->prepare($sql);
+        $insert->bindParam(':bookCode', $bookCode);
+        $insert->bindParam(':bookTitle', $bookTitle);
+        $insert->bindParam(':authorName', $author);
+        $insert->bindParam(':printId', $print);
+        $insert->bindParam(':publishYear', $publishYear);
+        $insert->bindParam(':price', $price);
+        $insert->bindParam(':categoryId', $category);
+        $insert->bindParam(':image', $image);
+    
+        if($insert->execute()){
+            echo json_encode("Insert Success");
+        } else {
+            echo json_encode("Insert Failed");
+        }
+    }
+    // 4 get_byid
+	if($_GET['data'] == 'get_byid'){
+			$result = $conn->prepare("SELECT * FROM Book WHERE id=:id");
+			$result->bindParam(':id', $_GET['id']);
+			$result->execute();
+			if($row = $result->fetch(PDO::FETCH_ASSOC)){
+                $book[] = array($row["id"], $row["bookCode"],
+                $row["bookTitle"],$row["authorName"],$row["printId"],
+                $row["publishYear"],$row["price"],$row["categoryId"],$row["image"],
+                $row["status"],$row["createdAt"]);
+			}
+			echo json_encode($book);
+	}
+
+        //5 Update Book
+	 if($_GET['data'] == 'update_book'){
+
+		if(empty($_POST['txtBookTitle'])){
+			echo json_encode("Please check the empty fields!");
+		}else{
+
+			$id = $_GET['id'];
+            $bookTitle = $_POST["txtBookTitle"];
+            $print = $_POST["ddlPrint"];
+            $author = $_POST["txtAuthor"];
+            $category = $_POST["ddlCategory"];
+            $publishYear = $_POST["txtPublishYear"];
+            $price = $_POST["txtPrice"];
+	
+			// Check if a new image file was uploaded
+			if(!empty($_FILES['image']['name'])) {
+				// Get the image file and move it to the uploads directory
+				$image = $_FILES['image']['name'];
+				$target_dir = "../upload/";
+				$target_file = $target_dir . basename($_FILES["image"]["name"]);
+				move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+			} else {
+				// Get the old image file name from the database
+				$stmt = $conn->prepare("SELECT image FROM Book WHERE id=:id");
+				$stmt->bindParam(':id', $id);
+				$stmt->execute();
+				$row = $stmt->fetch(PDO::FETCH_ASSOC);
+				$image = $row['image'];
+			}
+	
+			// Update the image file and user data in the database
+			$sql = "UPDATE Book SET bookTitle=:bookTitle, authorName=:authorName, printId=:printId,
+             publishYear=:publishYear, price=:price, categoryId=:categoryId, image=:image where id=:id;";
+			$update = $conn->prepare($sql);
+			$update->bindParam(':image', $image);
+            $update->bindParam(':bookTitle', $bookTitle);
+            $update->bindParam(':authorName', $author);
+            $update->bindParam(':printId', $print);
+            $update->bindParam(':publishYear', $publishYear);
+            $update->bindParam(':price', $price);
+            $update->bindParam(':categoryId', $category);
+			$update->bindParam(':id', $id);
+	
+			if($update->execute()){
+				// If the update was successful, delete the old image file if it exists
+				if(!empty($_FILES['image']['name'])) {
+					if(isset($_POST['oldImage']) && !empty($_POST['oldImage'])) {
+						$old_image = $_POST['oldImage'];
+						if(file_exists('../upload/' . $old_image)) {
+							unlink('../upload/' . $old_image);
+						}
+					}
+				}
+				echo json_encode("Update Success");
+			}else{
+				echo json_encode("Update Failed");
+			}
+		}
+	}
+
+    //Delete Book
+    if ($_GET['data'] == 'delete_book') {
         $id = $_GET['id'];
-        $delete = $conn->prepare("DELETE FROM Class WHERE id=:id;");
+        $stmt = $conn->prepare("SELECT image FROM Book WHERE id=:id;");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $image = $result['image'];
+
+        $delete = $conn->prepare("DELETE FROM Book WHERE id=:id;");
         $delete->bindParam(':id', $id);
-        if($delete->execute()){
+
+        if ($delete->execute()) {
+            // delete image from folder
+            $target_file = "../upload/" . $image;
+            if (file_exists($target_file)) {
+                unlink($target_file);
+            }
+
             echo json_encode("Delete Success");
-        }else{
-            echo json_encode("Delete Faild");
+        } else {
+            echo json_encode("Delete Failed");
         }
     }
 ?>

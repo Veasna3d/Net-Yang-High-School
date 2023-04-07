@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>សៀវភៅ</h1>
+                    <h1>បញ្ជីខ្ចីសៀវភៅ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
-                        <li class="breadcrumb-item active">សៀវភៅ</li>
+                        <li class="breadcrumb-item active">បញ្ជីខ្ចីសៀវភៅ</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                             <!-- Button trigger modal -->
                             <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#myModal">
-                                សៀវភៅថ្មី
+                                ខ្ចីសៀវភៅ
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -59,7 +59,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">ព័ត៌មានសៀវភៅ</h5>
+                <h5 class="modal-title" id="myModalLabel">ខ្ចីសៀវភៅ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -69,52 +69,46 @@
                     <div class="d-flex">
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="txtBookTitle">ឈ្មោះសៀវភៅ</label>
-                                <input type="text" name="txtBookTitle" class="form-control" id="txtBookTitle">
+                                <label for="ddlStudent">សិស្ស</label>
+                                <select id="ddlStudent" name="ddlStudent" class="form-control">
+                                    <option selected>ជ្រើសរើស</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="ddlPrint">គ្រឹះស្ថាន នឹង​ ទីតាំងបោះពុម្ភ</label>
-                                <select id="ddlPrint" name="ddlPrint" class="form-control">
+                                <label for="ddlClass">ថ្នាក់</label>
+                                <select id="ddlClass" name="ddlClass" class="form-control">
+                                    <option selected>ជ្រើសរើស</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtBorrowDate">ថ្ងៃខែឆ្នាំខ្ចី</label>
+                                <input type="text" name="txtBorrowDate" class="form-control" id="txtBorrowDate">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="ddlTeacher">គ្រូ</label>
+                                <select id="ddlTeacher" name="ddlTeacher" class="form-control">
                                     <option selected>ជ្រើសរើស</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="txtPublishYear">ឆ្នាំបោះពុម្ភ</label>
-                                <input type="text" name="txtPublishYear" class="form-control" id="txtPublishYear">
-                            </div>
-
-                        </div>
-                        <div class="col-6">
-
-                            <div class="form-group">
-                                <label for="txtAuthor">អ្នកនិពន្ធ</label>
-                                <input type="text" name="txtAuthor" class="form-control" id="txtAuthor">
-                            </div>
-                            <div class="form-group">
-                                <label for="txtPrice">តម្លៃ</label>
-                                <input type="number" name="txtPrice" class="form-control" id="txtPrice">
-                            </div>
-                            <div class="form-group">
-                                <label for="ddlCategory">លេខបញ្ជី</label>
-                                <select id="ddlCategory" name="ddlCategory" class="form-control"
+                                <label for="ddlBook">សៀវភៅ</label>
+                                <select id="ddlBook" name="ddlBook" class="form-control"
                                     aria-label="Default select example">
                                     <option selected>ជ្រើសរើស</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="txtReturnDate">ថ្ងៃខែឆ្នាំសង</label>
+                                <input type="text" name="txtReturnDate" class="form-control" id="txtReturnDate">
+                            </div>
+
+
+
                         </div>
-
                     </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                            <input type="file" name="image" id="image" class="form-control-file d-none"
-                                onchange="previewImage(event)">
-                        </div>
-                        <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
-                    </div>
-
-
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
@@ -129,25 +123,22 @@
 
 
 <?php include 'includes/footer.php' ?>
-<script src="./js/book.js"></script>
-
+<script src="./js/borrow.js"></script>
 <script>
-$("#txtPublishYear").datepicker({
-    dateFormat: "yy",
+$("#txtBorrowDate").datepicker({
+    dateFormat: "dd-MM-yy",
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    yearRange: "1999:2030" // Sets the year range to 1999-2050
+    yearRange: "2023:2030",
+    defaultDate: new Date() // Set the default date to today's date
 });
-
-//Preview Image
-function previewImage(event) {
-    var reader = new FileReader();
-    reader.onload = function() {
-        var img = document.getElementById('image-preview');
-        img.src = reader.result;
-        img.classList.remove('d-none');
-    }
-    reader.readAsDataURL(event.target.files[0]);
-}
+$("#txtReturnDate").datepicker({
+    dateFormat: "dd-MM-yy",
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    yearRange: "2023:2030",
+    defaultDate: new Date() // Set the default date to today's date
+});
 </script>

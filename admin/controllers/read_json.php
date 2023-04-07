@@ -2,31 +2,32 @@
 
     require '../includes/dbConnection.php';
     if($_GET["data"] == "get_read"){
-        $sql = "select * from vReader";
+        $sql = "select * from vRead";
         $result = $conn->prepare($sql);
 		$result->execute();
         $read = [];
         while($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $read[] = array($row["id"], $row["studentName"], $row["gender"],$row["date"],$row["bookTitle"],$row["createdAt"]);
+            $read[] = array($row["id"], $row["studentName"], $row["date"],
+            $row["bookTitle"],$row["createdAt"]);
         }
         echo json_encode($read);
     }
 
-    if ($_GET['data'] == 'check_class_name') {
-        $name = $_POST['name'];
-        $query = "SELECT COUNT(*) as count FROM Class WHERE className = :name";
-        $statement = $conn->prepare($query);
-        $statement->bindValue(':name', $name);
-        $statement->execute();
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        $count = $row['count'];
-        echo json_encode(['exists' => $count > 0]);
-        exit;
-    }
+    // if ($_GET['data'] == 'check_class_name') {
+    //     $name = $_POST['name'];
+    //     $query = "SELECT COUNT(*) as count FROM Class WHERE className = :name";
+    //     $statement = $conn->prepare($query);
+    //     $statement->bindValue(':name', $name);
+    //     $statement->execute();
+    //     $row = $statement->fetch(PDO::FETCH_ASSOC);
+    //     $count = $row['count'];
+    //     echo json_encode(['exists' => $count > 0]);
+    //     exit;
+    // }
     
     	//Get Student
 	if($_GET['data'] == "get_student"){
-        $sql = "SELECT * FROM Student";
+        $sql = "SELECT * FROM vStudent";
         $result = $conn->prepare($sql);
         $result->execute();
         $student = [];
@@ -34,7 +35,7 @@
         while( $row = $result->fetch(PDO::FETCH_ASSOC)){
 
             $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
-            $row['image'],  $row['gender'],$row['classId'],
+            $row['image'],  $row['gender'],$row['className'],
             $row["birthday"], $row["password"], $row['createdAt']);
             
         }
@@ -42,29 +43,34 @@
     }
 
      	//Get Book
-	if($_GET['data'] == "get_class"){
-        $sql = "SELECT * FROM Class";
+	if($_GET['data'] == "get_book"){
+        $sql = "SELECT * FROM vBook";
         $result = $conn->prepare($sql);
         $result->execute();
-        $class = [];
+        $book = [];
 
         while( $row = $result->fetch(PDO::FETCH_ASSOC)){
-
-                $class[] = array($row['id'],
-                    $row['className'],$row['createdAt']);
+            $book[] = array($row["id"], $row["bookCode"],
+            $row["bookTitle"],$row["authorName"],$row["publishingHouse"],
+            $row["publishYear"],$row["price"],$row["categoryCode"],$row["image"],
+            $row["status"],$row["createdAt"]);
             
         }
-        echo json_encode($class);
+        echo json_encode($book);
     }
 
 
     //1-add_class
-    if($_GET["data"] == "add_class"){
-            $name = $_POST["txtName"];
+    if($_GET["data"] == "add_read"){
+            $student = $_POST["ddlStudent"];
+            $date = $_POST["txtDate"];
+            $book = $_POST["ddlBook"];
 
-            $sql = "INSERT INTO Class (className) VALUES (:className);";
+            $sql = "INSERT INTO Reader (studentId,date,bookId) VALUES (:studentId,:date,:bookId);";
             $insert = $conn->prepare($sql);
-            $insert->bindParam(':className', $name);
+            $insert->bindParam(':studentId', $student);
+            $insert->bindParam(':date', $date);
+            $insert->bindParam(':bookId', $book);
 
             if($insert->execute()){
                    echo json_encode("Insert Success");}

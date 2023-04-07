@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
-                        <li class="breadcrumb-item active">ទិន្នន័យការអានសៀវភៅ</li>
+                        <li class="breadcrumb-item active">ការអានសៀវភៅ</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                             <!-- Button trigger modal -->
                             <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#myModal">
-                                សិស្សចូលអាន
+                                បង្កើតថ្មី
                             </button>
                         </div>
                         <!-- /.card-header -->

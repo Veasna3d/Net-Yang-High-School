@@ -1,7 +1,6 @@
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -9,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>អ្នក​ផ្គត់ផ្គង់</h1>
+                    <h1>ការនាំចូល</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
-                        <li class="breadcrumb-item active">អ្នក​ផ្គត់ផ្គង់</li>
+                        <li class="breadcrumb-item active">ការនាំចូល</li>
                     </ol>
                 </div>
             </div>
@@ -30,8 +29,9 @@
                     <div class="card">
                         <div class="card-header">
                             <!-- Button trigger modal -->
-                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                បង្កើត
+                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#myModal">
+                                បង្កើតថ្មី
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -53,13 +53,13 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal -->
+<!-- Modal Insert & Update -->
 <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">បង្កើត</h5>
+                <h5 class="modal-title" id="myModalLabel">ការនាំចូល</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -67,17 +67,27 @@
             <div class="modal-body">
                 <form method="post" id="form">
                     <div class="form-group">
-                        <label for="supplierName">ឈ្នោះអ្នក​ផ្គត់ផ្គង់</label>
-                        <input type="text" name="supplierName" class="form-control" id="supplierName">
+                        <label for="txtReceivedDate">ថ្ងៃខែឆ្នាំទទួល</label>
+                        <input type="text" name="txtReceivedDate" class="form-control" id="txtReceivedDate">
                     </div>
                     <div class="form-group">
-                        <label for="phone">លេខទូរស័ព្ទ</label>
-                        <input type="text" name="phone" class="form-control" id="phone">
+                        <label for="ddlBook">ឈ្មោះសៀវភៅ</label>
+                        <select id="ddlBook" name="ddlBook" class="form-control">
+                            <option selected>ជ្រើសរើស</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="email">អ៊ីមៃល</label>
-                        <input type="email" name="email" class="form-control" id="email">
+                        <label for="ddlSupplier">ម្ចាស់អំណោយ</label>
+                        <select id="ddlSupplier" name="ddlSupplier" class="form-control"
+                            aria-label="Default select example">
+                            <option selected>ជ្រើសរើស</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="txtQty">ចំនួនសៀវភៅ</label>
+                        <input type="number" name="txtQty" class="form-control" id="txtQty">
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
                         <button type="button" class="btn btn-primary" id="btnSave">រក្សាទុក</button>
@@ -89,5 +99,20 @@
     </div>
 </div>
 
+
 <?php include 'includes/footer.php' ?>
-<script src="./js/supplier.js"></script>
+<script src="./js/import.js"></script>
+<script>
+$("#txtReceivedDate").datepicker({
+  dateFormat: "dd-MM-yy",
+  changeMonth: true,
+  changeYear: true,
+  showButtonPanel: true,
+  yearRange: "2020:2030",
+  defaultDate: new Date() // Set the default date to today's date
+});
+
+// Set the datepicker to today's date
+$("#txtReceivedDate").datepicker("setDate", new Date());
+
+</script>

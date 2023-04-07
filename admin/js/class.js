@@ -9,8 +9,6 @@ function displayData() {
                 title: "ល.រ"
             }, {
                 title: "ថ្នាក់"
-            },{
-                title: "ថ្ងៃបង្កើត"
             }, {
                 title: "សកម្មភាព"
             }];
@@ -21,7 +19,7 @@ function displayData() {
                 alldata[i][0] +
                 ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                 alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
-                data.push([alldata[i][0],alldata[i][1],alldata[i][2], option]);
+                data.push([alldata[i][0],alldata[i][1], option]);
             }
             console.log(data);
             $('#tableId').DataTable({
