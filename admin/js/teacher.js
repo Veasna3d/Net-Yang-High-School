@@ -94,6 +94,8 @@ $.ajax({
                     url: './controllers/teacher_json.php?data=add_teacher',
                     data: form_data,
                     dataType: 'json',
+                    contentType: false, // Set to false to let jQuery decide the content type
+                    processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
                     success: function(data) {
                         toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                         displayData();
@@ -111,6 +113,8 @@ $.ajax({
                     url: './controllers/teacher_json.php?data=update_teacher&id=' + class_id,
                     data: form_data,
                     dataType: 'json',
+                    contentType: false, // Set to false to let jQuery decide the content type
+                    processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
                     success: function(data) {
                         toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                         displayData();
@@ -136,7 +140,7 @@ $('#btnAdd').click(function() {
     $('#teacherName').val("");
     $('#password').val("");
     $('#image').val("");
-    $('#gender').val("");
+    $('#ddlGender').val("");  
     $('#phone').val("");
     $('#btnSave').text("រក្សាទុក");
 });
@@ -151,11 +155,13 @@ function editData(id) {
         data: '&id=' + id,
         type: 'GET',
         dataType: 'json',
+        contentType: false, // Set to false to let jQuery decide the content type
+        processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
         success: function(data) {
             $('#teacherName').val(data[0][1]);
             $('#password').val(data[0][2]);
             $('#image').val(data[0][3]);
-            $('#gender').val(data[0][4]);
+            $('#ddlGender').val(data[0][4]);
             $('#phone').val(data[0][5]);  
         },
         error: function(ex) {

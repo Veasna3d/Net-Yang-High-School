@@ -1,13 +1,16 @@
-<?php
 
+<?php
+// error_reporting(0);
 require '../includes/dbConnection.php';
+
 if($_GET["data"] == "get_teacher"){
-    $sql = "SELECT * FROM teacher";
-    $result = $conn->prepare($sql);
-  $result->execute();
-  $teacher = [];
+  $sql = "SELECT * FROM teacher";
+  $result = $conn->prepare($sql);
+$result->execute();
+$teacher = [];
   while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-    $teacher[]  = array($row["id"],$row["teacherName"],$row["password"],$row["image"],$row["gender"],$row["phone"],$row["createdAt"]);
+    $teacher[]  = array($row["id"],$row["teacherName"],$row["password"],
+    $row["image"],$row["gender"],$row["phone"],$row["createdAt"]);
   }
     echo json_encode($teacher);
 }
@@ -25,38 +28,82 @@ if ($_GET['data'] == 'check_teacher_name') {
     exit;
 }
 
-//Add Student
-if($_GET["data"] == "add_teacher"){
-    $teacherName = $_POST['teacherName'];
-    $password = $_POST["password"];
-    $image = $_FILES['image']['name'];
-    $gender = $_POST['gender'];
-    $gender = $_POST['phone'];
+//Add teacher
+// if($_GET["data"] == "add_teacher"){
+//   $teacherName = $_POST["teacherName"];
+// $password = $_POST["password"];
+// $image = $_FILES['image']['name'];
+// $gender = $_POST["ddlGender"];
+// $phone = $_POST["phone"];
+
+// $target_dir = "../upload/";
+// $target_file = $target_dir . basename($_FILES["image"]["name"]);
+// move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+// if (strlen($password) > 5) {
+//     echo json_encode("Password must be less than 5 characters long");
+//     return;
+// }
+
+// $encrypted_password = md5($password);
+
+// $sql = "INSERT INTO teacher (teacherName,password,image,gender,phone) VALUES(:teacherName,:password, :image,:gender,:phone)";
+// $insert = $conn->prepare($sql);
+// $insert->bindParam(':teacherName', $teacherName);
+// $insert->bindParam(':password', $encrypted_password);
+// $insert->bindParam(':image', $image);
+// $insert->bindParam(':gender', $gender);
+// $insert->bindParam(':phone', $phone);
+
+// if($insert->execute()){
+//     echo json_encode("Insert Success");
+// }else{
+//     echo json_encode("Insert Failed");
+// }
+
+// }
 
 
-    $target_dir = "../upload/";
-    $target_file = $target_dir . basename($_FILES["image"]["name"]);
-    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+// Add teacher
+if ($_GET["data"] == "add_teacher") {
+  $teacherName = $_POST['teacherName'];
+  $password = $_POST["password"];
+  $gender = $_POST['ddlGender'];
+  $phone = $_POST['phone'];
 
-    if (strlen($password) > 5) {
-        echo json_encode("Password must be less than 5 characters long");
-        return;
-    }
+  if (!isset($_FILES['image']) || !is_uploaded_file($_FILES['image']['tmp_name'])) {
+      echo json_encode("Image file not uploaded");
+      return;
+  }
 
-    $sql = "INSERT INTO teacher (teacherName,password,image, gender,phone) VALUES (:teacherName,:password,:image, :gender,:phone)";
-    $insert = $conn->prepare($sql);
-    $insert->bindParam(':teacherName', $teacherName);
-    $insert->bindParam(':password', $password);
-    $insert->bindParam(':image', $image);
-    $insert->bindParam(':gender', $gender);
-    $insert->bindParam(':phone', $phone);
+  $image = $_FILES['image']['name'];
+  $target_dir = "../upload/";
+  $target_file = $target_dir . basename($_FILES["image"]["name"]);
+  move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-    if($insert->execute()){
-        echo json_encode("Insert Success");
-    }else{
-        echo json_encode("Insert Failed");
-    }    
+  if (strlen($password) > 5) {
+      echo json_encode("Password must be less than 5 characters long");
+      return;
+  }
+  
+  $encrypted_password = md5($password);
+
+  $sql = "INSERT INTO teacher(teacherName, password, image, gender, phone) VALUES (:teacherName, :password, :image, :gender, :phone)";
+  $insert = $conn->prepare($sql);
+  $insert->bindParam(':teacherName', $teacherName);
+  $insert->bindParam(':password', $encrypted_password);
+  $insert->bindParam(':image', $image);
+  $insert->bindParam(':gender', $gender);
+  $insert->bindParam(':phone', $phone);
+
+  if ($insert->execute()) {
+      echo json_encode("Insert Success");
+  } else {
+      echo json_encode("Insert Failed");
+  }
 }
+
+
 
 //2-get_byID
 if($_GET['data'] == 'get_byid'){
@@ -77,7 +124,7 @@ if($_GET['data'] == 'update_teacher'){
     }else{
         $id = $_GET['id'];
         $teacherName = $_POST['teacherName'];
-        $gender = $_POST['gender'];
+        $gender = $_POST["ddlGender"];
         $phone = $_POST['phone'];
 
   

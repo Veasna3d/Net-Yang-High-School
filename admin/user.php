@@ -9,12 +9,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>គ្រូ</h1>
+                    <h1>អ្នកប្រើប្រាស់</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
-                        <li class="breadcrumb-item active">គ្រូ</li>
+                        <li class="breadcrumb-item active">អ្នកប្រើប្រាស់</li>
                     </ol>
                 </div>
             </div>
@@ -32,8 +32,9 @@
                             <!-- Button trigger modal -->
                             <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#myModal">
-                                គ្រូថ្មី
+                                បង្កើត
                             </button>
+                            
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -60,44 +61,43 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">ព័ត៌មានគ្រូ</h5>
+                <h5 class="modal-title" id="myModalLabel">ព័ត៌មានអ្នកប្រើប្រាស់</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form">
-                <div class="form-group" >
-                        <label for="teacherName">ឈ្មោះគ្រូ</label>
-                        <input type="text" name="teacherName" class="form-control" id="teacherName">
-                    </div>
+                <form method="post" id="form" enctype="multipart/form-data">
+
                     <div class="form-group">
-                        <label for="password">លេខសម្ងាត់</label>
-                        <input type="password" name="password" class="form-control" id="password">
+                        <label for="name">ឈ្មោះអ្នកប្រើប្រាស់</label>
+                        <input type="text" name="txtUsername" id="txtUsername" class="form-control" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file d-none">
+                        <label for="name">លេខសម្ងាត់</label>
+                        <input type="password" name="txtPassword" id="txtPassword" class="form-control" required>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file d-none">
-                    </div> -->
+
                     <div class="form-group">
-                        <label for="ddlGender">ភេទ</label>
-                        <select id="ddlGender" name="ddlGender" class="form-control"
-                            aria-label="Default select example">
-                            <option selected>ជ្រើសរើសភេទ</option>
-                            <option value="ស្រី">ស្រី</option>
-                            <option value="ប្រុស">ប្រុស</option>
+                        <label for="role">ច្បាប់</label>
+                        <select class="form-control" id="txtRole" name="txtRole">
+                            <option value="1">Admin</option>
+                            <option value="2">Editor</option>
                         </select>
                     </div>
+
                     <div class="form-group">
-                        <label for="phone">លេខទូរស័ព្ទ</label>
-                        <input type="text" name="phone" class="form-control" id="phone">
-                        <!-- <span id="user_uploaded_image"></span> -->
+                        <label for="name">អ៊ីមែល</label>
+                        <input type="email" name="txtEmail" id="txtEmail" class="form-control" required>
                     </div>
-            
+
+                    <div class="form-group">
+                        <label for="image">រូបភាព</label>
+                        <input type="file" name="image" id="image" class="form-control-file">
+                    </div>
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
                         <button type="button" class="btn btn-primary" id="btnSave">រក្សាទុក</button>
@@ -120,7 +120,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+
             </div>
 
         </div>
@@ -129,7 +129,7 @@
 
 
 <?php include 'includes/footer.php' ?>
-<script src="./js/teacher.js"></script>
+<script src="./js/user.js"></script>
 <!-- <script src="./js/jquery.daterange.js"></script> -->
 
 <script>
@@ -156,6 +156,4 @@ $(function() {
         yearRange: "c-10:c+10" // Optional, limits the year range available to select
     });
 });
-
-
 </script>
