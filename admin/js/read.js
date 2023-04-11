@@ -176,7 +176,7 @@ $("#btnSave").click(function () {
         $.ajax({
             type: "POST",
             url:
-                "././controllers/read_json.php?data=update_class&id=" + class_id,
+                "./controllers/read_json.php?data=update_read&id=" + read_id,
             data: form_data,
             dataType: "json",
             success: function (data) {
@@ -199,18 +199,20 @@ $("#btnAdd").click(function () {
     $("#btnSave").text("រក្សាទុក");
 });
 
-var class_id;
+var read_id;
 
 function editData(id) {
     $("#btnSave").text("កែប្រែ");
-    class_id = id;
+    read_id = id;
     $.ajax({
-        url: "././controllers/read_json.php?data=get_byid",
+        url: "./controllers/read_json.php?data=get_byid",
         data: "&id=" + id,
         type: "GET",
         dataType: "json",
         success: function (data) {
-            $("#txtName").val(data[0][1]);
+            $("#ddlStudent").val(data[0][1]);
+            $("#txtDate").val(data[0][2]);
+            $("#ddlBook").val(data[0][3]);
         },
         error: function (ex) {
             console.log(ex.responseText);
@@ -232,7 +234,7 @@ function deleteData(id) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "GET",
-                url: "././controllers/read_json.php?data=delete_class&id=" + id,
+                url: "./controllers/read_json.php?data=delete_read&id=" + id,
                 dataType: "json",
                 success: function (data) {
                     Swal.fire({

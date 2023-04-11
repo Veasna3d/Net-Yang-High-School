@@ -31,7 +31,7 @@
                         <div class="card-header">
                             <!-- Button trigger modal -->
                             <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                បង្កើតថ្នាក់ថ្មី
+                            បង្កើតថ្មី
                             </button>
                         </div>
                         <!-- /.card-header -->

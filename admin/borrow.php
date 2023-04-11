@@ -31,7 +31,7 @@
                             <!-- Button trigger modal -->
                             <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#myModal">
-                                ខ្ចីសៀវភៅ
+                                បង្កើតថ្មី
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -104,9 +104,14 @@
                                 <label for="txtReturnDate">ថ្ងៃខែឆ្នាំសង</label>
                                 <input type="text" name="txtReturnDate" class="form-control" id="txtReturnDate">
                             </div>
+                        </div>
 
-
-
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="កំណត់សម្គាល់" name="txtRemark" id="txtRemark"
+                                style="height: 100px"></textarea>
+                            <!-- <label for="floatingTextarea2">Comments</label> -->
                         </div>
                     </div>
 
@@ -140,5 +145,33 @@ $("#txtReturnDate").datepicker({
     showButtonPanel: true,
     yearRange: "2023:2030",
     defaultDate: new Date() // Set the default date to today's date
+});
+
+$(document).ready(function() {
+    $('#ddlStudent').change(function() {
+        if ($(this).val() !== '') {
+            $('#ddlTeacher').prop('disabled', true);
+        } else {
+            $('#ddlTeacher').prop('disabled', false);
+        }
+    });
+
+    $('#ddlTeacher').change(function() {
+        if ($(this).val() !== '') {
+            $('#ddlStudent').prop('disabled', true);
+            $('#ddlClass').prop('disabled', true);
+        } else {
+            $('#ddlStudent').prop('disabled', false);
+            $('#ddlClass').prop('disabled', false);
+        }
+    });
+
+    $('#ddlClass').change(function() {
+        if ($(this).val() !== '') {
+            $('#ddlTeacher').prop('disabled', true);
+        } else {
+            $('#ddlTeacher').prop('disabled', false);
+        }
+    });
 });
 </script>

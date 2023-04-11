@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>គ្រូ</h1>
+                    <h1>ចំនួនគ្រូ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -30,8 +30,9 @@
                     <div class="card">
                         <div class="card-header">
                             <!-- Button trigger modal -->
-                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                បង្កើត
+                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#myModal">
+                                បង្កើតថ្មី
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -53,39 +54,43 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal -->
+<!-- Modal Insert & Update -->
 <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">បង្កើត</h5>
+                <h5 class="modal-title" id="myModalLabel">ព័ត៌មានគ្រូ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-            <form method="post" id="form" enctype="multipart/form-data">
+                <form method="post" id="form">
                     <div class="form-group">
-                        <label for="teacherName">ឈ្មោះគ្រូ</label>
-                        <input type="text" name="teacherName" class="form-control" id="teacherName">
+                        <label for="txtTeacherName">ឈ្មោះ</label>
+                        <input type="text" name="txtTeacherName" class="form-control" id="txtTeacherName">
                     </div>
                     <div class="form-group">
-                        <label for="password">លេខសម្ងាត់</label>
-                        <input type="password" name="password" class="form-control" id="password">
+                        <label for="ddlGender">ភេទ</label>
+                        <select id="ddlGender" name="ddlGender" class="form-control"
+                            aria-label="Default select example">
+                            <option selected>ជ្រើសរើសភេទ</option>
+                            <option value="ស្រី">ស្រី</option>
+                            <option value="ប្រុស">ប្រុស</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPhone">លេខទូរស័ព្ទ</label>
+                        <input type="text" name="txtPhone" class="form-control" id="txtPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPassword">លេខសម្ងាត់</label>
+                        <input type="password" name="txtPassword" class="form-control" id="txtPassword">
                     </div>
                     <div class="form-group">
                         <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file">
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">ភេទ</label>
-                        <input type="text" name="gender" class="form-control" id="gender">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">លេខទូរស័ព្ទ</label>
-                        <input type="text" name="phone" class="form-control" id="phone">
-                        <!-- <span id="user_uploaded_image"></span> -->
+                        <input type="file" name="image" id="image" class="form-control-file d-none">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
@@ -98,5 +103,7 @@
     </div>
 </div>
 
+
 <?php include 'includes/footer.php' ?>
 <script src="./js/teacher.js"></script>
+<!-- <script src="./js/jquery.daterange.js"></script> -->

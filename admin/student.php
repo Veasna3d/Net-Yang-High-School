@@ -32,7 +32,7 @@
                             <!-- Button trigger modal -->
                             <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#myModal">
-                                សិស្សថ្មី
+                                បង្កើតថ្មី
                             </button>
                         </div>
                         <!-- /.card-header -->

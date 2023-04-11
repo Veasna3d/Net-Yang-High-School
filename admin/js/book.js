@@ -45,7 +45,7 @@ function displayData() {
                         alldata[i][6] + " ៛",
                         alldata[i][7],
                         "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
-                        alldata[i][8],
+                        alldata[i][9],
                         option
                     ]);
             }

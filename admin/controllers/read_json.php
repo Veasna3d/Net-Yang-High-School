@@ -60,7 +60,7 @@
     }
 
 
-    //1-add_class
+    //1-add_reader
     if($_GET["data"] == "add_read"){
             $student = $_POST["ddlStudent"];
             $date = $_POST["txtDate"];
@@ -89,18 +89,22 @@
     }
 
     //3-update
-    if($_GET['data'] == 'update_class'){
-        if(empty($_POST['txtName'])){
+    if($_GET['data'] == 'update_read'){
+        if(empty($_POST['ddlStudent'])){
             echo json_encode("please check the empty field!");
         }else{
 
             $id = $_GET['id'];
-            $name = $_POST['txtName'];
+            $student = $_POST["ddlStudent"];
+            $date = $_POST["txtDate"];
+            $book = $_POST["ddlBook"];
 
-            $sql = "Update Class set className=:className where id=:id;";
+            $sql = "UPDATE Reader SET studentId=:studentId,date=:date, bookId=:bookId WHERE id=:id;";
             $update = $conn->prepare($sql);
 
-            $update->bindParam(':className', $name);
+            $update->bindParam(':studentId', $student);
+            $update->bindParam(':date', $date);
+            $update->bindParam(':bookId', $book);
             $update->bindParam(':id', $id);
             if($update->execute()){
                 echo json_encode("Update Success");
@@ -111,9 +115,9 @@
     }
 
     //4-delete
-    if($_GET['data'] == 'delete_class'){
+    if($_GET['data'] == 'delete_read'){
         $id = $_GET['id'];
-        $delete = $conn->prepare("DELETE FROM Class WHERE id=:id;");
+        $delete = $conn->prepare("DELETE FROM Reader WHERE id=:id;");
         $delete->bindParam(':id', $id);
         if($delete->execute()){
             echo json_encode("Delete Success");
