@@ -66,23 +66,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form">
-                <div class="form-group" >
-                        <label for="teacherName">ឈ្មោះគ្រូ</label>
-                        <input type="text" name="teacherName" class="form-control" id="teacherName">
+                <form method="post" id="form" enctype="multipart/form-data">
+                <div class="form-group">
+                        <label for="name">ឈ្នោះគ្រូ</label>
+                        <input type="text" name="name" class="form-control" id="name">
                     </div>
                     <div class="form-group">
                         <label for="password">លេខសម្ងាត់</label>
                         <input type="password" name="password" class="form-control" id="password">
                     </div>
-                    <div class="form-group">
-                        <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file d-none">
-                    </div>
                     <!-- <div class="form-group">
                         <label for="image" class="btn btn-outline-primary">រូបភាព</label>
                         <input type="file" name="image" id="image" class="form-control-file d-none">
                     </div> -->
+                    <div class="form-group">
+                        <label for="image">រូបភាព</label>
+                        <input type="file" name="image" id="image" class="form-control-file">
+                    </div>
+
                     <div class="form-group">
                         <label for="ddlGender">ភេទ</label>
                         <select id="ddlGender" name="ddlGender" class="form-control"
@@ -97,7 +98,7 @@
                         <input type="text" name="phone" class="form-control" id="phone">
                         <!-- <span id="user_uploaded_image"></span> -->
                     </div>
-            
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
                         <button type="button" class="btn btn-primary" id="btnSave">រក្សាទុក</button>
@@ -109,7 +110,7 @@
     </div>
 </div>
 <!-- Modal View Card-->
-<div class="modal fade" id="viewData" data-backdrop="static" data-keyboard="false" tabindex="-1"
+<!-- <div class="modal fade" id="viewData" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="viewDataLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -120,42 +121,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+
             </div>
 
         </div>
     </div>
-</div>
+</div> -->
 
 
 <?php include 'includes/footer.php' ?>
 <script src="./js/teacher.js"></script>
+
 <!-- <script src="./js/jquery.daterange.js"></script> -->
-
-<script>
-$(function() {
-    $("#txtStartYear").datepicker({
-        dateFormat: "yy",
-        changeMonth: false,
-        changeYear: true,
-        showButtonPanel: true,
-        yearRange: "c-10:c+10" // Optional, limits the year range available to select
-    });
-    $("#txtEndYear").datepicker({
-        dateFormat: "yy",
-        changeMonth: false,
-        changeYear: true,
-        showButtonPanel: true,
-        yearRange: "c-10:c+10" // Optional, limits the year range available to select
-    });
-    $("#txtBirthday").datepicker({
-        dateFormat: "dd-MM-yy",
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        yearRange: "c-10:c+10" // Optional, limits the year range available to select
-    });
-});
-
-
-</script>

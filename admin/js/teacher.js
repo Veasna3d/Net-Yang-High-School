@@ -52,13 +52,13 @@ $(document).ready(function() {
 })
 
 $('#btnSave').click(function() {
-    var teacherName = $('#teacherName');
+    var name = $('#name');
     var password = $('#password');
-    var image = $('#image');
+    // var image = $('#image');
     var gender = $('#gender');
     var phone = $('#phone');
-    if(teacherName.val() == ""){
-        teacherName.focus();
+    if(name.val() == ""){
+        name.focus();
         return toastr.warning("សូមបញ្ចូលឈ្មោះ!").css("margin-top", "2rem");
     }
     else if(password.val() == ""){
@@ -72,15 +72,15 @@ $('#btnSave').click(function() {
         phone.focus();
         return toastr.warning("សូមបញ្ចូលឈ្មោះ!").css("margin-top", "2rem");
     }
-  // Check if txtName already exists in database
+  // Check if txtname already exists in database
 $.ajax({
     type: 'POST',
-    url: './controllers/teacher_json.php?data=check_teacher_name',
-    data: {teacherName: teacherName.val(), password: password.val()},
+    url: './controllers/teacher_json.php?data=check_teacher',
+    data: {name: name.val()},
     dataType: 'json',
     success: function(data) {
         if (data.exists) {
-            teacherName.focus();
+            teachername.focus();
             password.focus();
             gender.focus();
             phone.focus();
@@ -133,11 +133,11 @@ $.ajax({
         console.log(ex.responseText);
     }
 });
-
+    
 });
 
 $('#btnAdd').click(function() {
-    $('#teacherName').val("");
+    $('#name').val("");
     $('#password').val("");
     $('#image').val("");
     $('#ddlGender').val("");  
@@ -158,7 +158,7 @@ function editData(id) {
         contentType: false, // Set to false to let jQuery decide the content type
         processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
         success: function(data) {
-            $('#teacherName').val(data[0][1]);
+            $('#name').val(data[0][1]);
             $('#password').val(data[0][2]);
             $('#image').val(data[0][3]);
             $('#ddlGender').val(data[0][4]);

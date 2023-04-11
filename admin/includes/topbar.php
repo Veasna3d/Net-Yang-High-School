@@ -22,6 +22,7 @@
     <!-- JQuery UI -->
     <link rel="stylesheet" href="./plugins/jquery-ui/jquery-ui.css">
 
+
   <!-- DataTables -->
   
   <link rel="stylesheet" href="./plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
