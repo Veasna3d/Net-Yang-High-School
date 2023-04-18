@@ -143,24 +143,30 @@ if (isset($_GET['year'])) {
             </div> -->
 
             <div class="card card-success">
-              <div class="card-header">
-                <h3 class="card-title">Bar Chart</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                <div class="card-header">
+                    <h3 class="card-title">Monthly Transaction Report</h3>
+                    <div class="card-tools pull-right">
+                        <form class="form-inline">
+                            <div class="form-group me-2">
+                                <label for="select_year">Select Year:</label>
+                                <select class="form-select form-select-sm" id="select_year">
+                                    <?php for ($i = 2022; $i <= 2025; $i++) { ?>
+                                    <?php $selected = ($i == $year) ? 'selected' : ''; ?>
+                                    <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
+                                    </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
-              <div class="card-body">
-                <div class="chart">
-                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <div class="card-body">
+                    <div class="chart">
+                        <canvas id="barChart"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
                 </div>
-              </div>
-              <!-- /.card-body -->
+                <!-- /.card-body -->
             </div>
 
 
@@ -173,48 +179,80 @@ if (isset($_GET['year'])) {
 </div>
 <!-- /.content-wrapper -->
 <?php include 'includes/footer.php' ?>
+<?php
+    $and = 'AND YEAR(date) = :year';
+    $months = array();
+    $return = array();
+    $borrow = array();
+    for ($m = 1; $m <= 12; $m++) {
+        $month = str_pad($m, 2, 0, STR_PAD_LEFT);
+        $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(returnDate) = :month AND YEAR(returnDate) = :year AND status=1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['month' => $month, 'year' => $year]);
+        array_push($return, $stmt->rowCount());
 
+        $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(borrowDate) = :month AND YEAR(borrowDate) = :year AND status=0";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['month' => $month, 'year' => $year]);
+        array_push($borrow, $stmt->rowCount());
+
+        $month_name = date('M', mktime(0, 0, 0, $m, 1));
+        array_push($months, $month_name);
+    }
+
+    $months = json_encode($months);
+    $return = json_encode($return);
+    $borrow = json_encode($borrow);
+    ?>
 
 <!-- End Chart Data -->
 
 <script>
 $(document).ready(function() {
-  var areaChartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Borrow',
-        backgroundColor: 'rgba(60,141,188,0.9)',
-        borderColor: 'rgba(60,141,188,0.8)',
-        data: [10, 20, 30, 40, 50, 60, 70]
-      },
-      {
-        label: 'Return',
-        backgroundColor: 'rgba(210, 214, 222, 1)',
-        borderColor: 'rgba(210, 214, 222, 1)',
-        data: [30, 50, 20, 60, 40, 80, 10]
-      }
-    ]
-  };
+    var areaChartData = {
+        labels: <?php echo $months; ?>,
+            datasets: [{
+                    label: 'Borrow',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    data: [10, 20, 30, 40, 50, 60, 70],
+                    data: <?php echo $borrow; ?>
+                },
+                {
+                    label: 'Return',
+                    backgroundColor: 'rgba(210, 214, 222, 1)',
+                    borderColor: 'rgba(210, 214, 222, 1)',
+                    data: [30, 50, 20, 60, 40, 80, 10],
+                    data: <?php echo $return; ?>
+                }
+            ]
+        };
 
-  var barChartCanvas = $('#barChart').get(0).getContext('2d');
-  var barChartData = $.extend(true, {}, areaChartData);
-  var temp0 = areaChartData.datasets[0];
-  var temp1 = areaChartData.datasets[1];
-  barChartData.datasets[0] = temp1;
-  barChartData.datasets[1] = temp0;
+        var barChartCanvas = document.getElementById('barChart').getContext('2d');
+        var barChartData = JSON.parse(JSON.stringify(areaChartData));
+        var temp0 = areaChartData.datasets[0];
+        var temp1 = areaChartData.datasets[1];
+        barChartData.datasets[0] = temp1;
+        barChartData.datasets[1] = temp0;
 
-  var barChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    datasetFill: false
-  };
+        var barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false
+        };
 
-  new Chart(barChartCanvas, {
-    type: 'bar',
-    data: barChartData,
-    options: barChartOptions
-  });
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        });
 });
 
+
+
+$(function() {
+    $('#select_year').change(function() {
+        window.location.href = 'index.php?year=' + $(this).val();
+    });
+});
 </script>
