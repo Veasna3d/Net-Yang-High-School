@@ -3,19 +3,40 @@
 require '../includes/dbConnection.php';
 //Get Borrow
 if ($_GET["data"] == "get_borrow") {
-    $sql = "SELECT * FROM vBorrow";
+    $sql = "SELECT * FROM vBorrow WHERE status = 1";
     $result = $conn->prepare($sql);
     $result->execute();
     $borrow = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         if ($row['status'] == 1) {
-            $status = "<span class='badge badge-pill badge-primary'>បានខ្ចី</span>";
+            $status = "<span class='badge badge-pill badge-success'>បានខ្ចី</span>";
         } else {
             $status = "<span class='badge badge-pill badge-info'>បានសង</span>";
         }
         $borrow[] = array(
             $row["id"], $row["studentName"], $row["teacherName"],
-            $row["className"], $row["bookTitle"], $row["borrowDate"], $row["returnDate"], $row["remark"],
+            $row["bookTitle"], $row["borrowDate"], $row["returnDate"], $row["remark"],
+            $status, $row["createdAt"]
+        );
+    }
+    echo json_encode($borrow);
+}
+
+//Get Return
+if ($_GET["data"] == "get_return") {
+    $sql = "SELECT * FROM vBorrow WHERE status = 0";
+    $result = $conn->prepare($sql);
+    $result->execute();
+    $borrow = [];
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        if ($row['status'] == 1) {
+            $status = "<span class='badge badge-pill badge-success'>បានខ្ចី</span>";
+        } else {
+            $status = "<span class='badge badge-pill badge-info'>បានសង</span>";
+        }
+        $borrow[] = array(
+            $row["id"], $row["studentName"], $row["teacherName"],
+            $row["bookTitle"], $row["borrowDate"], $row["returnDate"], $row["remark"],
             $status, $row["createdAt"]
         );
     }
@@ -52,22 +73,6 @@ if ($_GET['data'] == "get_student") {
     echo json_encode($student);
 }
 
-//Get Class
-if ($_GET['data'] == "get_class") {
-    $sql = "SELECT * FROM Class";
-    $result = $conn->prepare($sql);
-    $result->execute();
-    $class = [];
-
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-
-        $class[] = array(
-            $row['id'],
-            $row['className'], $row['createdAt']
-        );
-    }
-    echo json_encode($class);
-}
 
 //Get Teacher
 if ($_GET['data'] == "get_teacher") {
@@ -108,18 +113,16 @@ if ($_GET['data'] == "get_book") {
 if ($_GET["data"] == "add_borrow") {
     $student = !empty($_POST["ddlStudent"]) ? $_POST["ddlStudent"] : null;
     $teacher = !empty($_POST["ddlTeacher"]) ? $_POST["ddlTeacher"] : null;
-    $class = !empty($_POST["ddlClass"]) ? $_POST["ddlClass"] : null;
     $book = !empty($_POST["ddlBook"]) ? $_POST["ddlBook"] : null;
     $borrowDate = !empty($_POST["txtBorrowDate"]) ? $_POST["txtBorrowDate"] : null;
     $returnDate = !empty($_POST["txtReturnDate"]) ? $_POST["txtReturnDate"] : null;
     $remark = !empty($_POST["txtRemark"]) ? $_POST["txtRemark"] : null;
 
-    $sql = "INSERT INTO Borrow (studentId, teacherId, classId, bookId, borrowDate, returnDate, remark) 
-            VALUES (:studentId, :teacherId, :classId, :bookId, :borrowDate, :returnDate, :remark)";
+    $sql = "INSERT INTO Borrow (studentId, teacherId, bookId, borrowDate, returnDate, remark) 
+            VALUES (:studentId, :teacherId, :bookId, :borrowDate, :returnDate, :remark)";
     $insert = $conn->prepare($sql);
     $insert->bindParam(':studentId', $student, PDO::PARAM_INT);
     $insert->bindParam(':teacherId', $teacher, PDO::PARAM_INT);
-    $insert->bindParam(':classId', $class, PDO::PARAM_INT);
     $insert->bindParam(':bookId', $book, PDO::PARAM_INT);
     $insert->bindParam(':borrowDate', $borrowDate, PDO::PARAM_STR);
     $insert->bindParam(':returnDate', $returnDate, PDO::PARAM_STR);
@@ -141,7 +144,7 @@ if ($_GET['data'] == 'get_byid') {
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $borrow[] = array(
             $row["id"], $row["studentId"], $row["teacherId"],
-            $row["classId"], $row["bookId"], $row["borrowDate"],
+            $row["bookId"], $row["borrowDate"],
             $row["returnDate"], $row["remark"], $row["status"], $row["createdAt"]
         );
     }
@@ -157,16 +160,20 @@ if ($_GET['data'] == 'update_borrow') {
         $id = $_GET['id'];
         $student = !empty($_POST["ddlStudent"]) ? $_POST["ddlStudent"] : null;
         $teacher = !empty($_POST["ddlTeacher"]) ? $_POST["ddlTeacher"] : null;
-        $class = !empty($_POST["ddlClass"]) ? $_POST["ddlClass"] : null;
         $book = !empty($_POST["ddlBook"]) ? $_POST["ddlBook"] : null;
         $borrowDate = !empty($_POST["txtBorrowDate"]) ? $_POST["txtBorrowDate"] : null;
         $returnDate = !empty($_POST["txtReturnDate"]) ? $_POST["txtReturnDate"] : null;
         $remark = !empty($_POST["txtRemark"]) ? $_POST["txtRemark"] : null;
 
-        $sql = "UPDATE Borrow SET className=:className WHERE id=:id;";
+        $sql = "UPDATE Borrow SET studentId=:studentId, teacherId=:teacherId,
+        bookId=:bookId,borrowDate=:borrowDate,returnDate=:returnDate, remark=:remark WHERE id=:id;";
         $update = $conn->prepare($sql);
-
-        $update->bindParam(':className', $name);
+        $update->bindParam(':studentId', $student, PDO::PARAM_INT);
+        $update->bindParam(':teacherId', $teacher, PDO::PARAM_INT);
+        $update->bindParam(':bookId', $book, PDO::PARAM_INT);
+        $update->bindParam(':borrowDate', $borrowDate, PDO::PARAM_STR);
+        $update->bindParam(':returnDate', $returnDate, PDO::PARAM_STR);
+        $update->bindParam(':remark', $remark, PDO::PARAM_STR);
         $update->bindParam(':id', $id);
         if ($update->execute()) {
             echo json_encode("Update Success");
@@ -185,5 +192,23 @@ if ($_GET['data'] == 'delete_borrow') {
         echo json_encode("Delete Success");
     } else {
         echo json_encode("Delete Faild");
+    }
+}
+
+//return 
+if($_GET['data'] == 'return_borrow'){
+        
+    $id = $_GET['id'];
+    $status = 0;
+    $sql = "UPDATE Borrow SET status=:status WHERE id=:id;";
+    $update = $conn->prepare($sql);
+
+    $update->bindParam(':status', $status);
+    $update->bindParam(':id', $id);
+
+    if($update->execute()){
+        echo json_encode("Return Success");
+    }else{
+        echo json_encode("Return Faild");
     }
 }

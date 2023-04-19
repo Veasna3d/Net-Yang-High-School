@@ -36,9 +36,9 @@ function displayData() {
             var option = "";
             for (var i in alldata) {
                 option =
-                    "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#viewData' onclick='viewData(" +
+                    "<button class='btn btn-info btn-sm edit btn-flat' data-toggle='modal' data-target='#viewData' onclick='viewData(" +
                     alldata[i][0] +
-                    ")'><i class='fa fa-eye'></i> </button> | <button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                    ")'><i class='fa fa-id-card'></i> </button> | <button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                     alldata[i][0] + ")'><i class='fa fa-trash'></i> </button>";

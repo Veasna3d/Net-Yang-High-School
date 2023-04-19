@@ -157,6 +157,28 @@
                           </li>
                       </ul>
                   </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-book"></i>
+                          <p>
+                              របាយការណ៍
+                              <i class="fas fa-angle-left right"></i>
+                              <!-- <span class="badge badge-info right">6</span> -->
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="r_import.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
+                              </a>
+                              <a href="Rimport.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
               </ul>
           </nav>
           <!-- /.sidebar-menu -->

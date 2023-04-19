@@ -33,6 +33,15 @@
                                 data-target="#myModal">
                                 បង្កើតថ្មី
                             </button>
+
+                            <!--filter Button-->
+                            <button id="btnAvailable" type="button" class="btn btn-success">
+                                មាន
+                            </button>
+                            <button id="btnNotAvailable" type="button" class="btn btn-danger">
+                                គ្មាន
+                            </button>
+                            
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

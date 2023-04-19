@@ -33,7 +33,8 @@ function displayData() {
                 option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
+                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='notAvailable(" +
+                    alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
                 data.push(
                     [
                         //alldata[i][0],
@@ -69,6 +70,153 @@ function displayData() {
         }
     });
 }
+
+//Filter
+$("#btnAvailable").click(function () {
+    $.ajax({
+        url: './controllers/book_json.php?data=get_book',
+        type: 'GET',
+        dataType: 'json',
+        success: function (alldata) {
+            var columns = [{
+                title: "សារពើភណ្ឌ"
+            }, {
+                title: "ចំណងជើង"
+            }, {
+                title: "ឈ្មោះអ្នកនិពន្ធ"
+            }, {
+                title: "គ្រឹះស្ថានបោះពុម្ភ"
+            }, {
+                title: "ឆ្នាំបោះពុម្ភ"
+            }, {
+                title: "តម្លៃ"
+            }, {
+                title: "លេខបញ្ជី"
+            },
+            {
+                title: "រូបភាព"
+            }, {
+                title: "ស្ថានភាព"
+            }, {
+                title: "សកម្មភាព"
+            }];
+            var data = [];
+            var option = '';
+            for (var i in alldata) {
+                option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='notAvailable(" +
+                    alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
+                data.push(
+                    [
+                        //alldata[i][0],
+                        alldata[i][1],
+                        alldata[i][2],
+                        alldata[i][3],
+                        alldata[i][4],
+                        alldata[i][5],
+                        alldata[i][6] + " ៛",
+                        alldata[i][7],
+                        "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
+                        alldata[i][9],
+                        option
+                    ]);
+            }
+            console.log(data);
+            $('#tableId').DataTable({
+                destroy: true,
+                data: data,
+                columns: columns,
+                responsive: true,
+                lengthChange: false,
+                autoWidth: false,
+                buttons: ['print', 'pdf'],
+                dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'l>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+            });
+        },
+        error: function (e) {
+            console.log(e.responseText);
+        }
+    });
+});
+
+$("#btnNotAvailable").click(function () {
+    $.ajax({
+        url: './controllers/book_json.php?data=not_available',
+        type: 'GET',
+        dataType: 'json',
+        success: function (alldata) {
+            var columns = [{
+                title: "សារពើភណ្ឌ"
+            }, {
+                title: "ចំណងជើង"
+            }, {
+                title: "ឈ្មោះអ្នកនិពន្ធ"
+            }, {
+                title: "គ្រឹះស្ថានបោះពុម្ភ"
+            }, {
+                title: "ឆ្នាំបោះពុម្ភ"
+            }, {
+                title: "តម្លៃ"
+            }, {
+                title: "លេខបញ្ជី"
+            },
+            {
+                title: "រូបភាព"
+            }, {
+                title: "ស្ថានភាព"
+            }, {
+                title: "សកម្មភាព"
+            }];
+            var data = [];
+            var option = '';
+            for (var i in alldata) {
+                option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='isAvailable(" +
+                    alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
+                data.push(
+                    [
+                        //alldata[i][0],
+                        alldata[i][1],
+                        alldata[i][2],
+                        alldata[i][3],
+                        alldata[i][4],
+                        alldata[i][5],
+                        alldata[i][6] + " ៛",
+                        alldata[i][7],
+                        "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
+                        alldata[i][9],
+                        option
+                    ]);
+            }
+            console.log(data);
+            $('#tableId').DataTable({
+                destroy: true,
+                data: data,
+                columns: columns,
+                responsive: true,
+                lengthChange: false,
+                autoWidth: false,
+                buttons: ['print', 'pdf'],
+                dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'l>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+            });
+        },
+        error: function (e) {
+            console.log(e.responseText);
+        }
+    });
+});
+
+
 
 function setDataToSelect(myselect, myjson, caption) {
     try {
@@ -280,6 +428,86 @@ function deleteData(id) {
             $.ajax({
                 type: "GET",
                 url: "./controllers/book_json.php?data=delete_book&id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    Swal.fire({
+                        title: "ជោគជ័យ",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    displayData();
+                },
+                error: function (ex) {
+                    Swal.fire({
+                        title: "បរាជ័យ",
+                        text: ex.responseText,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    console.log(ex.responseText);
+                },
+            });
+        }
+    });
+}
+
+//Not available
+function notAvailable(id) {
+    Swal.fire({
+        title: "សៀវភៅមិនមានក្នុងបណ្ណាល័យ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "ទេ",
+        confirmButtonText: "បាទ!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: "./controllers/book_json.php?data=is_not_available&id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    Swal.fire({
+                        title: "ជោគជ័យ",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    displayData();
+                },
+                error: function (ex) {
+                    Swal.fire({
+                        title: "បរាជ័យ",
+                        text: ex.responseText,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    console.log(ex.responseText);
+                },
+            });
+        }
+    });
+}
+
+//Available
+function isAvailable(id) {
+    Swal.fire({
+        title: "សៀវភៅមានក្នុងបណ្ណាល័យវិញហើយ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "ទេ",
+        confirmButtonText: "បាទ!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: "./controllers/book_json.php?data=is_available&id=" + id,
                 dataType: "json",
                 success: function (data) {
                     Swal.fire({

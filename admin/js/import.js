@@ -43,12 +43,21 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['print', 'pdf'],
+                buttons: ['icon pfd', 'pdf', 'excel'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                     "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                    "<'row'<'col-md-5'l><'col-md-7 text-right'<'#btn-container'>p>>",
             });
+
+            // Add the custom button to the DataTables toolbar
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+
+            // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend($('#btnAdd'));
+
+            // Adjust the margins of the custom button
+            $('#btnAdd').css('margin-right', '5px');
+
         },
         error: function (e) {
             console.log(e.responseText);

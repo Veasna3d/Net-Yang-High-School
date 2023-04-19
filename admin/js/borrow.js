@@ -7,24 +7,21 @@ function displayData() {
             var columns = [
                 {
                     title: "ល.រ",
-                },{
+                }, {
                     title: "សិស្ស",
-                },
-                {
+                }, {
                     title: "គ្រូ",
-                },{
-                    title: "ថ្នាក់",
-                },{
+                }, {
                     title: "សៀវភៅ",
-                },{
+                }, {
                     title: "កាលបរិច្ឆេទខ្ចី",
-                },{
+                }, {
                     title: "កាលបរិច្ឆេទសង",
-                },{
+                }, {
                     title: "ស្ថានភាព",
-                },{
+                }, {
                     title: "សម្គាល់",
-                },{
+                }, {
                     title: "សកម្មភាព",
                 },
             ];
@@ -36,7 +33,9 @@ function displayData() {
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                     alldata[i][0] +
-                    ")'><i class='fa fa-trash'></i> </button> ";
+                    ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm btn-flat' onclick='returnData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-reply'></i> </button>";
                 data.push([
                     alldata[i][0],
                     alldata[i][1],
@@ -44,9 +43,8 @@ function displayData() {
                     alldata[i][3],
                     alldata[i][4],
                     alldata[i][5],
-                    alldata[i][6],
-                    alldata[i][8],
                     alldata[i][7],
+                    alldata[i][6],
                     option,
                 ]);
             }
@@ -71,6 +69,150 @@ function displayData() {
         },
     });
 }
+
+//Filter Borrow
+$("#btnBorrow").click(function () {
+    $.ajax({
+        url: "./controllers/borrow_json.php?data=get_borrow",
+        type: "GET",
+        dataType: "json",
+        success: function (alldata) {
+            var columns = [
+                {
+                    title: "ល.រ",
+                }, {
+                    title: "សិស្ស",
+                }, {
+                    title: "គ្រូ",
+                }, {
+                    title: "សៀវភៅ",
+                }, {
+                    title: "កាលបរិច្ឆេទខ្ចី",
+                }, {
+                    title: "កាលបរិច្ឆេទសង",
+                }, {
+                    title: "ស្ថានភាព",
+                }, {
+                    title: "សម្គាល់",
+                }, {
+                    title: "សកម្មភាព",
+                },
+            ];
+            var data = [];
+            var option = "";
+            for (var i in alldata) {
+                option =
+                    "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm btn-flat' onclick='returnData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-reply'></i> </button>";
+                data.push([
+                    alldata[i][0],
+                    alldata[i][1],
+                    alldata[i][2],
+                    alldata[i][3],
+                    alldata[i][4],
+                    alldata[i][5],
+                    alldata[i][7],
+                    alldata[i][6],
+                    option,
+                ]);
+            }
+            console.log(data);
+            $("#tableId").DataTable({
+                destroy: true,
+                data: data,
+                columns: columns,
+                responsive: true,
+                lengthChange: false,
+                autoWidth: false,
+                buttons: ["print", "pdf"],
+                dom:
+                    "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'l>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+            });
+        },
+        error: function (e) {
+            console.log(e.responseText);
+        },
+    });
+})
+
+//Filter Returned
+$("#btnReturn").click(function () {
+    $.ajax({
+        url: "./controllers/borrow_json.php?data=get_return",
+        type: "GET",
+        dataType: "json",
+        success: function (alldata) {
+            var columns = [
+                {
+                    title: "ល.រ",
+                }, {
+                    title: "សិស្ស",
+                }, {
+                    title: "គ្រូ",
+                }, {
+                    title: "សៀវភៅ",
+                }, {
+                    title: "កាលបរិច្ឆេទខ្ចី",
+                }, {
+                    title: "កាលបរិច្ឆេទសង",
+                }, {
+                    title: "ស្ថានភាព",
+                }, {
+                    title: "សម្គាល់",
+                }, {
+                    title: "សកម្មភាព",
+                },
+            ];
+            var data = [];
+            var option = "";
+            for (var i in alldata) {
+                option =
+                    "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-trash'></i> </button>";
+                data.push([
+                    alldata[i][0],
+                    alldata[i][1],
+                    alldata[i][2],
+                    alldata[i][3],
+                    alldata[i][4],
+                    alldata[i][5],
+                    alldata[i][7],
+                    alldata[i][6],
+                    option,
+                ]);
+            }
+            console.log(data);
+            $("#tableId").DataTable({
+                destroy: true,
+                data: data,
+                columns: columns,
+                responsive: true,
+                lengthChange: false,
+                autoWidth: false,
+                buttons: ["print", "pdf"],
+                dom:
+                    "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'l>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+            });
+        },
+        error: function (e) {
+            console.log(e.responseText);
+        },
+    });
+})
 
 function setStudent(myselect, myjson, caption) {
     try {
@@ -178,11 +320,6 @@ $(document).ready(function () {
         "./controllers/borrow_json.php?data=get_teacher",
         "ជ្រើសរើស"
     );
-    setData(
-        "#ddlClass",
-        "./controllers/borrow_json.php?data=get_class",
-        "ជ្រើសរើស"
-    );
 });
 
 $("#btnSave").click(function () {
@@ -191,7 +328,7 @@ $("#btnSave").click(function () {
     var borrowDate = $("#txtBorrowDate");
     var returnDate = $("#txtReturnDate");
 
-    
+
     if (book.val() == "") {
         book.focus();
         return toastr.warning("បញ្ចូលទិន្នន័យ!").css("margin-top", "2rem");
@@ -245,7 +382,6 @@ $("#btnSave").click(function () {
 $("#btnAdd").click(function () {
     $("#ddlStudent").val("");
     $("#ddlTeacher").val("");
-    $("#ddlClass").val("");
     $("#ddlBook").val("");
     $("#txtBorrowDate").val("");
     $("#txtReturnDate").val("");
@@ -266,22 +402,76 @@ function editData(id) {
         success: function (data) {
             $("#ddlStudent").val(data[0][1]);
             $("#ddlTeacher").val(data[0][2]);
-            $("#ddlBook").val(data[0][4]);
-            $("#txtBorrowDate").val(data[0][5]);
-            $("#txtReturnDate").val(data[0][6]);
-            $("#txtRemark").val(data[0][7]);
-            $("#ddlClass").val(data[0][8]);
+            $("#ddlBook").val(data[0][3]);
+            $("#txtBorrowDate").val(data[0][4]);
+            $("#txtReturnDate").val(data[0][5]);
+            $("#txtRemark").val(data[0][6]);
+
+            // disable ddlTeacher if ddlStudent has a value
+            if ($("#ddlStudent").val()) {
+                $("#ddlTeacher").prop("disabled", true);
+            } else {
+                $("#ddlTeacher").prop("disabled", false);
+            }
+
+            // disable ddlStudent if ddlTeacher has a value
+            if ($("#ddlTeacher").val()) {
+                $("#ddlStudent").prop("disabled", true);
+            } else {
+                $("#ddlStudent").prop("disabled", false);
+            }
         },
+
         error: function (ex) {
             console.log(ex.responseText);
         },
     });
 }
 
+//Returned
+function returnStatus(id) {
+    Swal.fire({
+        title: "សៀវត្រូវបានសង?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "ទេ",
+        confirmButtonText: "បាទ!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: "./controllers/borrow_json.php?data=return_borrow&id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    Swal.fire({
+                        title: "ជោគជ័យ",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    displayData();
+                },
+                error: function (ex) {
+                    Swal.fire({
+                        title: "បរាជ័យ",
+                        text: ex.responseText,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    console.log(ex.responseText);
+                },
+            });
+        }
+    });
+}
+
 //Delete
 function deleteData(id) {
     Swal.fire({
-        title: "តើអ្នកចង់លុបថ្នាក់នេះចេញពីប្រព័ន្ធ?",
+        title: "តើអ្នកចង់ទិន្នន័យនេះចេញពីប្រព័ន្ធ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

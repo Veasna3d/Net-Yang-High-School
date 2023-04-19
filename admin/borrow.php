@@ -33,6 +33,14 @@
                                 data-target="#myModal">
                                 បង្កើតថ្មី
                             </button>
+                            <!--Fillter Button-->
+                            <button id="btnBorrow" type="button" class="btn btn-success">
+                                បានខ្ចី
+                            </button>
+                            <button id="btnReturn" type="button" class="btn btn-info">
+                                បានសង
+                            </button>
+                            
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -74,16 +82,7 @@
                                     <option selected>ជ្រើសរើស</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="ddlClass">ថ្នាក់</label>
-                                <select id="ddlClass" name="ddlClass" class="form-control">
-                                    <option selected>ជ្រើសរើស</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtBorrowDate">ថ្ងៃខែឆ្នាំខ្ចី</label>
-                                <input type="text" name="txtBorrowDate" class="form-control" id="txtBorrowDate">
-                            </div>
+
                         </div>
                         <div class="col-6">
                             <div class="form-group">
@@ -92,22 +91,24 @@
                                     <option selected>ជ្រើសរើស</option>
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label for="ddlBook">សៀវភៅ</label>
-                                <select id="ddlBook" name="ddlBook" class="form-control"
-                                    aria-label="Default select example">
-                                    <option selected>ជ្រើសរើស</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="txtReturnDate">ថ្ងៃខែឆ្នាំសង</label>
-                                <input type="text" name="txtReturnDate" class="form-control" id="txtReturnDate">
-                            </div>
                         </div>
-
                     </div>
                     <div class="col-12">
+                        <div class="form-group">
+                            <label for="ddlBook">សៀវភៅ</label>
+                            <select id="ddlBook" name="ddlBook" class="form-control"
+                                aria-label="Default select example">
+                                <option selected>ជ្រើសរើស</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtBorrowDate">ថ្ងៃខែឆ្នាំខ្ចី</label>
+                            <input type="text" name="txtBorrowDate" class="form-control" id="txtBorrowDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtReturnDate">ថ្ងៃខែឆ្នាំសង</label>
+                            <input type="text" name="txtReturnDate" class="form-control" id="txtReturnDate">
+                        </div>
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="កំណត់សម្គាល់" name="txtRemark" id="txtRemark"
                                 style="height: 100px"></textarea>
@@ -148,29 +149,25 @@ $("#txtReturnDate").datepicker({
 });
 
 $(document).ready(function() {
-    $('#ddlStudent').change(function() {
-        if ($(this).val() !== '') {
-            $('#ddlTeacher').prop('disabled', true);
+    // get references to the select elements
+    const ddlStudent = $("#ddlStudent");
+    const ddlTeacher = $("#ddlTeacher");
+
+    // listen for changes on ddlStudent
+    ddlStudent.change(function() {
+        if (ddlStudent.val()) {
+            ddlTeacher.prop("disabled", true);
         } else {
-            $('#ddlTeacher').prop('disabled', false);
+            ddlTeacher.prop("disabled", false);
         }
     });
 
-    $('#ddlTeacher').change(function() {
-        if ($(this).val() !== '') {
-            $('#ddlStudent').prop('disabled', true);
-            $('#ddlClass').prop('disabled', true);
+    // listen for changes on ddlTeacher
+    ddlTeacher.change(function() {
+        if (ddlTeacher.val()) {
+            ddlStudent.prop("disabled", true);
         } else {
-            $('#ddlStudent').prop('disabled', false);
-            $('#ddlClass').prop('disabled', false);
-        }
-    });
-
-    $('#ddlClass').change(function() {
-        if ($(this).val() !== '') {
-            $('#ddlTeacher').prop('disabled', true);
-        } else {
-            $('#ddlTeacher').prop('disabled', false);
+            ddlStudent.prop("disabled", false);
         }
     });
 });
