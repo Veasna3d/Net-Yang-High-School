@@ -429,7 +429,7 @@ function editData(id) {
 }
 
 //Returned
-function returnStatus(id) {
+function returnData(id) {
     Swal.fire({
         title: "សៀវត្រូវបានសង?",
         icon: "warning",

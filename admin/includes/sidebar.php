@@ -10,50 +10,19 @@
       <!-- Sidebar -->
       <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
               <div class="image">
                   <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
               </div>
               <div class="info">
                   <a href="#" class="d-block">Smart Boy</a>
               </div>
-          </div>
+          </div> -->
 
           <!-- Sidebar Menu -->
           <nav class="mt-2">
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                   data-accordion="false">
-                  <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                  <!-- <li class="nav-item">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="index.php" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
                   <li class="nav-item">
                       <a href="index.php" class="nav-link">
                           <i class="nav-icon fas fa-home"></i>
@@ -67,7 +36,7 @@
                       <a href="book.php" class="nav-link">
                           <i class="nav-icon fas fa-book"></i>
                           <p>
-                          សៀវភៅ
+                              សៀវភៅ
                           </p>
                       </a>
                   </li>
@@ -75,7 +44,7 @@
                       <a href="import.php" class="nav-link">
                           <i class="nav-icon fas fa-server"></i>
                           <p>
-                          ការនាំចូល
+                              ការនាំចូល
                           </p>
                       </a>
                   </li>
@@ -84,7 +53,7 @@
                       <a href="read.php" class="nav-link">
                           <i class="nav-icon fas fa-th"></i>
                           <p>
-                          អានសៀវភៅ
+                              អានសៀវភៅ
                           </p>
                       </a>
                   </li>
@@ -92,42 +61,16 @@
                       <a href="borrow.php" class="nav-link">
                           <i class="nav-icon fas fa-th"></i>
                           <p>
-                          ខ្ចីសៀវភៅ
+                              ខ្ចីសៀវភៅ
                           </p>
                       </a>
                   </li>
-                  <li class="nav-header">Manage</li>
-
+                  <li class="nav-header">ការកំណត់</li>
                   <li class="nav-item">
                       <a href="#" class="nav-link">
-                          <i class="nav-icon fas fa-copy"></i>
+                          <i class="nav-icon fas fa-list"></i>
                           <p>
-                              សិស្ស
-                              <i class="fas fa-angle-left right"></i>
-                              <!-- <span class="badge badge-info right">6</span> -->
-                          </p>
-                      </a>
-                      <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                              <a href="class.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>ថ្នាក់</p>
-                              </a>
-
-                              <a href="student.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>សិស្សទាំងអស់</p>
-                              </a>
-
-                          </li>
-
-                      </ul>
-                  </li>
-                  <li class="nav-item">
-                      <a href="#" class="nav-link">
-                          <i class="nav-icon fas fa-copy"></i>
-                          <p>
-                              អ្នកនិពន្ធ
+                          បញ្ជីអ្នកប្រើប្រាស់
                               <i class="fas fa-angle-left right"></i>
                               <!-- <span class="badge badge-info right">6</span> -->
                           </p>
@@ -136,27 +79,61 @@
                           <li class="nav-item">
                               <a href="teacher.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>គ្រូ</p>
+                                  <p>បញ្ជីគ្រូ</p>
+                              </a>
+                              <a href="student.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>បញ្ជីសិស្ស</p>
+                              </a>
+                              <li class="nav-header">ប្រភេទ</li>
+                              <a href="class.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ថ្នាក់រៀន</p>
                               </a>
                               <a href="category.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>ប្រភេទ</p>
+                                  <p>ប្រភេទសៀវភៅ</p>
                               </a>
                               <a href="supplier.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>អ្នក​ផ្គត់ផ្គង់</p>
                               </a>
-                              <a href="author.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>អ្នកនិពន្ធ</p>
-                              </a>
+        
                               <a href="print.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>បោះពុម្ព</p>
+                                  <p>គ្រឹះស្ថាន​ នឹង​ ទីតាំងបោះពុម្ព</p>
                               </a>
                           </li>
                       </ul>
                   </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-list"></i>
+                          <p>
+                          កំណត់ទូទៅ
+                              <i class="fas fa-angle-left right"></i>
+                              <!-- <span class="badge badge-info right">6</span> -->
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                          <a href="brand.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ឈ្មោះសាលា</p>
+                              </a>
+                              <a href="news.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ផ្ដល់ព័ត៌មានថ្មីៗ</p>
+                              </a>
+                              
+                              <a href="slide.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការបង្ហាញ</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="nav-header">របាយការណ៍</li>
                   <li class="nav-item">
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-book"></i>
@@ -172,13 +149,19 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
                               </a>
-                              <a href="Rimport.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
-                              </a>
                           </li>
                       </ul>
                   </li>
+                  <li class="nav-header">សុវត្ថិភាណ</li>
+                  <li class="nav-item">
+                      <a href="user.php" class="nav-link">
+                          <i class="nav-icon fas fa-th"></i>
+                          <p>
+                              អ្នកប្រើប្រាស់ក្នុងប្រព័ន្ធ
+                          </p>
+                      </a>
+                  </li>
+                 
               </ul>
           </nav>
           <!-- /.sidebar-menu -->
