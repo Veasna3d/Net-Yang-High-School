@@ -151,6 +151,14 @@
                               </a>
                           </li>
                       </ul>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="r_borrow.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការខ្ចី​​​​​​​​​​​​​​​​​​​​​</p>
+                              </a>
+                          </li>
+                      </ul>
                   </li>
                   <li class="nav-header">សុវត្ថិភាណ</li>
                   <li class="nav-item">
