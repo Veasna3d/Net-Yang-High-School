@@ -1,6 +1,7 @@
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -27,14 +28,12 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <div class="card-header">
+                        <div id="btn-container">
                             <!-- Button trigger modal -->
-                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#myModal">
-                                បង្កើតថ្មី
-                            </button>
+                            
 
                             <!--filter Button-->
+
                             <button id="btnAvailable" type="button" class="btn btn-success">
                                 មាន
                             </button>

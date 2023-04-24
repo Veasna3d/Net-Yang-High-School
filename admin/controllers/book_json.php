@@ -129,15 +129,20 @@ if ($_GET["data"] == "add_book") {
 }
 // 4 get_byid
 if ($_GET['data'] == 'get_byid') {
-    $result = $conn->prepare("SELECT * FROM Book WHERE id=:id");
+    $result = $conn->prepare("SELECT * FROM vBook WHERE id=:id");
     $result->bindParam(':id', $_GET['id']);
     $result->execute();
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        if ($row['status'] == 1) {
+            $status = "<span class='badge badge-pill badge-success'>មាន</span>";
+        } else {
+            $status = "<span class='badge badge-pill badge-danger'>គ្មាន</span>";
+        }
         $book[] = array(
             $row["id"], $row["bookCode"],
-            $row["bookTitle"], $row["authorName"], $row["printId"],
-            $row["publishYear"], $row["price"], $row["categoryId"], $row["image"],
-            $row["status"], $row["createdAt"]
+            $row["bookTitle"], $row["authorName"], $row["publishingHouse"],
+            $row["publishYear"], $row["price"], $row["categoryCode"], $row["image"],
+            $status, $row["createdAt"]
         );
     }
     echo json_encode($book);

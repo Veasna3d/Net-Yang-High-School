@@ -27,20 +27,15 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <div class="card-header">
+                        <div class="">
                             <!-- Button trigger modal -->
-                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#myModal">
-                                បង្កើតថ្មី
-                            </button>
-                            <!--Fillter Button-->
-                            <button id="btnBorrow" type="button" class="btn btn-success">
-                                បានខ្ចី
-                            </button>
-                            <button id="btnReturn" type="button" class="btn btn-info">
+                            <button id="btnReturn" type="button" class="btn btn-info" data-dismiss="modal">
                                 បានសង
                             </button>
-                            
+                            <button id="btnBorrow" type="button" class="btn btn-success" data-dismiss="modal">
+                                បានខ្ចី
+                            </button>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

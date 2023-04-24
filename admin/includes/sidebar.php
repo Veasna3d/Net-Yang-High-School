@@ -1,9 +1,8 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-          <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-              style="opacity: .8">
+      <a href="index.php" class="brand-link">
+          <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
           <span class="brand-text font-weight-light">NYHS</span>
       </a>
 
@@ -21,8 +20,7 @@
 
           <!-- Sidebar Menu -->
           <nav class="mt-2">
-              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                  data-accordion="false">
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <li class="nav-item">
                       <a href="index.php" class="nav-link">
                           <i class="nav-icon fas fa-home"></i>
@@ -70,7 +68,7 @@
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-list"></i>
                           <p>
-                          បញ្ជីអ្នកប្រើប្រាស់
+                              បញ្ជីអ្នកប្រើប្រាស់
                               <i class="fas fa-angle-left right"></i>
                               <!-- <span class="badge badge-info right">6</span> -->
                           </p>
@@ -85,7 +83,7 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>បញ្ជីសិស្ស</p>
                               </a>
-                              <li class="nav-header">ប្រភេទ</li>
+
                               <a href="class.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ថ្នាក់រៀន</p>
@@ -98,7 +96,7 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>អ្នក​ផ្គត់ផ្គង់</p>
                               </a>
-        
+
                               <a href="print.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>គ្រឹះស្ថាន​ នឹង​ ទីតាំងបោះពុម្ព</p>
@@ -110,14 +108,14 @@
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-list"></i>
                           <p>
-                          កំណត់ទូទៅ
+                              កំណត់ទូទៅ
                               <i class="fas fa-angle-left right"></i>
                               <!-- <span class="badge badge-info right">6</span> -->
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                          <a href="brand.php" class="nav-link">
+                              <a href="brand.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ឈ្មោះសាលា</p>
                               </a>
@@ -125,7 +123,7 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ផ្ដល់ព័ត៌មានថ្មីៗ</p>
                               </a>
-                              
+
                               <a href="slide.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ការបង្ហាញ</p>
@@ -161,7 +159,7 @@
                           </p>
                       </a>
                   </li>
-                 
+
               </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -169,15 +167,15 @@
       <!-- /.sidebar -->
   </aside>
   <script>
-var url = window.location;
-const allLinks = document.querySelectorAll('.nav-item a');
-const currentLink = [...allLinks].filter(e => {
-    return e.href == url;
-});
+      var url = window.location;
+      const allLinks = document.querySelectorAll('.nav-item a');
+      const currentLink = [...allLinks].filter(e => {
+          return e.href == url;
+      });
 
-if (currentLink.length > 0) {
-    currentLink[0].classList.add("active");
-    currentLink[0].closest(".nav-treeview").style.display = "block";
-    currentLink[0].closest(".has-treeview").classList.add("active", "menu-open");
-}
+      if (currentLink.length > 0) {
+          currentLink[0].classList.add("active");
+          currentLink[0].closest(".nav-treeview").style.display = "block";
+          currentLink[0].closest(".has-treeview").classList.add("active", "menu-open");
+      }
   </script>

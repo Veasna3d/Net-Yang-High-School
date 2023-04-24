@@ -9,10 +9,15 @@ if ($_GET["data"] == "get_teacher") {
     $teacher = [];
 
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        if ($row['status'] == 1) {
+            $status = "<span class='badge badge-pill badge-primary'>Active</span>";
+        } else {
+            $status = "<span class='badge badge-pill badge-danger'>Disable</span>";
+        }
 
         $teacher[] = array(
             $row['id'], $row["teacherName"], $row["image"],
-            $row['gender'], $row['phone'], $row["password"], $row['createdAt']
+            $row['gender'], $row['phone'], $row["password"],$status, $row['createdAt']
         );
     }
     echo json_encode($teacher);

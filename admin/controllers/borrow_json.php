@@ -212,3 +212,4 @@ if($_GET['data'] == 'return_borrow'){
         echo json_encode("Return Faild");
     }
 }
+?>

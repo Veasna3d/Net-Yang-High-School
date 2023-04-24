@@ -26,9 +26,9 @@ function displayData() {
                     title: "ថ្ងៃខែឆ្នាំកំណើត",
                 }, {
                     title: "លេខសម្ងាត់",
-                },
-
-                {
+                }, {
+                    title: "ស្ថានភាព",
+                }, {
                     title: "សកម្មភាព",
                 },
             ];
@@ -36,7 +36,7 @@ function displayData() {
             var option = "";
             for (var i in alldata) {
                 option =
-                    "<button class='btn btn-info btn-sm edit btn-flat' data-toggle='modal' data-target='#viewData' onclick='viewData(" +
+                    "<button class='btn btn-info btn-sm btn-flat' onclick='viewStudentModal(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-id-card'></i> </button> | <button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
@@ -52,6 +52,7 @@ function displayData() {
                     alldata[i][6],
                     alldata[i][7],
                     "***" + alldata[i][8].slice(-2),
+                    alldata[i][9],
                     option,
                 ]);
 
@@ -61,15 +62,30 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['print', 'pdf'],
+                buttons: ['icon pfd', 'pdf', 'excel'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                     "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                    "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                    "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+
+            // Add the custom button to the DataTables toolbar
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+
+            // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend($('#btnAdd'));
+
+            // Adjust the margins of the custom button
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);
@@ -311,31 +327,173 @@ function deleteData(id) {
 }
 
 //View Student Card
-// function viewData(id) {
-  
-//     student_id = id;
+// function viewStudentModal(id) {
 //     $.ajax({
-//         url: "./controllers/student_json.php?data=get_byid",
-//         data: "&id=" + id,
 //         type: "GET",
+//         url: "./controllers/student_json.php?data=student_info&id=" + id,
 //         dataType: "json",
-//         contentType: false,
-//         processData: false,
 //         success: function (data) {
-//             $("#txtVStartYear").val(data[0][1]);
-//             $("#txtVEndYear").val(data[0][2]);
-//             $("#txtVStudentName").val(data[0][3]);
-//             $("#txtVBirthday").val(data[0][7]);
-//             $("#ddlVGender").val(data[0][5]);
-//             $("#ddlVClass").val(data[0][6]);
-//             $("#txtVPassword").val(data[0][8]);
-//             $("#vimage").val(data[0][4]);
+//             var student = data[0]; // extract the student information from the JSON response
+//             var modalContent = "<div class='container'>" +
+//                 "<div class='row d-flex justify-content-center'>" +
+//                 "<div class='col-md-12'>" +
+//                 "<div class='card p-2 text-center'>" +
+//                 "<div class='row'>" +
+//                 "<div class='col-md-12 border-right no-gutters'>" +
+//                 " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
+//                 " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
+//                 "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
+//                 "<hr>"+
+//                 "<div class='stats'>" +
+//                 "<table class='table table-borderless'>" +
+//                 "<tbody> "+
+//                 "<tr> <td>" +
+//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
+//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>"+
+//                 "<tr> <td>" +
+//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
+//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>"+
+//             "</tbody></table></div></div> </div></div> </div></div></div></div>";
+//             Swal.fire({
+//                 title: "ព័ត៌មានសិស្ស",
+//                 html: modalContent,
+//                 showCloseButton: true,
+//                 showCancelButton: true,
+//                 confirmButtonColor: "#d33",
+//                 cancelButtonColor: "#3085d6",
+//                 cancelButtonText: "No",
+//                 confirmButtonText: "Disable!",
+
+//             }).then((result) => {
+//                 if (result.isConfirmed) {
+//                     $.ajax({
+//                         type: "GET",
+//                         url: "./controllers/student_json.php?data=disable_student&id=" + id,
+//                         dataType: "json",
+//                         success: function (data) {
+//                             Swal.fire({
+//                                 title: "ជោគជ័យ",
+//                                 icon: "success",
+//                                 showConfirmButton: false,
+//                                 timer: 2000,
+//                             });
+//                             displayData();
+//                         },
+//                         error: function (ex) {
+//                             Swal.fire({
+//                                 title: "បរាជ័យ",
+//                                 text: ex.responseText,
+//                                 icon: "error",
+//                                 showConfirmButton: false,
+//                                 timer: 2000,
+//                             });
+//                             console.log(ex.responseText);
+//                         },
+//                     });
+//                 }
+//             });
+
 //         },
 //         error: function (ex) {
+//             Swal.fire({
+//                 title: "Error",
+//                 text: ex.responseText,
+//                 icon: "error",
+//                 showConfirmButton: false,
+//                 timer: 1000,
+//             });
 //             console.log(ex.responseText);
 //         },
 //     });
 // }
+
+function viewStudentModal(id) {
+    $.ajax({
+        type: "GET",
+        url: "./controllers/student_json.php?data=student_info&id=" + id,
+        dataType: "json",
+        success: function (data) {
+            var student = data[0]; // extract the student information from the JSON response
+            var modalContent = "<div class='container'>" +
+                "<div class='row d-flex justify-content-center'>" +
+                "<div class='col-md-12'>" +
+                "<div class='card p-2 text-center'>" +
+                "<div class='row'>" +
+                "<div class='col-md-12 border-right no-gutters'>" +
+                " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
+                " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
+                "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
+                "<hr>" +
+                "<div class='stats'>" +
+                "<table class='table table-borderless'>" +
+                "<tbody> " +
+                "<tr> <td>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
+                "<tr> <td>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
+                "</tbody></table></div></div> </div></div> </div></div></div></div>";
+
+            // Check if the disable_student data is equal to 0
+            Swal.fire({
+                title: "ព័ត៌មានសិស្ស",
+                html: modalContent,
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "No",
+                confirmButtonText: "Disable!",
+
+                onBeforeOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+                    if (student[6] == 0) {
+                        confirmButton.disabled = true;
+                    } else {
+                        confirmButton.disabled = false;
+                    }
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "./controllers/student_json.php?data=disable_student&id=" + id,
+                        dataType: "json",
+                        success: function (data) {
+                            Swal.fire({
+                                title: "ជោគជ័យ",
+                                icon: "success",
+                                timer: 2000,
+                            });
+                            displayData();
+                        },
+                        error: function (ex) {
+                            Swal.fire({
+                                title: "បរាជ័យ",
+                                text: ex.responseText,
+                                icon: "error",
+                                timer: 2000,
+                            });
+                            console.log(ex.responseText);
+                        },
+                    });
+                }
+            });
+        },
+        error: function (ex) {
+            Swal.fire({
+                title: "Error",
+                text: ex.responseText,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+            console.log(ex.responseText);
+        },
+    });
+}
+
 
 
 

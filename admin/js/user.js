@@ -6,11 +6,11 @@ function displayData() {
     success: function (alldata) {
       var columns = [
         { title: 'ល.រ' },
-        { title: 'ឈ្មោះអ្នកប្រើប្រាស់' },
+        { title: 'ឈ្មោះ' },
         { title: 'លេខសម្ងាត់' },
         { title: 'រូបភាព' },
         { title: 'អ៊ីមែល' },
-        { title: 'ថ្ងៃបង្កើត' },
+        { title: 'ស្ថានភាព' },
         { title: 'សកម្មភាព' }
       ];
       var data = [];
@@ -34,13 +34,20 @@ function displayData() {
         destroy: true,
         data: data,
         columns: columns,
+        pageLength: 5,
+        language: {
+            info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+            infoEmpty: 'Showing 0 entries',
+            infoFiltered: '(filtered from _MAX_ total entries)'
+        },
         responsive: true,
         lengthChange: false,
         autoWidth: false,
         buttons: ['icon pfd', 'pdf', 'excel'],
         dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-            "<'row'<'col-md-12'tr>>" +
-            "<'row'<'col-md-5'l><'col-md-7 text-right'<'#btn-container'>p>>",
+        "<'row'<'col-md-12'tr>>" +
+        "<'row'<'col-md-5'i><'col-md-7'p>>" +
+        "<'row'<'col-md-5'l><'#btn-container'>>",
     });
 
     // Add the custom button to the DataTables toolbar
@@ -177,21 +184,43 @@ function editData(id) {
   });
 }
 
+
+//Delete Student
 function deleteData(id) {
-  if (confirm("Are you sure")) {
-    $.ajax({
-      type: "GET",
-      url: "./controllers/user_json.php?data=delete_user&id=" + id,
-      dataType: "json",
-      success: function (data) {
-        toastr.success("Action completed").css("margin-top", "2rem");
-        // alert(data);
-        displayData();
-      },
-      error: function (ex) {
-        toastr.error("Action incomplete").css("margin-top", "2rem");
-        console.log(ex.responseText);
-      },
-    });
-  }
+  Swal.fire({
+      title: "តើអ្នកចង់ទិន្នន័យនេះចេញពីប្រព័ន្ធ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ទេ",
+      confirmButtonText: "បាទ!",
+  }).then((result) => {
+      if (result.isConfirmed) {
+          $.ajax({
+              type: "GET",
+              url: "./controllers/user_json.php?data=delete_user&id=" + id,
+              dataType: "json",
+              success: function (data) {
+                  Swal.fire({
+                      title: "ជោគជ័យ",
+                      icon: "success",
+                      showConfirmButton: false,
+                      timer: 2000,
+                  });
+                  displayData();
+              },
+              error: function (ex) {
+                  Swal.fire({
+                      title: "បរាជ័យ",
+                      text: ex.responseText,
+                      icon: "error",
+                      showConfirmButton: false,
+                      timer: 2000,
+                  });
+                  console.log(ex.responseText);
+              },
+          });
+      }
+  });
 }

@@ -1,5 +1,13 @@
+<?php
+  // session_start();
+  // if (!isset($_SESSION["username"])) {
+  //     header('Location: ../404.php');
+  // }
+?>
+
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

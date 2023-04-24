@@ -8,17 +8,19 @@ function displayData() {
             var columns = [
                 {
                     title: "ល.រ",
-                },{
+                }, {
                     title: "ឈ្មោះគ្រូ",
-                },{
+                }, {
                     title: "រូបភាព",
-                },{
+                }, {
                     title: "ភេទ",
-                },{
+                }, {
                     title: "លេខទូរស័ព្ទ",
-                },{
+                }, {
                     title: "លេខសម្ងាត់",
-                },{
+                }, {
+                    title: "ស្ថានភាព",
+                }, {
                     title: "សកម្មភាព",
                 }
             ];
@@ -37,7 +39,8 @@ function displayData() {
                     "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][2] + "'>",
                     alldata[i][3],
                     alldata[i][4],
-                    "***" + alldata[i][6].slice(-2),
+                    "***" + alldata[i][7].slice(-2),
+                    alldata[i][6],
                     option,
                 ]);
 
@@ -47,15 +50,32 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['print', 'pdf'],
+                buttons: ['icon pfd', 'pdf', 'excel'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+
+            // Add the custom button to the DataTables toolbar
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+
+            // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend($('#btnAdd'));
+
+            // Adjust the margins of the custom button
+            $('#btnAdd').css('margin-right', '5px');
+
+
         },
         error: function (e) {
             console.log(e.responseText);
@@ -180,7 +200,7 @@ function editData(id) {
             $("#txtPassword").val(data[0][5]);
             $("#image").val(data[0][2]);
 
-          
+
         },
         error: function (ex) {
             console.log(ex.responseText);

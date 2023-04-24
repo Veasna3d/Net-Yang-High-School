@@ -49,20 +49,42 @@ function displayData() {
                 ]);
             }
             console.log(data);
-            $("#tableId").DataTable({
+            $('#tableId').DataTable({
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ["print", "pdf"],
-                dom:
-                    "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                buttons: ['icon pfd', 'pdf', 'excel'],
+                dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+        
+            // Add the custom button to the DataTables toolbar
+           
+           // $('#btn-container').append('<button id="btnReturn" type="button" class="btn btn-info">បានសង</button>');
+           // $('#btn-container').append('<button id="btnBorrow" type="button" class="btn btn-success">បានខ្ចី</button>');
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+        
+            // Move the custom button to the left of the other buttons
+            
+            $('.dt-buttons').prepend($('#btnReturn'));
+            $('.dt-buttons').prepend($('#btnBorrow'));
+            $('.dt-buttons').prepend($('#btnAdd'));
+        
+            // Adjust the margins of the custom button
+            $('#btnReturn').css('margin-right', '5px');
+            $('#btnBorrow').css('margin-right', '5px');
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);
@@ -122,20 +144,42 @@ $("#btnBorrow").click(function () {
                 ]);
             }
             console.log(data);
-            $("#tableId").DataTable({
+            $('#tableId').DataTable({
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ["print", "pdf"],
-                dom:
-                    "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                buttons: ['icon pfd', 'pdf', 'excel'],
+                dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+        
+            // Add the custom button to the DataTables toolbar
+           
+           // $('#btn-container').append('<button id="btnReturn" type="button" class="btn btn-info">បានសង</button>');
+           //$('#btn-container').append('<button id="btnBorrow" type="button" class="btn btn-success">បានខ្ចី</button>');
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+        
+            // Move the custom button to the left of the other buttons
+            
+            $('.dt-buttons').prepend($('#btnReturn'));
+            $('.dt-buttons').prepend($('#btnBorrow'));
+            $('.dt-buttons').prepend($('#btnAdd'));
+        
+            // Adjust the margins of the custom button
+            $('#btnReturn').css('margin-right', '5px');
+            $('#btnBorrow').css('margin-right', '5px');
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);
@@ -193,20 +237,42 @@ $("#btnReturn").click(function () {
                 ]);
             }
             console.log(data);
-            $("#tableId").DataTable({
+            $('#tableId').DataTable({
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ["print", "pdf"],
-                dom:
-                    "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                buttons: ['icon pfd', 'pdf', 'excel'],
+                dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+        
+            // Add the custom button to the DataTables toolbar
+           
+          //  $('#btn-container').append('<button id="btnReturn" type="button" class="btn btn-info">បានសង</button>');
+           // $('#btn-container').append('<button id="btnBorrow" type="button" class="btn btn-success">បានខ្ចី</button>');
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+        
+            // Move the custom button to the left of the other buttons
+            
+            $('.dt-buttons').prepend($('#btnReturn'));
+            $('.dt-buttons').prepend($('#btnBorrow'));
+            $('.dt-buttons').prepend($('#btnAdd'));
+        
+            // Adjust the margins of the custom button
+            $('#btnReturn').css('margin-right', '5px');
+            $('#btnBorrow').css('margin-right', '5px');
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);

@@ -28,13 +28,7 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <div class="card-header">
-                            <!-- Button trigger modal -->
-                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#myModal">
-                                បង្កើតថ្មី
-                            </button>
-                        </div>
+                        
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="tableId" class="table table-bordered table-striped">
@@ -121,24 +115,8 @@
         </div>
     </div>
 </div>
-<!-- Modal View Card-->
-<div class="modal fade" id="viewData" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="viewDataLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewDataLabel">ព័ត៌មានសិស្ស</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                
-            </div>
 
-        </div>
-    </div>
-</div>
+
 
 
 <?php include 'includes/footer.php' ?>

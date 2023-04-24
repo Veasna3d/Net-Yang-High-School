@@ -55,15 +55,31 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['print', 'pdf'],
+                buttons: ['icon pfd', 'pdf', 'excel'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+        
+            // Add the custom button to the DataTables toolbar
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+        
+            // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend($('#btnAvailable'));
+            $('.dt-buttons').prepend($('#btnNotAvailable'));
+            $('.dt-buttons').prepend($('#btnAdd'));
+            // Adjust the margins of the custom button
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);
@@ -128,15 +144,32 @@ $("#btnAvailable").click(function () {
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['print', 'pdf'],
+                buttons: ['icon pfd', 'pdf', 'excel'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>"
             });
+        
+            // Add the custom button to the DataTables toolbar
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+        
+            // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend($('#btnAvailable'));
+            $('.dt-buttons').prepend($('#btnNotAvailable'));
+            $('.dt-buttons').prepend($('#btnAdd'));
+        
+            // Adjust the margins of the custom button
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);
@@ -200,15 +233,32 @@ $("#btnNotAvailable").click(function () {
                 destroy: true,
                 data: data,
                 columns: columns,
+                pageLength: 5,
+                language: {
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)'
+                },
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['print', 'pdf'],
+                buttons: ['icon pfd', 'pdf', 'excel'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'l>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+        
+            // Add the custom button to the DataTables toolbar
+            $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+        
+            // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend($('#btnAvailable'));
+            $('.dt-buttons').prepend($('#btnNotAvailable'));
+            $('.dt-buttons').prepend($('#btnAdd'));
+        
+            // Adjust the margins of the custom button
+            $('#btnAdd').css('margin-right', '5px');
         },
         error: function (e) {
             console.log(e.responseText);
@@ -455,41 +505,95 @@ function deleteData(id) {
 
 //Not available
 function notAvailable(id) {
-    Swal.fire({
-        title: "សៀវភៅមិនមានក្នុងបណ្ណាល័យ?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "ទេ",
-        confirmButtonText: "បាទ!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: "GET",
-                url: "./controllers/book_json.php?data=is_not_available&id=" + id,
-                dataType: "json",
-                success: function (data) {
-                    Swal.fire({
-                        title: "ជោគជ័យ",
-                        icon: "success",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    displayData();
+    $.ajax({
+        type: "GET",
+        url: "./controllers/book_json.php?data=get_byid&id=" + id,
+        dataType: "json",
+        success: function (data) {
+            var book = data[0];
+            var modalContent = 
+            '<div class="d-flex justify-content-between">'+
+                '<div class="col-4">'+
+                    '<div class="card">'+
+                    '<img src="upload/' + book[8] + '" width="100" class="card-img-top">'+
+                        '<div class="card-body">'+
+                            '<p class="card-text">' + book[2] + '</p>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="col-8">'+
+                    '<div class="card">'+
+                        '<div class="card-body">'+
+                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                            '<p class="card-title">គ្រឹះស្ថានបោះពុម្ភ : <b>' + book[4] + '</b></p>'+
+                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                            '<h5 class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></h5>'+
+                            '<h5 class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></h5>'+
+                            //'<p class="card-text">Hello</p>'+
+                    '</div>'+
+                '</div>'+
+            '</div>';
+
+            // Check if the disable_student data is equal to 0
+            Swal.fire({
+                title: 'ព័ត៌មានសៀវភៅ',
+                html: modalContent,
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "No",
+                confirmButtonText: "Disable!",
+                with: 1000,
+
+                onBeforeOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+                    if (student[6] == 0) {
+                        confirmButton.disabled = true;
+                    } else {
+                        confirmButton.disabled = false;
+                    }
                 },
-                error: function (ex) {
-                    Swal.fire({
-                        title: "បរាជ័យ",
-                        text: ex.responseText,
-                        icon: "error",
-                        showConfirmButton: false,
-                        timer: 2000,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "./controllers/student_json.php?data=disable_student&id=" + id,
+                        dataType: "json",
+                        success: function (data) {
+                            Swal.fire({
+                                title: "ជោគជ័យ",
+                                icon: "success",
+                                timer: 2000,
+                            });
+                            displayData();
+                        },
+                        error: function (ex) {
+                            Swal.fire({
+                                title: "បរាជ័យ",
+                                text: ex.responseText,
+                                icon: "error",
+                                timer: 2000,
+                            });
+                            console.log(ex.responseText);
+                        },
                     });
-                    console.log(ex.responseText);
-                },
+                }
             });
-        }
+        },
+        error: function (ex) {
+            Swal.fire({
+                title: "Error",
+                text: ex.responseText,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+            console.log(ex.responseText);
+        },
     });
 }
 
