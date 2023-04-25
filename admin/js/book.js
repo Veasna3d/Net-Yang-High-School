@@ -512,32 +512,31 @@ function notAvailable(id) {
         success: function (data) {
             var book = data[0];
             var modalContent = 
-            '<div class="d-flex justify-content-between">'+
-                '<div class="col-4">'+
-                    '<div class="card">'+
+            '<div>'+
+            '<div class="d-flex">'+
+            
+                '<div class="col-6">'+
+                   
                     '<img src="upload/' + book[8] + '" width="100" class="card-img-top">'+
-                        '<div class="card-body">'+
-                            '<p class="card-text">' + book[2] + '</p>'+
-                        '</div>'+
-                    '</div>'+
+                    
                 '</div>'+
-                '<div class="col-8">'+
-                    '<div class="card">'+
-                        '<div class="card-body">'+
-                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
-                            '<p class="card-title">គ្រឹះស្ថានបោះពុម្ភ : <b>' + book[4] + '</b></p>'+
-                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
-                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
-                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
-                            '<p class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
-                            '<h5 class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></h5>'+
-                            '<h5 class="card-title">អ្នកនិពន្ធ : <b>' + book[3] + '</b></h5>'+
-                            //'<p class="card-text">Hello</p>'+
-                    '</div>'+
+                '<div class="col-6">'+
+                                '<h4 class="card-header"><b>' + book[2] + '</b></h4>'+
+                                '<p class="card-title pt-2">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                                '<p class="card-title pt-2">ឆ្នាំបោះពុម្ភ : <b>' + book[5] + '</b></p>'+
+                                '<p class="card-title pt-2">តម្លៃ : <b>' + book[6] + '៛</b></p>'+
+                                '<p class="card-title pt-2">លេខបញ្ចី : <b>' + book[7] + '</b></p>'+
+                                '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[9] + '</b></p>'+
+                                '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[7] + '</b></p>'+
+                                //'<p class="card-text">Hello</p>'+
+                    
+                '</div>'+
+            '</div>'+
+                '<div class="col-12 pt-4">'+
+                        '<p>គ្រឹះស្ថានបោះពុម្ភ : <b>' + book[4] + '</b></p>'+
                 '</div>'+
             '</div>';
 
-            // Check if the disable_student data is equal to 0
             Swal.fire({
                 title: 'ព័ត៌មានសៀវភៅ',
                 html: modalContent,
@@ -546,7 +545,7 @@ function notAvailable(id) {
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
                 cancelButtonText: "No",
-                confirmButtonText: "Disable!",
+                confirmButtonText: "Not Available!",
                 with: 1000,
 
                 onBeforeOpen: () => {
@@ -561,7 +560,7 @@ function notAvailable(id) {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "GET",
-                        url: "./controllers/student_json.php?data=disable_student&id=" + id,
+                        url: "./controllers/book_json.php?data=is_not_available&id=" + id,
                         dataType: "json",
                         success: function (data) {
                             Swal.fire({
@@ -599,40 +598,93 @@ function notAvailable(id) {
 
 //Available
 function isAvailable(id) {
-    Swal.fire({
-        title: "សៀវភៅមានក្នុងបណ្ណាល័យវិញហើយ?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "ទេ",
-        confirmButtonText: "បាទ!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: "GET",
-                url: "./controllers/book_json.php?data=is_available&id=" + id,
-                dataType: "json",
-                success: function (data) {
-                    Swal.fire({
-                        title: "ជោគជ័យ",
-                        icon: "success",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    displayData();
+    $.ajax({
+        type: "GET",
+        url: "./controllers/book_json.php?data=get_byid&id=" + id,
+        dataType: "json",
+        success: function (data) {
+            var book = data[0];
+            var modalContent = 
+            '<div>'+
+            '<div class="d-flex">'+
+            
+                '<div class="col-6">'+
+                   
+                    '<img src="upload/' + book[8] + '" width="100" class="card-img-top">'+
+                    
+                '</div>'+
+                '<div class="col-6">'+
+                                '<h4 class="card-header"><b>' + book[2] + '</b></h4>'+
+                                '<p class="card-title pt-2">អ្នកនិពន្ធ : <b>' + book[3] + '</b></p>'+
+                                '<p class="card-title pt-2">ឆ្នាំបោះពុម្ភ : <b>' + book[5] + '</b></p>'+
+                                '<p class="card-title pt-2">តម្លៃ : <b>' + book[6] + '៛</b></p>'+
+                                '<p class="card-title pt-2">លេខបញ្ចី : <b>' + book[7] + '</b></p>'+
+                                '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[9] + '</b></p>'+
+                                '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[7] + '</b></p>'+
+                                //'<p class="card-text">Hello</p>'+
+                    
+                '</div>'+
+            '</div>'+
+                '<div class="col-12 pt-4">'+
+                        '<p>គ្រឹះស្ថានបោះពុម្ភ : <b>' + book[4] + '</b></p>'+
+                '</div>'+
+            '</div>';
+
+            Swal.fire({
+                title: 'ព័ត៌មានសៀវភៅ',
+                html: modalContent,
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonColor: "#32CD32",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "No",
+                confirmButtonText: "Available!",
+                with: 1000,
+
+                onBeforeOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+                    if (student[6] == 0) {
+                        confirmButton.disabled = true;
+                    } else {
+                        confirmButton.disabled = false;
+                    }
                 },
-                error: function (ex) {
-                    Swal.fire({
-                        title: "បរាជ័យ",
-                        text: ex.responseText,
-                        icon: "error",
-                        showConfirmButton: false,
-                        timer: 2000,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "./controllers/book_json.php?data=is_available&id=" + id,
+                        dataType: "json",
+                        success: function (data) {
+                            Swal.fire({
+                                title: "ជោគជ័យ",
+                                icon: "success",
+                                timer: 2000,
+                            });
+                            displayData();
+                        },
+                        error: function (ex) {
+                            Swal.fire({
+                                title: "បរាជ័យ",
+                                text: ex.responseText,
+                                icon: "error",
+                                timer: 2000,
+                            });
+                            console.log(ex.responseText);
+                        },
                     });
-                    console.log(ex.responseText);
-                },
+                }
             });
-        }
+        },
+        error: function (ex) {
+            Swal.fire({
+                title: "Error",
+                text: ex.responseText,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+            console.log(ex.responseText);
+        },
     });
 }

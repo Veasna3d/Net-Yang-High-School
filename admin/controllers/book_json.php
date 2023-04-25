@@ -9,9 +9,9 @@ if ($_GET["data"] == "get_book") {
     $book = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         if ($row['status'] == 1) {
-            $status = "<span class='badge badge-pill badge-success'>មាន</span>";
+            $status = "<span class='badge badge-pill badge-success'>Available</span>";
         } else {
-            $status = "<span class='badge badge-pill badge-danger'>គ្មាន</span>";
+            $status = "<span class='badge badge-pill badge-danger'>Not Available</span>";
         }
         $book[] = array(
             $row["id"], $row["bookCode"],
@@ -31,9 +31,9 @@ if ($_GET["data"] == "not_available") {
     $book = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         if ($row['status'] == 1) {
-            $status = "<span class='badge badge-pill badge-success'>មាន</span>";
+            $status = "<span class='badge badge-pill badge-success'>Available</span>";
         } else {
-            $status = "<span class='badge badge-pill badge-danger'>គ្មាន</span>";
+            $status = "<span class='badge badge-pill badge-danger'>Not Available</span>";
         }
         $book[] = array(
             $row["id"], $row["bookCode"],
@@ -134,9 +134,9 @@ if ($_GET['data'] == 'get_byid') {
     $result->execute();
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         if ($row['status'] == 1) {
-            $status = "<span class='badge badge-pill badge-success'>មាន</span>";
+            $status = "<span class='badge badge-pill badge-success'>Available</span>";
         } else {
-            $status = "<span class='badge badge-pill badge-danger'>គ្មាន</span>";
+            $status = "<span class='badge badge-pill badge-danger'>Not Available</span>";
         }
         $book[] = array(
             $row["id"], $row["bookCode"],

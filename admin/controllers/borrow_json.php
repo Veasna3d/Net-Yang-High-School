@@ -57,7 +57,7 @@ if ($_GET["data"] == "get_return") {
 
 //Get Student
 if ($_GET['data'] == "get_student") {
-    $sql = "SELECT * FROM vStudent";
+    $sql = "SELECT * FROM vStudent WHERE status = 1";
     $result = $conn->prepare($sql);
     $result->execute();
     $student = [];
@@ -76,7 +76,7 @@ if ($_GET['data'] == "get_student") {
 
 //Get Teacher
 if ($_GET['data'] == "get_teacher") {
-    $sql = "SELECT * FROM Teacher";
+    $sql = "SELECT * FROM Teacher WHERE status = 1";
     $result = $conn->prepare($sql);
     $result->execute();
     $teacher = [];
@@ -93,7 +93,7 @@ if ($_GET['data'] == "get_teacher") {
 
 //Get Book
 if ($_GET['data'] == "get_book") {
-    $sql = "SELECT * FROM vBook";
+    $sql = "SELECT * FROM vBook WHERE status = 1";
     $result = $conn->prepare($sql);
     $result->execute();
     $book = [];

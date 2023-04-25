@@ -86,13 +86,20 @@ if($_GET["data"] == "add_student"){
     
 		// 4 get_byid
 	if($_GET['data'] == 'get_byid'){
-			$result = $conn->prepare("SELECT * FROM Student WHERE id=:id");
+			$result = $conn->prepare("SELECT * FROM vStudent WHERE id=:id");
 			$result->bindParam(':id', $_GET['id']);
 			$result->execute();
 			if($row = $result->fetch(PDO::FETCH_ASSOC)){
+                if ($row['status'] == 1) {
+                    $status = "<span class='badge badge-pill badge-primary'>Active</span>";
+                } else {
+                    $status = "<span class='badge badge-pill badge-danger'>Inactive</span>";
+                }
+    
                 $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
-                $row['image'],  $row['gender'],$row['classId'],
-                $row["birthday"], $row["password"], $row['createdAt']);
+                $row['image'],  $row['gender'],$row['className'],
+                $row["birthday"], $row["password"],$status, $row['createdAt']);
+    
 			}
 			echo json_encode($student);
 	}
@@ -186,18 +193,6 @@ if($_GET["data"] == "add_student"){
         }
     }
 
-      //view Student
-      if ($_GET['data'] == 'student_info') {
-        $result = $conn->prepare("SELECT * FROM vStudent WHERE id=:id");
-        $result->bindParam(':id', $_GET['id']);
-        $result->execute();
-        if($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
-            $row['image'],  $row['gender'],$row['className'],
-            $row["birthday"], $row["password"],$row["status"], $row['createdAt']);
-        }
-        echo json_encode($student);
-    }
     //disable
     if($_GET['data'] == 'disable_student'){
         

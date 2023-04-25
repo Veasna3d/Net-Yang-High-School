@@ -327,90 +327,10 @@ function deleteData(id) {
 }
 
 //View Student Card
-// function viewStudentModal(id) {
-//     $.ajax({
-//         type: "GET",
-//         url: "./controllers/student_json.php?data=student_info&id=" + id,
-//         dataType: "json",
-//         success: function (data) {
-//             var student = data[0]; // extract the student information from the JSON response
-//             var modalContent = "<div class='container'>" +
-//                 "<div class='row d-flex justify-content-center'>" +
-//                 "<div class='col-md-12'>" +
-//                 "<div class='card p-2 text-center'>" +
-//                 "<div class='row'>" +
-//                 "<div class='col-md-12 border-right no-gutters'>" +
-//                 " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
-//                 " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
-//                 "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
-//                 "<hr>"+
-//                 "<div class='stats'>" +
-//                 "<table class='table table-borderless'>" +
-//                 "<tbody> "+
-//                 "<tr> <td>" +
-//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
-//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>"+
-//                 "<tr> <td>" +
-//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
-//                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>"+
-//             "</tbody></table></div></div> </div></div> </div></div></div></div>";
-//             Swal.fire({
-//                 title: "ព័ត៌មានសិស្ស",
-//                 html: modalContent,
-//                 showCloseButton: true,
-//                 showCancelButton: true,
-//                 confirmButtonColor: "#d33",
-//                 cancelButtonColor: "#3085d6",
-//                 cancelButtonText: "No",
-//                 confirmButtonText: "Disable!",
-
-//             }).then((result) => {
-//                 if (result.isConfirmed) {
-//                     $.ajax({
-//                         type: "GET",
-//                         url: "./controllers/student_json.php?data=disable_student&id=" + id,
-//                         dataType: "json",
-//                         success: function (data) {
-//                             Swal.fire({
-//                                 title: "ជោគជ័យ",
-//                                 icon: "success",
-//                                 showConfirmButton: false,
-//                                 timer: 2000,
-//                             });
-//                             displayData();
-//                         },
-//                         error: function (ex) {
-//                             Swal.fire({
-//                                 title: "បរាជ័យ",
-//                                 text: ex.responseText,
-//                                 icon: "error",
-//                                 showConfirmButton: false,
-//                                 timer: 2000,
-//                             });
-//                             console.log(ex.responseText);
-//                         },
-//                     });
-//                 }
-//             });
-
-//         },
-//         error: function (ex) {
-//             Swal.fire({
-//                 title: "Error",
-//                 text: ex.responseText,
-//                 icon: "error",
-//                 showConfirmButton: false,
-//                 timer: 1000,
-//             });
-//             console.log(ex.responseText);
-//         },
-//     });
-// }
-
 function viewStudentModal(id) {
     $.ajax({
         type: "GET",
-        url: "./controllers/student_json.php?data=student_info&id=" + id,
+        url: "./controllers/student_json.php?data=get_byid&id=" + id,
         dataType: "json",
         success: function (data) {
             var student = data[0]; // extract the student information from the JSON response
@@ -431,8 +351,8 @@ function viewStudentModal(id) {
                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
                 "<tr> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ភេទ</b></span> <span class='text-left bottom'>" + student[5] + "</span></div></td> <td>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ស្ថានភាព</b></span> <span class='text-left bottom'>" + student[9] + "</span> </div></td> </tr>" +
                 "</tbody></table></div></div> </div></div> </div></div></div></div>";
 
             // Check if the disable_student data is equal to 0
@@ -444,7 +364,7 @@ function viewStudentModal(id) {
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
                 cancelButtonText: "No",
-                confirmButtonText: "Disable!",
+                confirmButtonText: "Inactive!",
 
                 onBeforeOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
