@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["username"])) {
+        header('Location: ../404.php');
+    }
+?>
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 
@@ -8,12 +14,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>បញ្ជីខ្ចីសៀវភៅ</h1>
+                    <h1>ខ្ចីសៀវភៅ</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
-                        <li class="breadcrumb-item active">បញ្ជីខ្ចីសៀវភៅ</li>
+                        <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
+                        <li class="breadcrumb-item active">ខ្ចីសៀវភៅ</li>
                     </ol>
                 </div>
             </div>
@@ -27,19 +33,9 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <div class="">
-                            <!-- Button trigger modal -->
-                            <button id="btnReturn" type="button" class="btn btn-info" data-dismiss="modal">
-                                បានសង
-                            </button>
-                            <button id="btnBorrow" type="button" class="btn btn-success" data-dismiss="modal">
-                                បានខ្ចី
-                            </button>
-
-                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="tableId" class="table table-bordered table-striped">
+                            <table id="tableId" class="table table-bordered table-hover">
                             </table>
                         </div>
                         <!-- /.card-body -->

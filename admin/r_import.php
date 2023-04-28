@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["username"])) {
+        header('Location: ../404.php');
+    }
+?>
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -14,7 +20,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">របាយការណ៍</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">ការនាំចូល</li>
                     </ol>
                 </div>

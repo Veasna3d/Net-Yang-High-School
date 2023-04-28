@@ -153,7 +153,7 @@
                   <li class="nav-header">សុវត្ថិភាណ</li>
                   <li class="nav-item">
                       <a href="user.php" class="nav-link">
-                          <i class="nav-icon fas fa-th"></i>
+                      <i class="fa fa-lock"></i>
                           <p>
                               អ្នកប្រើប្រាស់ក្នុងប្រព័ន្ធ
                           </p>

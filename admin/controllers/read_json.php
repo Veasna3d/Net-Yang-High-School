@@ -44,7 +44,7 @@
 
      	//Get Book
 	if($_GET['data'] == "get_book"){
-        $sql = "SELECT * FROM vBook";
+        $sql = "SELECT * FROM vBook WHERE status = 1";
         $result = $conn->prepare($sql);
         $result->execute();
         $book = [];

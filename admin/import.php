@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["username"])) {
+        header('Location: ../404.php');
+    }
+?>
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 
@@ -12,7 +18,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
+                    <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">ការនាំចូល</li>
                     </ol>
                 </div>
@@ -30,7 +36,7 @@
                         
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="tableId" class="table table-bordered table-striped">
+                            <table id="tableId" class="table table-bordered table-hover">
                             </table>
                         </div>
                         <!-- /.card-body -->

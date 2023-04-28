@@ -330,7 +330,7 @@ function deleteData(id) {
 function viewStudentModal(id) {
     $.ajax({
         type: "GET",
-        url: "./controllers/student_json.php?data=get_byid&id=" + id,
+        url: "./controllers/student_json.php?data=view_student&id=" + id,
         dataType: "json",
         success: function (data) {
             var student = data[0]; // extract the student information from the JSON response

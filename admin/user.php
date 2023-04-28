@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["username"])) {
+        header('Location: ../404.php');
+    }
+?>
+
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 
@@ -13,7 +20,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">ផ្ទះ</a></li>
+                    <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">អ្នកប្រើប្រាស់</li>
                     </ol>
                 </div>

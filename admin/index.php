@@ -1,32 +1,13 @@
 <?php
-//   session_start();
-//   if (!isset($_SESSION["username"])) {
-//       header('Location: ../404.php');
-//   }
-?>
+session_start();
 
-<?php
-$dsn = 'mysql:host=localhost;dbname=netyangdb;charset=utf8';
-$username = 'root';
-$password = '';
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-];
-try {
-    $pdo = new PDO($dsn, $username, $password, $options);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+if (!isset($_SESSION["username"])) {
+    header('Location: ../404.php');
 }
 
 include 'includes/timezone.php';
-$today = date('Y-m-d');
-$year = date('Y');
-if (isset($_GET['year'])) {
-    $year = $_GET['year'];
-}
-
-
 ?>
+
 
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
@@ -42,8 +23,7 @@ if (isset($_GET['year'])) {
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                        <li class="breadcrumb-item active">ទំព័រដើម</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -60,14 +40,22 @@ if (isset($_GET['year'])) {
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
+                            <?php
+                            $sql = "SELECT SUM(qty) as total FROM Import";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                            <p>New Orders</p>
+                            $total = $result['total'];
+                            echo "<h3>" . $total . " <sup style='font-size: 20px'>ក្បាល</sup></h3>";
+                            ?>
+
+                            <p>ចំនួនសៀវភៅសរុប</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="fa fa-book"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="import.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -75,14 +63,19 @@ if (isset($_GET['year'])) {
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <?php
+                            $sql = "SELECT * FROM Category";
+                            $query = $conn->query($sql);
+                            $total_rows = $query->rowCount();
 
-                            <p>Bounce Rate</p>
+                            echo "<h3>" . $total_rows . "</h3>";
+                            ?>
+                            <p>ប្រភេទនៃសៀវភៅ</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="fa fa-server"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="category.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -90,14 +83,21 @@ if (isset($_GET['year'])) {
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <?php
+                           $sql = "SELECT COUNT(bookId) AS time_student_borrow FROM borrow WHERE studentId IS NOT NULL;";
+                           $query = $conn->query($sql);
+                           $row = $query->fetch(PDO::FETCH_ASSOC);
+                           $total_rows = $row['time_student_borrow'];
+                           
+                           echo "<h3>" . $total_rows . "</h3>";                           
+                            ?>
 
-                            <p>User Registrations</p>
+                            <p>ចំនួនសិស្សដែលបានខ្ចីសរុប</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fa fa-users"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="student.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -105,61 +105,39 @@ if (isset($_GET['year'])) {
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
-                            <p>Unique Visitors</p>
+                            <?php
+                              $sql = "SELECT COUNT(bookId) AS time_teacher_borrow FROM borrow WHERE teacherId IS NOT NULL;";
+                              $query = $conn->query($sql);
+                              $row = $query->fetch(PDO::FETCH_ASSOC);
+                              $total_rows = $row['time_teacher_borrow'];
+                              
+                              echo "<h3>" . $total_rows . "</h3>";  
+                            ?>
+
+                            <p>ចំនួនគ្រូដែលបានខ្ចីសរុប</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="fa fa-users"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="teacher.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
             </div>
             <!-- /.row -->
-            <!-- <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Monthly Transaction Report</h3>
-                            <div class="card-tools pull-right">
-                                <form class="form-inline">
-                                    <div class="form-group me-2">
-                                        <label for="select_year">Select Year:</label>
-                                        <select class="form-select form-select-sm" id="select_year">
-                                            <?php for ($i = 2022; $i <= 2025; $i++) { ?>
-                                            <?php $selected = ($i == $year) ? 'selected' : ''; ?>
-                                            <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
-                                            </option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart">
-                                <br>
-                                <div id="legend" class="text-center"></div>
-                                <canvas id="barChart" style="height:300px;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
-            <div class="card card-success">
+            <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">Monthly Transaction Report</h3>
                     <div class="card-tools pull-right">
                         <form class="form-inline">
                             <div class="form-group me-2">
                                 <label for="select_year">Select Year:</label>
-                                <select class="form-select form-select-sm" id="select_year">
+                                <select class="form-control" id="select_year">
                                     <?php for ($i = 2022; $i <= 2025; $i++) { ?>
-                                    <?php $selected = ($i == $year) ? 'selected' : ''; ?>
-                                    <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
-                                    </option>
+                                        <?php $selected = ($i == $year) ? 'selected' : ''; ?>
+                                        <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
+                                        </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -168,8 +146,7 @@ if (isset($_GET['year'])) {
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <canvas id="barChart"
-                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -183,39 +160,40 @@ if (isset($_GET['year'])) {
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
 <?php include 'includes/footer.php' ?>
 <?php
-    $and = 'AND YEAR(date) = :year';
-    $months = array();
-    $return = array();
-    $borrow = array();
-    for ($m = 1; $m <= 12; $m++) {
-        $month = str_pad($m, 2, 0, STR_PAD_LEFT);
-        $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(returnDate) = :month AND YEAR(returnDate) = :year AND status=1";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['month' => $month, 'year' => $year]);
-        array_push($return, $stmt->rowCount());
+$and = 'AND YEAR(date) = :year';
+$months = array();
+$return = array();
+$borrow = array();
+for ($m = 1; $m <= 12; $m++) {
+    $month = str_pad($m, 2, 0, STR_PAD_LEFT);
+    $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(returnDate) = :month AND YEAR(returnDate) = :year AND status=1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['month' => $month, 'year' => $year]);
+    array_push($return, $stmt->rowCount());
 
-        $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(borrowDate) = :month AND YEAR(borrowDate) = :year AND status=0";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['month' => $month, 'year' => $year]);
-        array_push($borrow, $stmt->rowCount());
+    $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(borrowDate) = :month AND YEAR(borrowDate) = :year AND status=0";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['month' => $month, 'year' => $year]);
+    array_push($borrow, $stmt->rowCount());
 
-        $month_name = date('M', mktime(0, 0, 0, $m, 1));
-        array_push($months, $month_name);
-    }
+    $month_name = date('M', mktime(0, 0, 0, $m, 1));
+    array_push($months, $month_name);
+}
 
-    $months = json_encode($months);
-    $return = json_encode($return);
-    $borrow = json_encode($borrow);
-    ?>
+$months = json_encode($months);
+$return = json_encode($return);
+$borrow = json_encode($borrow);
+?>
 
 <!-- End Chart Data -->
 
 <script>
-$(document).ready(function() {
-    var areaChartData = {
-        labels: <?php echo $months; ?>,
+    $(document).ready(function() {
+        var areaChartData = {
+            labels: <?php echo $months; ?>,
             datasets: [{
                     label: 'Borrow',
                     backgroundColor: 'rgba(60,141,188,0.9)',
@@ -251,13 +229,13 @@ $(document).ready(function() {
             data: barChartData,
             options: barChartOptions
         });
-});
-
-
-
-$(function() {
-    $('#select_year').change(function() {
-        window.location.href = 'index.php?year=' + $(this).val();
     });
-});
+
+
+
+    $(function() {
+        $('#select_year').change(function() {
+            window.location.href = 'index.php?year=' + $(this).val();
+        });
+    });
 </script>

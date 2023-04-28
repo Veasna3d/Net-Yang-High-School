@@ -43,18 +43,6 @@ if ($_GET["data"] == "get_return") {
     echo json_encode($borrow);
 }
 
-// if ($_GET['data'] == 'check_class_name') {
-//     $name = $_POST['name'];
-//     $query = "SELECT COUNT(*) as count FROM Class WHERE className = :name";
-//     $statement = $conn->prepare($query);
-//     $statement->bindValue(':name', $name);
-//     $statement->execute();
-//     $row = $statement->fetch(PDO::FETCH_ASSOC);
-//     $count = $row['count'];
-//     echo json_encode(['exists' => $count > 0]);
-//     exit;
-// }
-
 //Get Student
 if ($_GET['data'] == "get_student") {
     $sql = "SELECT * FROM vStudent WHERE status = 1";
@@ -212,4 +200,25 @@ if($_GET['data'] == 'return_borrow'){
         echo json_encode("Return Faild");
     }
 }
+
+//Get Borrow Detail
+if ($_GET["data"] == "get_borrow_detail") {
+    $result = $conn->prepare("SELECT * FROM vBorrowDetail WHERE id=:id");
+    $result->bindParam(':id', $_GET['id']);
+    $result->execute();
+    $borrow = [];
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        if($row["remark"] == null){
+            $remark = '...';
+        }else{
+            $remark = $row["remark"];
+        }
+        $borrow[] = array(
+            $row["id"], $row["studentName"], $row["className"], $row["teacherName"],
+            $row["bookTitle"], $row["borrowDate"], $row["returnDate"], $remark
+        );
+    }
+    echo json_encode($borrow);
+}
 ?>
+
