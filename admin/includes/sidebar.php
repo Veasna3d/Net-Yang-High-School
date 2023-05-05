@@ -150,12 +150,26 @@
                                   <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
                               </a>
                           </li>
-                      </ul>
-                      <ul class="nav nav-treeview">
+                      
+                 
                           <li class="nav-item">
-                              <a href="r_borrow.php" class="nav-link">
+                              <a href="r_teacherBorrow.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>ការខ្ចី​​​​​​​​​​​​​​​​​​​​​</p>
+                                  <p>ការខ្ចីរបស់គ្រូ​</p>
+                              </a>
+                          </li>
+                      
+             
+                          <li class="nav-item">
+                              <a href="r_StudentBorrow.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការខ្ចីរបស់សិស្ស​​​​​​​​​​​​​​​​</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="r_reader.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការអាន​​​​​​​​​​​​​​​​</p>
                               </a>
                           </li>
                       </ul>
