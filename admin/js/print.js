@@ -11,8 +11,6 @@ function displayData() {
                 title: "គ្រឹះស្ថានបោះពុម្ព"
             },{
                 title: "ទីតាំងបោះពុម្ព"
-            },{
-                title: "ថ្ងៃបង្កើត"
             }, {
                 title: "សកម្មភាព"
             }];
@@ -23,7 +21,7 @@ function displayData() {
                 alldata[i][0] +
                 ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                 alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
-                data.push([alldata[i][0],alldata[i][1],alldata[i][2],alldata[i][3], option]);
+                data.push([alldata[i][0],alldata[i][1],alldata[i][2],option]);
             }
             console.log(data);
             $('#tableId').DataTable({
@@ -39,7 +37,7 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['icon pfd', 'pdf', 'excel'],
+                buttons: ['icon pfd'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                 "<'row'<'col-md-12'tr>>" +
                 "<'row'<'col-md-5'i><'col-md-7'p>>" +

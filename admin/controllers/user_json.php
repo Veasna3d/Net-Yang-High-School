@@ -9,29 +9,26 @@ if ($_GET["data"] == "get_user") {
 	$result->execute();
 	$user = [];
 	while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		if ($row['status'] == 1) {
-            $status = "<span class='badge badge-pill badge-primary'>Active</span>";
-        } else {
-            $status = "<span class='badge badge-pill badge-danger'>Disable</span>";
-        }
 
-		$user[]  = array($row["id"], $row["username"], $row["password"], $row["image"],
-		 $row["email"],$status, $row["createdAt"]);
+		$user[]  = array(
+			$row["id"], $row["username"], $row["password"], $row["image"],
+			$row["email"], $row["createdAt"]
+		);
 	}
 	echo json_encode($user);
 }
 
-if ($_GET['data'] == 'check_username') {
-	$name = $_POST['name'];
-	$query = "SELECT COUNT(*) as count FROM user WHERE username = :name";
-	$statement = $conn->prepare($query);
-	$statement->bindValue(':name', $name);
-	$statement->execute();
-	$row = $statement->fetch(PDO::FETCH_ASSOC);
-	$count = $row['count'];
-	echo json_encode(['exists' => $count > 0]);
-	exit;
-}
+// if ($_GET['data'] == 'check_username') {
+// 	$name = $_POST['name'];
+// 	$query = "SELECT COUNT(*) as count FROM user WHERE username = :name";
+// 	$statement = $conn->prepare($query);
+// 	$statement->bindValue(':name', $name);
+// 	$statement->execute();
+// 	$row = $statement->fetch(PDO::FETCH_ASSOC);
+// 	$count = $row['count'];
+// 	echo json_encode(['exists' => $count > 0]);
+// 	exit;
+// }
 
 //add_user
 if ($_GET["data"] == "add_user") {
@@ -51,8 +48,19 @@ if ($_GET["data"] == "add_user") {
 
 	$encrypted_password = md5($password);
 
-	$sql = "INSERT INTO user (username, password,image,email) VALUES (:username, :password,:image ,:email)";
-	$insert = $conn->prepare($sql);
+	$sql_check = "SELECT COUNT(*) FROM user WHERE username = :username";
+	$check = $conn->prepare($sql_check);
+	$check->bindParam(':username', $username);
+	$check->execute();
+	$count = $check->fetchColumn();
+
+	if ($count > 0) {
+		echo json_encode("User already exists");
+		return;
+	}
+
+	$sql_insert = "INSERT INTO user (username, password, image, email) VALUES (:username, :password, :image, :email)";
+	$insert = $conn->prepare($sql_insert);
 	$insert->bindParam(':username', $username);
 	$insert->bindParam(':password', $encrypted_password);
 	$insert->bindParam(':image', $image);
@@ -64,6 +72,7 @@ if ($_GET["data"] == "add_user") {
 		echo json_encode("Insert Failed");
 	}
 }
+
 
 
 // 4 get_byid
@@ -78,72 +87,148 @@ if ($_GET['data'] == 'get_byid') {
 }
 
 //5 update_user
-if ($_GET['data'] == 'update_user') {
+// if($_GET['data'] == 'update_user'){
 
-	if (empty($_POST['txtUsername']) || empty($_POST['txtEmail'])) {
-		echo json_encode("Please check the empty fields!");
-	} else {
-		$id = $_GET['id'];
-		$username = $_POST["txtUsername"];
-		$email = $_POST["txtEmail"];
+// 	if(empty($_POST['txtUsername'])){
+// 		echo json_encode("Please check the empty fields!");
+// 	}else{
+// 		$id = $_GET['id'];
+// 		$username = $_POST["txtUsername"];
+// 		$email = $_POST["txtEmail"];
+// 		$password = $_POST["txtPassword"];
 
-		// Check if a new image file was uploaded
-		if (!empty($_FILES['image']['name'])) {
-			// Get the image file and move it to the uploads directory
-			$image = $_FILES['image']['name'];
-			$target_dir = "../upload/";
-			$target_file = $target_dir . basename($_FILES["image"]["name"]);
-			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-		} else {
-			// Get the old image file name from the database
-			$stmt = $conn->prepare("SELECT image FROM user WHERE id=:id");
-			$stmt->bindParam(':id', $id);
-			$stmt->execute();
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			$image = $row['image'];
-		}
+// 		// Check if a new image file was uploaded
+// 		if(!empty($_FILES['image']['name'])) {
+// 			// Get the image file and move it to the uploads directory
+// 			$image = $_FILES['image']['name'];
+// 			$target_dir = "../upload/";
+// 			$target_file = $target_dir . basename($_FILES["image"]["name"]);
+// 			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+// 		} else {
+// 			// Get the old image file name from the database
+// 			$stmt = $conn->prepare("SELECT image FROM User WHERE id=:id");
+// 			$stmt->bindParam(':id', $id);
+// 			$stmt->execute();
+// 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+// 			$image = $row['image'];
+// 		}
 
-		// Check if a new password was provided
-		if (!empty($_POST['txtPassword'])) {
-			// If a new password was provided, encrypt it using MD5 hash
-			$password = md5($_POST["txtPassword"]);
-		} else {
-			// If no new password was provided, retain the old password
-			$stmt = $conn->prepare("SELECT password FROM user WHERE id=:id");
-			$stmt->bindParam(':id', $id);
-			$stmt->execute();
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			$password = $row['password'];
-		}
+// 		// Check if a new password was entered and encrypt it
+// 		if(!empty($password)) {
+// 			$encrypted_password = md5($password);
+// 		} else {
+// 			// If no new password was entered, use the existing one
+// 			$stmt = $conn->prepare("SELECT password FROM User WHERE id=:id");
+// 			$stmt->bindParam(':id', $id);
+// 			$stmt->execute();
+// 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+// 			$encrypted_password = $row['password'];
+// 		}
+		
 
-		// Update the image file and user data in the database
-		$sql = "UPDATE user SET username=:username, password=:password,image=:image,email=:email  where id=:id;";
-		$update = $conn->prepare($sql);
-		$update->bindParam(':username', $username);
-		$update->bindParam(':password', $password);
-		$update->bindParam(':image', $image);
-		$update->bindParam(':email', $email);
-		$update->bindParam(':id', $id);
+// 		// Update the image file and user data in the database
+// 		$sql = "UPDATE User SET username=:username, email=:email, password=:password, image=:image where id=:id;";
+// 		$update = $conn->prepare($sql);
+// 		$update->bindParam(':image', $image);
+// 		$update->bindParam(':username', $username);
+// 		$update->bindParam(':email', $email);
+// 		$update->bindParam(':password', $encrypted_password);
+// 		$update->bindParam(':id', $id);
 
-		if ($update->execute()) {
-			// If the update was successful, delete the old image file if it exists
-			if (!empty($_FILES['image']['name'])) {
-				if (isset($_POST['oldImage']) && !empty($_POST['oldImage'])) {
-					$old_image = $_POST['oldImage'];
-					if (file_exists('../upload/' . $old_image)) {
-						unlink('../upload/' . $old_image);
-					}
-				}
-			}
-			echo json_encode("Update Success");
-		} else {
-			echo json_encode("Update Failed");
-		}
-	}
+// 		if($update->execute()){
+// 			// If the update was successful, delete the old image file if it exists
+// 			if(!empty($_FILES['image']['name'])) {
+// 				if(isset($_POST['oldImage']) && !empty($_POST['oldImage'])) {
+// 					$old_image = $_POST['oldImage'];
+// 					if(file_exists('../upload/' . $old_image)) {
+// 						unlink('../upload/' . $old_image);
+// 					}
+// 				}
+// 			}
+// 			echo json_encode("Update Success");
+// 		}else{
+// 			echo json_encode("Update Failed");
+// 		}
+// 	}
+// }
+if($_GET['data'] == 'update_user'){
+
+    if(empty($_POST['txtUsername'])){
+        echo json_encode("Please check the empty fields!");
+    }else{
+        $id = $_GET['id'];
+        $username = $_POST["txtUsername"];
+        $email = $_POST["txtEmail"];
+        $password = $_POST["txtPassword"];
+
+        // Check if a new image file was uploaded
+        if(!empty($_FILES['image']['name'])) {
+            // Get the image file and move it to the uploads directory
+            $image = $_FILES['image']['name'];
+            $target_dir = "../upload/";
+            $target_file = $target_dir . basename($_FILES["image"]["name"]);
+            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+        } else {
+            // Get the old image file name from the database
+            $stmt = $conn->prepare("SELECT image FROM User WHERE id=:id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $image = $row['image'];
+        }
+
+        // Check if a new password was entered and encrypt it
+        if(!empty($password)) {
+            $encrypted_password = md5($password);
+        } else {
+            // If no new password was entered, use the existing one
+            $stmt = $conn->prepare("SELECT password FROM User WHERE id=:id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $encrypted_password = $row['password'];
+        }
+
+        // Check if the new username already exists in the database
+        $stmt = $conn->prepare("SELECT * FROM User WHERE username=:username AND id!=:id");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            echo json_encode("Username already exists");
+        } else {
+
+            // Update the image file and user data in the database
+            $sql = "UPDATE User SET username=:username, email=:email, password=:password, image=:image where id=:id;";
+            $update = $conn->prepare($sql);
+            $update->bindParam(':image', $image);
+            $update->bindParam(':username', $username);
+            $update->bindParam(':email', $email);
+            $update->bindParam(':password', $encrypted_password);
+            $update->bindParam(':id', $id);
+
+            if($update->execute()){
+                // If the update was successful, delete the old image file if it exists
+                if(!empty($_FILES['image']['name'])) {
+                    if(isset($_POST['oldImage']) && !empty($_POST['oldImage'])) {
+                        $old_image = $_POST['oldImage'];
+                        if(file_exists('../upload/' . $old_image)) {
+                            unlink('../upload/' . $old_image);
+                        }
+                    }
+                }
+                echo json_encode("Update Success");
+            }else{
+                echo json_encode("Update Failed");
+            }
+        }
+    }
 }
 
 
-
+//5 delete_user
 if ($_GET['data'] == 'delete_user') {
 	$id = $_GET['id'];
 	$stmt = $conn->prepare("SELECT image FROM User WHERE id=:id;");

@@ -98,7 +98,7 @@ if($_GET["data"] == "add_student"){
 			echo json_encode($student);
 	}
 
-        //5 Update Book
+        //5 Update Student
 	 if($_GET['data'] == 'update_student'){
 
 		if(empty($_POST['txtStudentName'])){

@@ -127,6 +127,35 @@
     </div>
 </div>
 
+<!-- Modal Import -->
+<div class="modal fade" id="myImport" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Import</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="importBook.php" enctype="multipart/form-data" id="upload_csv_form">
+                    <div class="form-group">
+                        <label for="file" class="form-control btn btn-info">Update File (CSV)</label>
+                        <input type="file" name="file" id="file" class="form-control" hidden>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-success">Upload</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <?php include 'includes/footer.php' ?>
 <script src="./js/book.js"></script>

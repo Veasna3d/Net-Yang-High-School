@@ -10,7 +10,6 @@ function displayData() {
                 {title: 'ឈ្នោះអ្នក​ផ្គត់ផ្គង់'},
                 {title: 'លេខទូរស័ព'},
                 {title: 'អ៊ីមៃល'},
-                {title: 'ថ្ងៃបង្កើត'},
                 {title: 'សកម្មភាព'}
             ];
             var data = [];
@@ -20,7 +19,7 @@ function displayData() {
                 alldata[i][0] +
                 ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                 alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
-                data.push([alldata[i][0], alldata[i][1], alldata[i][2], alldata[i][3], alldata[i][4], option]);
+                data.push([alldata[i][0], alldata[i][1], alldata[i][2], alldata[i][3], option]);
             }
             console.log(data);
             $('#tableId').DataTable({
@@ -36,7 +35,7 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['icon pfd', 'pdf', 'excel'],
+                buttons: ['icon pfd'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                 "<'row'<'col-md-12'tr>>" +
                 "<'row'<'col-md-5'i><'col-md-7'p>>" +

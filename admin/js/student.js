@@ -71,13 +71,12 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['icon pfd', 'pdf', 'excel'],
+                buttons: ['icon pfd'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-5'i><'col-md-7'p>>" +
-                    "<'row'<'col-md-5'l><'#btn-container'>>",
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                "<'row'<'col-md-5'l><'#btn-container'>>",
             });
-
             // Add the custom button to the DataTables toolbar
             $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
 
@@ -128,7 +127,9 @@ $(document).ready(function () {
 $("#btnSave").click(function () {
 
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
+
     if ($("#btnSave").text() == "រក្សាទុក") {
+        
         var start = $("#txtStartYear");
         var end = $("#txtEndYear");
         var studentName = $("#txtStudentName");

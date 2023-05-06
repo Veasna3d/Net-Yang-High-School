@@ -12,7 +12,7 @@ if ($_GET["data"] == "get_teacher") {
         if ($row['status'] == 1) {
             $status = "<span class='badge badge-pill badge-primary'>Active</span>";
         } else {
-            $status = "<span class='badge badge-pill badge-danger'>Disable</span>";
+            $status = "<span class='badge badge-pill badge-danger'>Inactive</span>";
         }
 
         $teacher[] = array(
@@ -154,5 +154,23 @@ if ($_GET['data'] == 'delete_teacher') {
         echo json_encode("Delete Success");
     } else {
         echo json_encode("Delete Failed");
+    }
+}
+
+//disable
+if($_GET['data'] == 'disable_teacher'){
+        
+    $id = $_GET['id'];
+    $status = 0;
+    $sql = "UPDATE Teacher SET status=:status WHERE id=:id;";
+    $update = $conn->prepare($sql);
+
+    $update->bindParam(':status', $status);
+    $update->bindParam(':id', $id);
+
+    if($update->execute()){
+        echo json_encode("Return Success");
+    }else{
+        echo json_encode("Return Faild");
     }
 }

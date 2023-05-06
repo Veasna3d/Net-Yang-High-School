@@ -12,6 +12,8 @@
 <script src="./plugins/jquery-ui/jquery-ui.js"></script>
 <!-- Bootstrap 4 -->
 <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- datepicker -->
+
 
 <!-- Toastr -->
 <script src="./plugins/toastr/toastr.min.js"></script>

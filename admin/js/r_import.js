@@ -73,11 +73,26 @@ function displayData() {
             $('#date-range').on('cancel.daterangepicker', function (ev, picker) {
                 table.columns(1).search('').draw();
             });
-        }
-    });
 
-
+            // Apply search when the user types in the search box
+            $('#tableId_filter input').keyup(function () {
+                table.search(this.value).draw();
+            });
+        },
+        error: function (xhr, status, error) {
+                console.log(xhr);
+        console.log(status);
+        console.log(error);
+    }
+});
 }
+
+$(document).ready(function() {
+displayData();
+});
+
+
+       
 
 // Call the displayData function when the page is loaded
 $(document).ready(function () {

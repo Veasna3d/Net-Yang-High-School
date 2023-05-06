@@ -621,7 +621,7 @@ function returnData(id) {
                 showCloseButton: true,
                 showCancelButton: true,
                 confirmButtonColor: "#30d",
-                cancelButtonColor: "#3085d6",
+                cancelButtonColor: "#3085d6",   
                 cancelButtonText: "ទេ",
                 confirmButtonText: "សៀវភៅត្រូវបានសង!",
                 with: 1000,

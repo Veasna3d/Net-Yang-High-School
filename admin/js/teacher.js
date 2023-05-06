@@ -28,7 +28,9 @@ function displayData() {
             var option = "";
             for (var i in alldata) {
                 option =
-                    "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                    "<button class='btn btn-info btn-sm edit btn-flat' onclick='disabledData(" +
+                    alldata[i][0] +
+                    ")'><i class='fa fa-id-card'></i> </button> | <button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                     alldata[i][0] + ")'><i class='fa fa-trash'></i> </button>";
@@ -59,7 +61,7 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['icon pfd', 'pdf', 'excel'],
+                buttons: ['icon pfd'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                 "<'row'<'col-md-12'tr>>" +
                 "<'row'<'col-md-5'i><'col-md-7'p>>" +
@@ -248,6 +250,44 @@ function deleteData(id) {
     });
 }
 
+function disabledData(id) {
+    Swal.fire({
+        title: "ប្រសិនបើអ្នកពាក្យថា Inactive នោះ User មិនអាចប្រើប្រាស់ក្នុងប្រព័ន្ធបានទៀតទេ!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        cancelButtonText: "No",
+        confirmButtonText: "Inactive!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: "./controllers/teacher_json.php?data=disable_teacher&id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    Swal.fire({
+                        title: "ជោគជ័យ",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    displayData();
+                },
+                error: function (ex) {
+                    Swal.fire({
+                        title: "បរាជ័យ",
+                        text: ex.responseText,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                    console.log(ex.responseText);
+                },
+            });
+        }
+    });
+}
 
 
 

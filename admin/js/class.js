@@ -35,7 +35,7 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['icon pfd', 'pdf', 'excel'],
+                buttons: ['icon pfd'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                 "<'row'<'col-md-12'tr>>" +
                 "<'row'<'col-md-5'i><'col-md-7'p>>" +

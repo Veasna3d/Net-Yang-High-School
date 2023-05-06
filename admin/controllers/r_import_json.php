@@ -1,9 +1,17 @@
 <?php
 require '../includes/dbConnection.php';
 
-//Get Import
+// Get Import
 if ($_GET["data"] == "get_import") {
-    $sql = "SELECT * FROM vImport";
+    $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+    $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+
+    $sql = "SELECT * FROM vImport WHERE 1=1";
+
+    if (!empty($startDate) && !empty($endDate)) {
+        $sql .= " AND receivedDate BETWEEN '$startDate' AND '$endDate'";
+    }
+
     $result = $conn->prepare($sql);
     $result->execute();
     $import = [];
@@ -17,17 +25,4 @@ if ($_GET["data"] == "get_import") {
     }
     echo json_encode($import);
 }
-
-if ($_GET["data"] == "get_date_value") {
-   // Get the latest date value from the database
-$sql = "SELECT MAX(receivedDate) AS max_date FROM vImport";
-$result = $conn->query($sql);
-$row = $result->fetch(PDO::FETCH_ASSOC);
-$maxDate = $row['max_date'];
-
-// Return the date value as a JSON string
-echo json_encode($maxDate);
-}
-
 ?>
-

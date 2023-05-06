@@ -85,8 +85,17 @@ function displayData() {
             });
             btn2.append('Unavailable');
 
+            var btn3 = $('<button>').attr({
+                id: 'btnImport',
+                type: 'button',
+                class: 'btn btn-info',
+                'data-toggle': 'modal',
+                'data-target': '#myImport'
+            });
+            btn3.append('Import');
+
             // Add the custom button to the DataTables toolbar
-            $('#btn-container').append(btn1, btn2);
+            $('#btn-container').append(btn1, btn2, btn3);
             $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
 
 
@@ -94,7 +103,7 @@ function displayData() {
             registerCustomButtonHandlers();
 
             // Move the custom button to the left of the other buttons
-            $('.dt-buttons').prepend(btn1, btn2);
+            $('.dt-buttons').prepend(btn3, btn1, btn2);
             $('.dt-buttons').prepend($('#btnAdd'));
 
 
@@ -744,3 +753,45 @@ function isAvailable(id) {
         },
     });
 }
+
+//Import 
+$(document).ready(function(){  
+    $('#upload_csv_form').on("submit", function(e){  
+         e.preventDefault(); //form will not submitted  
+         $.ajax({  
+              url:"importBook.php",  
+              method:"POST",  
+              data:new FormData(this),  
+              contentType:false,          // The content type used when sending data to the server.  
+              cache:false,                // To unable request pages to be cached  
+              processData:false,          // To send DOMDocument or non processed data file it is set to false  
+              success: function(data){  
+                   if(data=='Error1')  
+                   {  
+                    toastr.warning("Invalid File").css("margin-top", "2rem");
+                        // alert("Invalid File");  
+                   }  
+                   else if(data == "Error2")  
+                   {  
+                    toastr.warning("Please Select File").css("margin-top", "2rem");
+                        // alert("Please Select File");  
+                   }                           
+                   else if(data == "Success")  
+                   {  
+                    toastr.success("CSV file data has been imported").css("margin-top", "2rem");
+                      // alert("CSV file data has been imported");  
+                      $('#upload_csv_form')[0].reset();
+                      alert(data);
+                      $("#myImport").modal("hide");
+                      displayData();
+                     
+                      //  $('#table_id').html(data); 
+                   }  
+                   else  
+                   {  
+                       // $('#employee_table').html(data);  
+                   }  
+              }  
+         })  
+    });  
+});

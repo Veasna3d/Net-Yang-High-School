@@ -147,6 +147,10 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
                               </a>
+                              <a href="r_borrow.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ការខ្ចីសៀវភៅ​​​​​​​​​​​​​​​​​​​​​</p>
+                              </a>
                           </li>
                       </ul>
                   </li>
