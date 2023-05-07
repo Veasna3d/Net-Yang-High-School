@@ -45,7 +45,6 @@ if ($_GET["data"] == "not_available") {
     echo json_encode($book);
 }
 
-
 //Get Print
 if ($_GET['data'] == "get_print") {
     $sql = "SELECT * FROM Print";

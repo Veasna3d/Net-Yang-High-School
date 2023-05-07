@@ -10,7 +10,7 @@
 
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper mt-5 pt-2">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">សិស្សទាំងអស់</li>
                     </ol>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="col-12">
 
                     <div class="card">
-                        
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="tableId" class="table table-bordered table-hover">
@@ -68,19 +68,23 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="form">
-                    <div class="form-group">
-                        <label for="">ឆ្នាំសិក្សា</label>
-                        <div class="d-flex">
-                            <div class="col-6">
+                    <div class="d-flex">
+                        <div class="col-6">
+                            <div class="form-group">
                                 <label for="">ពីឆ្នាំ</label>
                                 <input type="text" id="txtStartYear" class="form-control" name="txtStartYear">
                             </div>
-                            <div class="col-6">
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
                                 <label for="">ដល់ឆ្នាំ</label>
                                 <input id="txtEndYear" class="form-control" name="txtEndYear">
                             </div>
                         </div>
                     </div>
+                    <div class="col-12">
+
+                    
                     <div class="form-group">
                         <label for="txtStudentName">ឈ្មោះ</label>
                         <input type="text" name="txtStudentName" class="form-control" id="txtStudentName">
@@ -105,12 +109,9 @@
                         <input type="text" name="txtBirthday" class="form-control" id="txtBirthday">
                     </div>
                     <div class="form-group">
-                        <label for="txtPassword">លេខសម្ងាត់</label>
-                        <input type="password" name="txtPassword" class="form-control" id="txtPassword">
-                    </div>
-                    <div class="form-group">
                         <label for="image" class="btn btn-outline-primary">រូបភាព</label>
                         <input type="file" name="image" id="image" class="form-control-file d-none">
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
@@ -154,6 +155,4 @@ $(function() {
         yearRange: "c-10:c+10" // Optional, limits the year range available to select
     });
 });
-
-
 </script>

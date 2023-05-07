@@ -55,7 +55,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
-                pageLength: 5,
+                pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                     infoEmpty: 'Showing 0 entries',
@@ -174,7 +174,7 @@ function registerCustomButtonHandlers() {
                     destroy: true,
                     data: data,
                     columns: columns,
-                    pageLength: 5,
+                    pageLength: 10,
                     language: {
                         info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                         infoEmpty: 'Showing 0 entries',
@@ -284,7 +284,7 @@ function registerCustomButtonHandlers() {
                     destroy: true,
                     data: data,
                     columns: columns,
-                    pageLength: 5,
+                    pageLength: 10,
                     language: {
                         info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                         infoEmpty: 'Showing 0 entries',

@@ -17,8 +17,6 @@ function displayData() {
                 }, {
                     title: "លេខទូរស័ព្ទ",
                 }, {
-                    title: "លេខសម្ងាត់",
-                }, {
                     title: "ស្ថានភាព",
                 }, {
                     title: "សកម្មភាព",
@@ -41,8 +39,7 @@ function displayData() {
                     "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][2] + "'>",
                     alldata[i][3],
                     alldata[i][4],
-                    "***" + alldata[i][7].slice(-2),
-                    alldata[i][6],
+                    alldata[i][5],
                     option,
                 ]);
 
@@ -52,7 +49,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
-                pageLength: 5,
+                pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                     infoEmpty: 'Showing 0 entries',
@@ -92,45 +89,7 @@ $(document).ready(function () {
 
 //btnSave
 $("#btnSave").click(function () {
-    // var start = $("#txtStartYear");
-    // var end = $("#txtEndYear");
-    // var studentName = $("#txtStudentName");
-    // var gender = $("#ddlGender");
-    // var classId = $("#ddlClass");
-    // var birthday = $("#txtBirthday");
-    // var password = $("#txtPassword");
 
-    // if (start.val() == "") {
-    //     start.focus();
-    //     return toastr.warning("Field Require!").css("margin-top", "2rem");
-    // } else if (start.val() == "") {
-    //     start.focus();
-    //     return toastr.warning("From Require!").css("margin-top", "2rem");
-    // } else if (end.val() == "") {
-    //     end.focus();
-    //     return toastr.warning("To Require!").css("margin-top", "2rem");
-    // }
-    // else if (studentName.val() == "") {
-    //     studentName.focus();
-    //     return toastr.warning("Student Name Require!").css("margin-top", "2rem");
-    // } else if (password.val() == "") {
-    //     password.focus();
-    //     return toastr.warning("Password Require!").css("margin-top", "2rem");
-    // } else if (password.val().length > 4) {
-    //     password.focus();
-    //     return toastr.warning("Password must be less than 5 characters long!").css("margin-top", "2rem");
-    // } else if (classId.val() == "") {
-    //     classId.focus();
-    //     return toastr.warning("Class Require!").css("margin-top", "2rem");
-    // }
-    // else if (gender.val() == "") {
-    //     gender.focus();
-    //     return toastr.warning("Gender Require!").css("margin-top", "2rem");
-    // }
-    // else if (birthday.val() == "") {
-    //     birthday.focus();
-    //     return toastr.warning("Birthday Require!").css("margin-top", "2rem");
-    // }
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
     if ($("#btnSave").text() == "រក្សាទុក") {
         //Insert
@@ -177,14 +136,13 @@ $("#btnAdd").click(function () {
     $("#txtTeacherName").val("");
     $("#ddlGender").val("");
     $("#txtPhone").val("");
-    $("#txtPassword").val("");
     $("#image").val("");
     $("#btnSave").text("រក្សាទុក");
 });
 
 var teacher_id;
 
-//Edit student
+//Edit teacher
 function editData(id) {
     $("#btnSave").text("Update");
     teacher_id = id;
@@ -199,7 +157,6 @@ function editData(id) {
             $("#txtTeacherName").val(data[0][1]);
             $("#ddlGender").val(data[0][3]);
             $("#txtPhone").val(data[0][4]);
-            $("#txtPassword").val(data[0][5]);
             $("#image").val(data[0][2]);
 
 
@@ -210,7 +167,7 @@ function editData(id) {
     });
 }
 
-//Delete Student
+//Delete teacher
 function deleteData(id) {
     Swal.fire({
         title: "តើអ្នកចង់លុបសិស្សនេះចេញពីប្រព័ន្ធ?",

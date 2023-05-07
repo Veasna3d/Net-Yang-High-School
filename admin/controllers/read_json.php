@@ -6,28 +6,28 @@
         $result = $conn->prepare($sql);
 		$result->execute();
         $read = [];
-        while($row = $result->fetch(PDO::FETCH_ASSOC)){
-            $read[] = array($row["id"], $row["studentName"], $row["date"],
-            $row["bookTitle"],$row["createdAt"]);
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            // Format the date and createdAt fields as "Y-M-d, h:i A"
+            $date = new DateTime($row["date"]);
+            $formattedDate = $date->format('d-M-Y, h:i A');
+        
+        
+            // Add the formatted fields to the $read array
+            $read[] = array(
+                $row["id"], 
+                $row["studentName"], 
+                $formattedDate,
+                $row["bookTitle"],
+                $row["createdAt"]
+            );
         }
+        
         echo json_encode($read);
     }
-
-    // if ($_GET['data'] == 'check_class_name') {
-    //     $name = $_POST['name'];
-    //     $query = "SELECT COUNT(*) as count FROM Class WHERE className = :name";
-    //     $statement = $conn->prepare($query);
-    //     $statement->bindValue(':name', $name);
-    //     $statement->execute();
-    //     $row = $statement->fetch(PDO::FETCH_ASSOC);
-    //     $count = $row['count'];
-    //     echo json_encode(['exists' => $count > 0]);
-    //     exit;
-    // }
     
     	//Get Student
 	if($_GET['data'] == "get_student"){
-        $sql = "SELECT * FROM vStudent";
+        $sql = "SELECT * FROM vStudent WHERE status = 1";
         $result = $conn->prepare($sql);
         $result->execute();
         $student = [];
@@ -36,7 +36,7 @@
 
             $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
             $row['image'],  $row['gender'],$row['className'],
-            $row["birthday"], $row["password"], $row['createdAt']);
+            $row["birthday"], $row['createdAt']);
             
         }
         echo json_encode($student);

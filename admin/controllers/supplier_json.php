@@ -12,22 +12,6 @@ if($_GET["data"] == "get_supplier"){
     echo json_encode($supplier);
 }
 
-if ($_GET['data'] == 'check_supplier_name') {
-  $supplierName = $_POST['supplierName'];
-  $phone = $_POST['phone'];
-  $email = $_POST['email'];
-
-   $query = "SELECT COUNT(*) as count FROM supplier WHERE supplierName = :supplierName AND phone = :phone AND email = :email";
-    $statement = $conn->prepare($query);
-    $statement->bindValue(':supplierName', $supplierName);
-    $statement->bindValue(':phone', $phone);
-    $statement->bindValue(':email', $email);
-    $statement->execute();
-    $row = $statement->fetch(PDO::FETCH_ASSOC);
-    $count = $row['count'];
-    echo json_encode(['exists' => $count > 0]);
-    exit;
-}
 
 
 //1-add_class

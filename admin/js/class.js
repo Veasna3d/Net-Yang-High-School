@@ -26,7 +26,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
-                pageLength: 5,
+                pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                     infoEmpty: 'Showing 0 entries',
@@ -62,67 +62,79 @@ $(document).ready(function() {
     displayData();
 })
 
-$('#btnSave').click(function() {
-    var className = $('#txtName');
-    if(className.val() == ""){
+$("#btnSave").click(function () {
+
+    var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
+    if ($("#btnSave").text() == "រក្សាទុក") {
+      //Insert
+  
+      var className = $("#txtName");
+  
+      if (className.val() == "") {
         className.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
-    }
-    // Check if txtName already exists in database
-    $.ajax({
-        type: 'POST',
-        url: '././controllers/class_json.php?data=check_class_name',
-        data: {name: className.val()},
-        dataType: 'json',
-        success: function(data) {
-            if (data.exists) {
-                className.focus();
-                toastr.warning("Name already exists in database!").css("margin-top", "2rem");
-            } else {
-                var form_data = $('#form').serialize();
-                if ($('#btnSave').text() == "រក្សាទុក") {
-                    // Insert
-                    $.ajax({
-                        type: 'POST',
-                        url: '././controllers/class_json.php?data=add_class',
-                        data: form_data,
-                        dataType: 'json',
-                        success: function(data) {
-                            toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                            displayData();
-                            $('#myModal').modal('hide');
-                        },
-                        error: function(ex) {
-                            toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                            console.log(ex.responseText);
-                        }
-                    });
-                } else {
-                    // Update
-                    $.ajax({
-                        type: 'POST',
-                        url: '././controllers/class_json.php?data=update_class&id=' + class_id,
-                        data: form_data,
-                        dataType: 'json',
-                        success: function(data) {
-                            toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                            displayData();
-                            $('#myModal').modal('hide');
-                        },
-                        error: function(ex) {
-                            toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                            console.log(ex.responseText);
-                        }
-                    });
-                }
-            }
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      } 
+  
+  
+      $.ajax({
+        type: "POST",
+        url: "./controllers/class_json.php?data=add_class",
+        data: form_data,
+        dataType: "json",
+        contentType: false, // Set to false to let jQuery decide the content type
+        processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
+        success: function (data) {
+          if (data === "Class already exists") {
+              toastr.warning("Class already exists").css("margin-top", "2rem");
+              $("#txtName").focus(); // Focus on the username box
+              return;
+          } else {
+              toastr.success("Action completed").css("margin-top", "2rem");
+              displayData();
+              $("#myModal").modal("hide");
+          }
+      },
+        error: function (ex) {
+          toastr.error("Action incomplete").css("margin-top", "2rem");
+          console.log(ex.responseText);
         },
-        error: function(ex) {
-            toastr.error("Error checking name in database").css("margin-top", "2rem");
-            console.log(ex.responseText);
+      });
+    } else {
+      //Update
+  
+      var className = $("#txtName");
+  
+      if (className.val() == "") {
+        className.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      }
+  
+      $.ajax({
+        type: "POST",
+        url: "./controllers/class_json.php?data=update_class&id=" + class_id,
+        data: form_data,
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          if (data === "Class already exists") {
+            toastr.warning("Class already exists!").css("margin-top", "2rem");
+            $("#txtName").focus(); // Focus on the username box
+            return;
+        } else {
+            toastr.success("Action completed").css("margin-top", "2rem");
+            displayData();
+            $("#myModal").modal("hide");
         }
-    });
-});
+        },
+        error: function (ex) {
+          toastr.error("Action incomplete").css("margin-top", "2rem");
+          console.log(ex.responseText);
+        },
+      });
+    }
+  })
+  
 
 
 $('#btnAdd').click(function() {

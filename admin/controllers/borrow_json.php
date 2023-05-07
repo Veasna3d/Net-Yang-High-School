@@ -55,7 +55,7 @@ if ($_GET['data'] == "get_student") {
         $student[] = array(
             $row['id'], $row['startYear'], $row['endYear'], $row["studentName"],
             $row['image'],  $row['gender'], $row['className'],
-            $row["birthday"], $row["password"], $row['createdAt']
+            $row["birthday"],$row['createdAt']
         );
     }
     echo json_encode($student);

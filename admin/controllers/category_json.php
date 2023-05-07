@@ -12,35 +12,36 @@ if($_GET["data"] == "get_category"){
     echo json_encode($category);
 }
 
-if ($_GET['data'] == 'check_category_name') {
-    $categoryCode = $_POST['categoryCode'];
-    $categoryName = $_POST['categoryName'];
-
-    $query = "SELECT COUNT(*) as count FROM category WHERE categoryCode = :categoryCode AND categoryName = :categoryName";
-    $statement = $conn->prepare($query);
-    $statement->bindParam(':categoryCode',$categoryCode);
-    $statement->bindParam(':categoryName',$categoryName);
-    $statement->execute(); // add this line
-    $row = $statement->fetch(PDO::FETCH_ASSOC);
-    $count = $row['count'];
-    echo json_encode(['exists' => $count > 0]);
-    exit;
-    
-}
 
 
-//1-add_class
-if($_GET["data"] == "add_category"){
-    $categoryCode = $_POST['categoryCode'];
-    $categoryName = $_POST['categoryName'];
 
-        $sql = "INSERT INTO category(categoryCode,categoryName) VALUE(:categoryCode,:categoryName);";
-        $insert = $conn->prepare($sql);
-        $insert->bindParam(':categoryCode',$categoryCode);
-        $insert->bindParam(':categoryName',$categoryName);
-        if($insert->execute()){
-               echo json_encode("Insert Success");}
-        else{ echo json_encode("Insert Faild");}    
+//1-add_category
+if ($_GET["data"] == "add_category") {
+    $categoryCode = $_POST["categoryCode"];
+    $categoryName = $_POST["categoryName"];
+
+
+    $sql_check = "SELECT COUNT(*) FROM Category WHERE categoryCode = :categoryCode";
+    $check = $conn->prepare($sql_check);
+    $check->bindParam(':categoryCode', $categoryCode);
+    $check->execute();
+    $count = $check->fetchColumn();
+
+    if ($count > 0) {
+        echo json_encode("Category code already exists");
+        return;
+    }
+
+    $sql_insert = "INSERT INTO Category (categoryCode, categoryName) VALUES (:categoryCode, :categoryName)";
+    $insert = $conn->prepare($sql_insert);
+    $insert->bindParam(':categoryCode', $categoryCode);
+    $insert->bindParam(':categoryName', $categoryName);
+
+    if ($insert->execute()) {
+        echo json_encode("Insert Success");
+    } else {
+        echo json_encode("Insert Failed");
+    }
 }
 
 //2-get_byID
@@ -56,24 +57,38 @@ if($_GET['data'] == 'get_byid'){
 
 //3-update
 if($_GET['data'] == 'update_category'){
-    if(empty($_POST['categoryCode']) || empty($_POST['categoryName'])){
-        echo json_encode("please check the empty field!");
+
+    if(empty($_POST['categoryCode'])){
+        echo json_encode("Please check the empty fields!");
     }else{
-
         $id = $_GET['id'];
-        $categoryCode = $_POST['categoryCode'];
-        $categoryName = $_POST['categoryName'];
+        $categoryCode = $_POST["categoryCode"];
+        $categoryName = $_POST["categoryName"];
 
-        $sql = "Update category set categoryCode=:categoryCode,categoryName=:categoryName where id=:id;";
-        $update = $conn->prepare($sql);
 
-        $update->bindParam(':categoryCode',$categoryCode);
-        $update->bindParam(':categoryName',$categoryName);
-        $update->bindParam(':id', $id);
-        if($update->execute()){
-            echo json_encode("Update Success");
-        }else{
-            echo json_encode("Update Faild");
+        // Check if the new username already exists in the database
+        $stmt = $conn->prepare("SELECT * FROM Category WHERE categoryCode=:categoryCode AND id!=:id");
+        $stmt->bindParam(':categoryCode', $categoryCode);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            echo json_encode("Category code already exists");
+        } else {
+
+            // Update the image file and user data in the database
+            $sql = "UPDATE Category SET categoryCode=:categoryCode, categoryName=:categoryName where id=:id;";
+            $update = $conn->prepare($sql);
+            $update->bindParam(':categoryCode', $categoryCode);
+            $update->bindParam(':categoryName', $categoryName);
+            $update->bindParam(':id', $id);
+
+            if($update->execute()){
+                echo json_encode("Update Success");
+            }else{
+                echo json_encode("Update Failed");
+            }
         }
     }
 }

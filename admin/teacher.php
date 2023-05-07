@@ -10,7 +10,7 @@
 
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper mt-5 pt-2">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -83,10 +83,6 @@
                     <div class="form-group">
                         <label for="txtPhone">លេខទូរស័ព្ទ</label>
                         <input type="text" name="txtPhone" class="form-control" id="txtPhone">
-                    </div>
-                    <div class="form-group">
-                        <label for="txtPassword">លេខសម្ងាត់</label>
-                        <input type="password" name="txtPassword" class="form-control" id="txtPassword">
                     </div>
                     <div class="form-group">
                         <label for="image" class="btn btn-outline-primary">រូបភាព</label>

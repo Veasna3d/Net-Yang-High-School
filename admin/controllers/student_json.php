@@ -17,7 +17,7 @@
 
             $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
             $row['image'],  $row['gender'],$row['className'],
-            $row["birthday"], $row["password"],$status, $row['createdAt']);
+            $row["birthday"],$status, $row['createdAt']);
 
         }
         echo json_encode($student);
@@ -50,22 +50,15 @@ if($_GET["data"] == "add_student"){
     $gender = $_POST["ddlGender"];
     $class = $_POST["ddlClass"];
     $birthday = $_POST["txtBirthday"];
-    $password = $_POST["txtPassword"];
     $image = $_FILES['image']['name'];
 
     $target_dir = "../upload/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-    if (strlen($password) > 5) {
-        echo json_encode("Password must be less than 5 characters long");
-        return;
-    }
 
-    $encrypted_password = md5($password);
-
-    $sql = "INSERT INTO Student (startYear, endYear,studentName, gender, classId, birthday, password, image) VALUES 
-                                (:startYear, :endYear, :studentName, :gender, :classId, :birthday, :password, :image)";
+    $sql = "INSERT INTO Student (startYear, endYear,studentName, gender, classId, birthday,  image) VALUES 
+                                (:startYear, :endYear, :studentName, :gender, :classId, :birthday, :image)";
     $insert = $conn->prepare($sql);
     $insert->bindParam(':startYear', $start);
     $insert->bindParam(':endYear', $end);
@@ -73,7 +66,6 @@ if($_GET["data"] == "add_student"){
     $insert->bindParam(':gender', $gender);
     $insert->bindParam(':classId', $class);
     $insert->bindParam(':birthday', $birthday);
-    $insert->bindParam(':password', $encrypted_password);
     $insert->bindParam(':image', $image);
 
     if($insert->execute()){
@@ -92,7 +84,7 @@ if($_GET["data"] == "add_student"){
 			if($row = $result->fetch(PDO::FETCH_ASSOC)){
                 $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
                 $row['image'],  $row['gender'],$row['classId'],
-                $row["birthday"], $row["password"],$row["status"], $row['createdAt']);
+                $row["birthday"], $row["status"], $row['createdAt']);
     
 			}
 			echo json_encode($student);
@@ -113,7 +105,6 @@ if($_GET["data"] == "add_student"){
             $gender = $_POST["ddlGender"];
             $class = $_POST["ddlClass"];
             $birthday = $_POST["txtBirthday"];
-            $password = $_POST["txtPassword"];
 	
 			// Check if a new image file was uploaded
 			if(!empty($_FILES['image']['name'])) {
@@ -133,7 +124,7 @@ if($_GET["data"] == "add_student"){
 	
 			// Update the image file and user data in the database
 			$sql = "UPDATE Student SET startYear=:startYear, endYear=:endYear, studentName=:studentName,
-             gender=:gender, classId=:classId, birthday=:birthday, password=:password, image=:image where id=:id;";
+             gender=:gender, classId=:classId, birthday=:birthday, image=:image where id=:id;";
 			$update = $conn->prepare($sql);
 			$update->bindParam(':image', $image);
             $update->bindParam(':startYear', $start);
@@ -142,7 +133,6 @@ if($_GET["data"] == "add_student"){
             $update->bindParam(':gender', $gender);
             $update->bindParam(':classId', $class);
             $update->bindParam(':birthday', $birthday);
-            $update->bindParam(':password', $password);
 			$update->bindParam(':id', $id);
 	
 			if($update->execute()){
@@ -219,7 +209,7 @@ if($_GET["data"] == "add_student"){
 
             $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
             $row['image'],  $row['gender'],$row['className'],
-            $row["birthday"], $row["password"],$status, $row['createdAt']);
+            $row["birthday"],$status, $row['createdAt']);
 
         }
         echo json_encode($student);

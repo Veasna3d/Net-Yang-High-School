@@ -25,7 +25,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
-                pageLength: 5,
+                pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                     infoEmpty: 'Showing 0 entries',
@@ -62,74 +62,86 @@ $(document).ready(function() {
     displayData();
 })
 
-$('#btnSave').click(function() {
-    var categoryCode = $('#categoryCode');
-    var categoryName = $('#categoryName');
-    if(categoryCode.val() == ""){
-        categoryCode.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះ!").css("margin-top", "2rem");
-    }
-    else if(categoryName.val() == ""){
-        categoryName.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះ!").css("margin-top", "2rem");
-    }
-  // Check if txtName already exists in database
-$.ajax({
-    type: 'POST',
-    url: './controllers/category_json.php?data=check_category_name',
-    data: {categoryCode: categoryCode.val(), categoryName: categoryName.val()},
-    dataType: 'json',
-    success: function(data) {
-        if (data.exists) {
-            categoryCode.focus();
-            categoryName.focus();
-            toastr.warning("ឈ្មោះ​មាន​រួច​ហើយ​ក្នុង​​ទិន្នន័យ!").css("margin-top", "2rem");
-        } else {
-            var form_data = $('#form').serialize();
-            if ($('#btnSave').text() == "រក្សាទុក") {
-                // Insert
-                $.ajax({
-                    type: 'POST',
-                    url: './controllers/category_json.php?data=add_category',
-                    data: form_data,
-                    dataType: 'json',
-                    success: function(data) {
-                        toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                        displayData();
-                        $('#myModal').modal('hide');
-                    },
-                    error: function(ex) {
-                        toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                        console.log(ex.responseText);
-                    }
-                });
-            } else {
-                // Update
-                $.ajax({
-                    type: 'POST',
-                    url: './controllers/category_json.php?data=update_category&id=' + class_id,
-                    data: form_data,
-                    dataType: 'json',
-                    success: function(data) {
-                        toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                        displayData();
-                        $('#myModal').modal('hide');
-                    },
-                    error: function(ex) {
-                        toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                        console.log(ex.responseText);
-                    }
-                });
-            }
-        }
-    },
-    error: function(ex) {
-        toastr.error("Error checking name in database").css("margin-top", "2rem");
-        console.log(ex.responseText);
-    }
-});
+$("#btnSave").click(function () {
 
-});
+    var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
+    if ($("#btnSave").text() == "រក្សាទុក") {
+      //Insert
+  
+      var categoryCode = $("#categoryCode");
+      var categoryName = $("#categoryName");
+  
+      if (categoryCode.val() == "") {
+        categoryCode.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      } else if(categoryName.val() == "") {
+        categoryName.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      }
+  
+  
+      $.ajax({
+        type: "POST",
+        url: "./controllers/category_json.php?data=add_category",
+        data: form_data,
+        dataType: "json",
+        contentType: false, // Set to false to let jQuery decide the content type
+        processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
+        success: function (data) {
+          if (data === "Category code already exists") {
+              toastr.warning("Category code already exists").css("margin-top", "2rem");
+              $("#categoryCode").focus(); // Focus on the username box
+              return;
+          } else {
+              toastr.success("Action completed").css("margin-top", "2rem");
+              displayData();
+              $("#myModal").modal("hide");
+          }
+      },
+        error: function (ex) {
+          toastr.error("Action incomplete").css("margin-top", "2rem");
+          console.log(ex.responseText);
+        },
+      });
+    } else {
+      //Update
+  
+      var categoryCode = $("#categoryCode");
+      var categoryName = $("#categoryName");
+  
+      if (categoryCode.val() == "") {
+        categoryCode.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      } else if(categoryName.val() == "") {
+        categoryName.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      }
+  
+      $.ajax({
+        type: "POST",
+        url: "./controllers/category_json.php?data=update_category&id=" + category_id,
+        data: form_data,
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          if (data === "Category code already exists") {
+            toastr.warning("Category code already exists!").css("margin-top", "2rem");
+            $("#categoryCode").focus(); ; // Focus on the username box
+            return;
+        } else {
+            toastr.success("Action completed").css("margin-top", "2rem");
+            displayData();
+            $("#myModal").modal("hide");
+        }
+        },
+        error: function (ex) {
+          toastr.error("Action incomplete").css("margin-top", "2rem");
+          console.log(ex.responseText);
+        },
+      });
+    }
+  })
 
 
 $('#btnAdd').click(function() {
@@ -138,11 +150,11 @@ $('#btnAdd').click(function() {
     $('#btnSave').text("រក្សាទុក");
 });
 
-var class_id;
+var category_id;
 
 function editData(id) {
     $('#btnSave').text("កែប្រែ");
-    class_id = id;
+    category_id = id;
     $.ajax({
         url: './controllers/category_json.php?data=get_byid',
         data: '&id=' + id,

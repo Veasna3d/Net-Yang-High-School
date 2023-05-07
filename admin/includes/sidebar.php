@@ -83,24 +83,6 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>បញ្ជីសិស្ស</p>
                               </a>
-
-                              <a href="class.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>ថ្នាក់រៀន</p>
-                              </a>
-                              <a href="category.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>ប្រភេទសៀវភៅ</p>
-                              </a>
-                              <a href="supplier.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>អ្នក​ផ្គត់ផ្គង់</p>
-                              </a>
-
-                              <a href="print.php" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>គ្រឹះស្ថាន​ នឹង​ ទីតាំងបោះពុម្ព</p>
-                              </a>
                           </li>
                       </ul>
                   </li>
@@ -119,15 +101,23 @@
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>ឈ្មោះសាលា</p>
                               </a>
-                              <!-- <a href="news.php" class="nav-link">
+                              <a href="class.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>ផ្ដល់ព័ត៌មានថ្មីៗ</p>
+                                  <p>ថ្នាក់រៀន</p>
+                              </a>
+                              <a href="category.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>ប្រភេទសៀវភៅ</p>
+                              </a>
+                              <a href="supplier.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>អ្នក​ផ្គត់ផ្គង់</p>
                               </a>
 
-                              <a href="slide.php" class="nav-link">
+                              <a href="print.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>ការបង្ហាញ</p>
-                              </a> -->
+                                  <p>គ្រឹះស្ថាន​ នឹង​ ទីតាំងបោះពុម្ព</p>
+                              </a>
                           </li>
                       </ul>
                   </li>

@@ -12,22 +12,6 @@
         echo json_encode($print);
     }
 
-    if ($_GET['data'] == 'check_print_name') {
-        $publishingHouse = $_POST['publishingHouse'];
-        $printingHouse = $_POST['printingHouse'];
-
-       $query = "SELECT COUNT(*) as count FROM print WHERE publishingHouse = :publishingHouse AND printingHouse = :printingHouse";
-        $statement = $conn->prepare($query);
-        $statement->bindValue(':publishingHouse', $publishingHouse);
-        $statement->bindValue(':printingHouse', $printingHouse);
-        $statement->execute();
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        $count = $row['count'];
-        echo json_encode(['exists' => $count > 0]);
-        exit;
-    }
-    
-
     //1-add_class
     if($_GET["data"] == "add_print"){
         $publishingHouse = $_POST['publishingHouse'];

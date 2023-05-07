@@ -17,7 +17,7 @@ if ($_GET["data"] == "get_teacher") {
 
         $teacher[] = array(
             $row['id'], $row["teacherName"], $row["image"],
-            $row['gender'], $row['phone'], $row["password"],$status, $row['createdAt']
+            $row['gender'], $row['phone'], $status, $row['createdAt']
         );
     }
     echo json_encode($teacher);
@@ -30,27 +30,20 @@ if ($_GET["data"] == "add_teacher") {
     $teacherName = $_POST["txtTeacherName"];
     $gender = $_POST["ddlGender"];
     $phone = $_POST["txtPhone"];
-    $password = $_POST["txtPassword"];
     $image = $_FILES['image']['name'];
 
     $target_dir = "../upload/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-    if (strlen($password) > 5) {
-        echo json_encode("Password must be less than 5 characters long");
-        return;
-    }
 
-    $encrypted_password = md5($password);
 
-    $sql = "INSERT INTO Teacher (teacherName, gender, phone, password, image) VALUES 
-                                ( :teacherName, :gender, :phone, :password, :image)";
+    $sql = "INSERT INTO Teacher (teacherName, gender, phone, image) VALUES 
+                                ( :teacherName, :gender, :phone, :image)";
     $insert = $conn->prepare($sql);
     $insert->bindParam(':teacherName', $teacherName);
     $insert->bindParam(':gender', $gender);
     $insert->bindParam(':phone', $phone);
-    $insert->bindParam(':password', $encrypted_password);
     $insert->bindParam(':image', $image);
 
     if ($insert->execute()) {
@@ -69,7 +62,7 @@ if ($_GET['data'] == 'get_byid') {
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $teacher[] = array(
             $row['id'], $row["teacherName"], $row["image"],
-            $row['gender'], $row['phone'], $row["password"], $row['createdAt']
+            $row['gender'], $row['phone'], $row['createdAt']
         );
     }
     echo json_encode($teacher);
@@ -85,7 +78,6 @@ if ($_GET['data'] == 'update_teacher') {
         $teacherName = $_POST["txtTeacherName"];
         $gender = $_POST["ddlGender"];
         $phone = $_POST["txtPhone"];
-        $password = $_POST["txtPassword"];
 
         // Check if a new image file was uploaded
         if (!empty($_FILES['image']['name'])) {
@@ -105,14 +97,13 @@ if ($_GET['data'] == 'update_teacher') {
 
         // Update the image file and user data in the database
         $sql = "UPDATE Teacher SET teacherName=:teacherName,
-                gender=:gender, phone=:phone, password=:password, 
+                gender=:gender, phone=:phone,
                 image=:image where id=:id;";
         $update = $conn->prepare($sql);
         $update->bindParam(':image', $image);
         $update->bindParam(':teacherName', $teacherName);
         $update->bindParam(':gender', $gender);
         $update->bindParam(':phone', $phone);
-        $update->bindParam(':password', $password);
         $update->bindParam(':id', $id);
 
         if ($update->execute()) {

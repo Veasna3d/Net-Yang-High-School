@@ -20,15 +20,8 @@ function displayData() {
                 {
                     title: "ហ្វេបុក",
                 },
-                {
-                    title: "តេលេក្រាម",
-                },
-                {
-                    title: "យូធូ",
-                },
-                {
-                    title: "ការពិពណ៌នា",
-                },
+            
+
                 {
                     title: "លេខទូរស័ព្ទ",
                 },
@@ -55,9 +48,6 @@ function displayData() {
                     alldata[i][4],
                     alldata[i][5],
                     alldata[i][6],
-                    alldata[i][7],
-                    alldata[i][8],
-                    alldata[i][9],
                     option,
                 ]);
 
@@ -67,7 +57,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
-                pageLength: 5,
+                pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                     infoEmpty: 'Showing 0 entries',
@@ -106,86 +96,78 @@ $(document).ready(function () {
 
 //btnSave
 $("#btnSave").click(function () {
-    // var start = $("#txtStartYear");
-    // var end = $("#txtEndYear");
-    // var studentName = $("#txtStudentName");
-    // var gender = $("#ddlGender");
-    // var classId = $("#ddlClass");
-    // var birthday = $("#txtBirthday");
-    // var password = $("#txtPassword");
-    // if (start.val() == "") {
-    //     start.focus();
-    //     return toastr.warning("Field Require!").css("margin-top", "2rem");
-    // } else if (start.val() == "") {
-    //     start.focus();
-    //     return toastr.warning("From Require!").css("margin-top", "2rem");
-    // } else if (end.val() == "") {
-    //     end.focus();
-    //     return toastr.warning("To Require!").css("margin-top", "2rem");
-    // }
-    // else if (studentName.val() == "") {
-    //     studentName.focus();
-    //     return toastr.warning("Student Name Require!").css("margin-top", "2rem");
-    // } else if (password.val() == "") {
-    //     password.focus();
-    //     return toastr.warning("Password Require!").css("margin-top", "2rem");
-    // } else if (password.val().length > 4) {
-    //     password.focus();
-    //     return toastr.warning("Password must be less than 5 characters long!").css("margin-top", "2rem");
-    // } else if (classId.val() == "") {
-    //     classId.focus();
-    //     return toastr.warning("Class Require!").css("margin-top", "2rem");
-    // }
-    // else if (gender.val() == "") {
-    //     gender.focus();
-    //     return toastr.warning("Gender Require!").css("margin-top", "2rem");
-    // }
-    // else if (birthday.val() == "") {
-    //     birthday.focus();
-    //     return toastr.warning("Birthday Require!").css("margin-top", "2rem");
-    // }
+
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
     if ($("#btnSave").text() == "រក្សាទុក") {
-        //Insert
-        $.ajax({
-            type: "POST",
-            url: "./controllers/brand_json.php?data=add_brand",
-            data: form_data,
-            dataType: "json",
-            contentType: false, // Set to false to let jQuery decide the content type
-            processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
-            success: function (data) {
-                toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                displayData();
-                $("#myModal").modal("hide");
-            },
-            error: function (ex) {
-                toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                console.log(ex.responseText);
-            },
-        });
+      //Insert
+  
+      var name = $("#name");
+  
+      if (name.val() == "") {
+        name.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      }
+  
+  
+      $.ajax({
+        type: "POST",
+        url: "./controllers/brand_json.php?data=add_brand",
+        data: form_data,
+        dataType: "json",
+        contentType: false, // Set to false to let jQuery decide the content type
+        processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
+        success: function (data) {
+          if (data === "Brand already exists") {
+              toastr.warning("Brand already exists").css("margin-top", "2rem");
+              $("#name").focus(); // Focus on the username box
+              return;
+          } else {
+              toastr.success("Action completed").css("margin-top", "2rem");
+              displayData();
+              $("#myModal").modal("hide");
+          }
+      },
+        error: function (ex) {
+          toastr.error("Action incomplete").css("margin-top", "2rem");
+          console.log(ex.responseText);
+        },
+      });
     } else {
-        //Update
-        $.ajax({
-            type: "POST",
-            url: "./controllers/brand_json.php?data=update_brand&id=" + teacher_id,
-            data: form_data,
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                displayData();
-                $("#myModal").modal("hide");
-            },
-            error: function (ex) {
-                toastr.error("បរាជ័យ").css("margin-top", "2rem");
-                console.log(ex.responseText);
-            },
-        });
+      //Update
+  
+      var name = $("#name");
+  
+      if (name.val() == "") {
+        name.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+      } 
+  
+      $.ajax({
+        type: "POST",
+        url: "./controllers/brand_json.php?data=update_brand&id=" + brand_id,
+        data: form_data,
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          if (data === "Brand already exists") {
+            toastr.warning("Brand already exists!").css("margin-top", "2rem");
+            $("#name").focus(); // Focus on the username box
+            return;
+        } else {
+            toastr.success("Action completed").css("margin-top", "2rem");
+            displayData();
+            $("#myModal").modal("hide");
+        }
+        },
+        error: function (ex) {
+          toastr.error("Action incomplete").css("margin-top", "2rem");
+          console.log(ex.responseText);
+        },
+      });
     }
-});
-
+  })
+  
 $("#btnAdd").click(function () {
     $("#name").val("");
     $("#image").val("");
@@ -199,11 +181,11 @@ $("#btnAdd").click(function () {
     $("#btnSave").text("រក្សាទុក");
 });
 
-var teacher_id;
+var brand_id;
 //Edit student
 function editData(id) {
     $("#btnSave").text("កែប្រែ");
-    teacher_id = id;
+    brand_id = id;
     $.ajax({
         url: "./controllers/brand_json.php?data=get_byid",
         data: "&id=" + id,
@@ -216,9 +198,6 @@ function editData(id) {
             // $("#image").val(data[0][2]);
             $("#address").val(data[0][2]);
             $("#facebook").val(data[0][3]);
-            $("#telegram").val(data[0][4]);
-            $("#youtube").val(data[0][5]);
-            $("#description").val(data[0][6]);
             $("#phone").val(data[0][7]);
             $("#email").val(data[0][8]);
 

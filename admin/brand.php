@@ -8,7 +8,7 @@
 <?php include 'includes/sidebar.php' ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper mt-5 pt-2">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">ឈ្មោះសាលា</li>
                     </ol>
                 </div>
@@ -65,56 +65,42 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="form">
-                    <div class="d-flex">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label class="form-label">ឈ្មោះ</label>
-                                <input type="text" name="name" id="name" class="form-control" />
-                            </div>
 
-                            <div class="form-group">
-                                <label for="image">រូបភាព</label>
-                                <input type="file" name="image" id="image" class="form-control-file">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">ទីតាំង</label>
-                                <input type="text" name="address" id="address" class="form-control" />
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">ហ្វេបុក</label>
-                                <input type="" name="facebook" id="facebook" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">តេលេក្រាម</label>
-                                <input type="" name="telegram" id="telegram" class="form-control" />
-                            </div>
-
-                        </div>
-                        <div class="col-6">
-                        <div class="form-group">
-                                <label class="form-label">យូធូ</label>
-                                <input type="text" name="youtube" id="youtube" class="form-control" />
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">ការពិពណ៌នា</label>
-                                <input type="" name="description" id="description" class="form-control" />
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">លេខទូរស័ព្ទ</label>
-                                <input type="" name="phone" id="phone" class="form-control" />
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="form-label">អ៊ីម៊ែល</label>
-                                <input type="Email" name="email" id="email" class="form-control" />
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">ឈ្មោះ</label>
+                        <input type="text" name="name" id="name" class="form-control" />
                     </div>
+
+                    <div class="form-group">
+                        <label class="form-label">ហ្វេបុក</label>
+                        <input type="" name="facebook" id="facebook" class="form-control" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="form-label">លេខទូរស័ព្ទ</label>
+                        <input type="" name="phone" id="phone" class="form-control" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="form-label">អ៊ីម៊ែល</label>
+                        <input type="Email" name="email" id="email" class="form-control" />
+                    </div>
+
+                    <div class="form-floating">
+                        <label class="form-label">អាសយដ្ឋាន</label>
+                        <textarea class="form-control" placeholder="កំណត់សម្គាល់" name="address" id="address"
+                            style="height: 100px"></textarea>
+                        <!-- <label for="floatingTextarea2">Comments</label> -->
+                    </div>
+
+                    <div class="form-group pt-2">
+                        <label for="image" class="btn btn-primary">រូបភាព</label>
+                        <input type="file" name="image" id="image" class="form-control-file" hidden>
+                    </div>
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
                         <button type="button" class="btn btn-primary" id="btnSave">រក្សាទុក</button>
@@ -128,5 +114,3 @@
 
     <?php include 'includes/footer.php' ?>
     <script src="./js/brand.js"></script>
-
-  

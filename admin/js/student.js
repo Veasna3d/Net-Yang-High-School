@@ -25,8 +25,6 @@ function displayData() {
                 }, {
                     title: "ថ្ងៃខែឆ្នាំកំណើត",
                 }, {
-                    title: "លេខសម្ងាត់",
-                }, {
                     title: "ស្ថានភាព",
                 }, {
                     title: "សកម្មភាព",
@@ -51,8 +49,7 @@ function displayData() {
                     alldata[i][5],
                     alldata[i][6],
                     alldata[i][7],
-                    "***" + alldata[i][8].slice(-2),
-                    alldata[i][9],
+                    alldata[i][8],
                     option,
                 ]);
 
@@ -62,7 +59,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
-                pageLength: 5,
+                pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
                     infoEmpty: 'Showing 0 entries',
@@ -130,45 +127,6 @@ $("#btnSave").click(function () {
 
     if ($("#btnSave").text() == "រក្សាទុក") {
         
-        var start = $("#txtStartYear");
-        var end = $("#txtEndYear");
-        var studentName = $("#txtStudentName");
-        var gender = $("#ddlGender");
-        var classId = $("#ddlClass");
-        var birthday = $("#txtBirthday");
-        var password = $("#txtPassword");
-
-        if (start.val() == "") {
-            start.focus();
-            return toastr.warning("Field Require!").css("margin-top", "2rem");
-        } else if (start.val() == "") {
-            start.focus();
-            return toastr.warning("From Require!").css("margin-top", "2rem");
-        } else if (end.val() == "") {
-            end.focus();
-            return toastr.warning("To Require!").css("margin-top", "2rem");
-        }
-        else if (studentName.val() == "") {
-            studentName.focus();
-            return toastr.warning("Student Name Require!").css("margin-top", "2rem");
-        } else if (password.val() == "") {
-            password.focus();
-            return toastr.warning("Password Require!").css("margin-top", "2rem");
-        } else if (password.val().length > 4) {
-            password.focus();
-            return toastr.warning("Password must be less than 5 characters long!").css("margin-top", "2rem");
-        } else if (classId.val() == "") {
-            classId.focus();
-            return toastr.warning("Class Require!").css("margin-top", "2rem");
-        }
-        else if (gender.val() == "") {
-            gender.focus();
-            return toastr.warning("Gender Require!").css("margin-top", "2rem");
-        }
-        else if (birthday.val() == "") {
-            birthday.focus();
-            return toastr.warning("Birthday Require!").css("margin-top", "2rem");
-        }
         //Insert
         $.ajax({
             type: "POST",
@@ -189,42 +147,6 @@ $("#btnSave").click(function () {
         });
     } else {
 
-        var start = $("#txtStartYear");
-        var end = $("#txtEndYear");
-        var studentName = $("#txtStudentName");
-        var gender = $("#ddlGender");
-        var classId = $("#ddlClass");
-        var birthday = $("#txtBirthday");
-        var password = $("#txtPassword");
-
-        if (start.val() == "") {
-            start.focus();
-            return toastr.warning("Field Require!").css("margin-top", "2rem");
-        } else if (start.val() == "") {
-            start.focus();
-            return toastr.warning("From Require!").css("margin-top", "2rem");
-        } else if (end.val() == "") {
-            end.focus();
-            return toastr.warning("To Require!").css("margin-top", "2rem");
-        }
-        else if (studentName.val() == "") {
-            studentName.focus();
-            return toastr.warning("Student Name Require!").css("margin-top", "2rem");
-        } else if (password.val() == "") {
-            password.focus();
-            return toastr.warning("Password Require!").css("margin-top", "2rem");
-        } else if (classId.val() == "") {
-            classId.focus();
-            return toastr.warning("Class Require!").css("margin-top", "2rem");
-        }
-        else if (gender.val() == "") {
-            gender.focus();
-            return toastr.warning("Gender Require!").css("margin-top", "2rem");
-        }
-        else if (birthday.val() == "") {
-            birthday.focus();
-            return toastr.warning("Birthday Require!").css("margin-top", "2rem");
-        }
         //Update
         $.ajax({
             type: "POST",
@@ -253,7 +175,6 @@ $("#btnAdd").click(function () {
     $("#ddlGender").val("");
     $("#ddlClass").val("");
     $("#txtBirthday").val("");
-    $("#txtPassword").val("");
     $("#image").val("");
     $("#btnSave").text("រក្សាទុក");
 });
@@ -353,7 +274,7 @@ function viewStudentModal(id) {
                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
                 "<tr> <td>" +
                 "<div class='d-flex flex-column'> <span class='text-left head'><b>ភេទ</b></span> <span class='text-left bottom'>" + student[5] + "</span></div></td> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ស្ថានភាព</b></span> <span class='text-left bottom'>" + student[9] + "</span> </div></td> </tr>" +
+                "<div class='d-flex flex-column'> <span class='text-left head'><b>ស្ថានភាព</b></span> <span class='text-left bottom'>" + student[8] + "</span> </div></td> </tr>" +
                 "</tbody></table></div></div> </div></div> </div></div></div></div>";
 
             // Check if the disable_student data is equal to 0

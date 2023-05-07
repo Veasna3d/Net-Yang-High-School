@@ -8,7 +8,7 @@
 <?php include 'includes/sidebar.php' ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper mt-5 pt-2">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -66,6 +66,7 @@
             <div class="modal-body">
                 <form method="post" id="form">
                     <div class="d-flex">
+                        
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="ddlStudent">សិស្ស</label>

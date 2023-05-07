@@ -87,70 +87,7 @@ if ($_GET['data'] == 'get_byid') {
 }
 
 //5 update_user
-// if($_GET['data'] == 'update_user'){
 
-// 	if(empty($_POST['txtUsername'])){
-// 		echo json_encode("Please check the empty fields!");
-// 	}else{
-// 		$id = $_GET['id'];
-// 		$username = $_POST["txtUsername"];
-// 		$email = $_POST["txtEmail"];
-// 		$password = $_POST["txtPassword"];
-
-// 		// Check if a new image file was uploaded
-// 		if(!empty($_FILES['image']['name'])) {
-// 			// Get the image file and move it to the uploads directory
-// 			$image = $_FILES['image']['name'];
-// 			$target_dir = "../upload/";
-// 			$target_file = $target_dir . basename($_FILES["image"]["name"]);
-// 			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-// 		} else {
-// 			// Get the old image file name from the database
-// 			$stmt = $conn->prepare("SELECT image FROM User WHERE id=:id");
-// 			$stmt->bindParam(':id', $id);
-// 			$stmt->execute();
-// 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-// 			$image = $row['image'];
-// 		}
-
-// 		// Check if a new password was entered and encrypt it
-// 		if(!empty($password)) {
-// 			$encrypted_password = md5($password);
-// 		} else {
-// 			// If no new password was entered, use the existing one
-// 			$stmt = $conn->prepare("SELECT password FROM User WHERE id=:id");
-// 			$stmt->bindParam(':id', $id);
-// 			$stmt->execute();
-// 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-// 			$encrypted_password = $row['password'];
-// 		}
-		
-
-// 		// Update the image file and user data in the database
-// 		$sql = "UPDATE User SET username=:username, email=:email, password=:password, image=:image where id=:id;";
-// 		$update = $conn->prepare($sql);
-// 		$update->bindParam(':image', $image);
-// 		$update->bindParam(':username', $username);
-// 		$update->bindParam(':email', $email);
-// 		$update->bindParam(':password', $encrypted_password);
-// 		$update->bindParam(':id', $id);
-
-// 		if($update->execute()){
-// 			// If the update was successful, delete the old image file if it exists
-// 			if(!empty($_FILES['image']['name'])) {
-// 				if(isset($_POST['oldImage']) && !empty($_POST['oldImage'])) {
-// 					$old_image = $_POST['oldImage'];
-// 					if(file_exists('../upload/' . $old_image)) {
-// 						unlink('../upload/' . $old_image);
-// 					}
-// 				}
-// 			}
-// 			echo json_encode("Update Success");
-// 		}else{
-// 			echo json_encode("Update Failed");
-// 		}
-// 	}
-// }
 if($_GET['data'] == 'update_user'){
 
     if(empty($_POST['txtUsername'])){

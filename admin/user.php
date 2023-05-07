@@ -10,7 +10,7 @@
 
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper mt-5 pt-2">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">

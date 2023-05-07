@@ -13,7 +13,7 @@ include 'includes/timezone.php';
 <?php include 'includes/sidebar.php' ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper mt-5 pt-2">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
