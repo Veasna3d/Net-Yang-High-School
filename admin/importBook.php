@@ -6,6 +6,8 @@ $password='';
 $dbname = "netyangdb";
 $conn=mysqli_connect($servername,$username,$password,"$dbname");
 
+// Load the database configuration file
+// include('./config/db.php');
  
 if(!empty($_FILES["file"]["name"]))
 {
@@ -40,30 +42,26 @@ if(!empty($_FILES["file"]["name"]))
             {
                 // Get row data
                 $bookCode = $getData[0];
-                $bookTitke = $getData[1];
+                $bookTitle = $getData[1];
                 $authorName = $getData[2];
                 $printId = $getData[3];
                 $publishYear = $getData[4];
                 $price = $getData[5];
                 $categoryId = $getData[6];
-              //  $image = $getData[7]; // image nullable
-                // $status = $getData[8];
+                $status = 1;
  
                 // If user already exists in the database with the same email
-               // If user already exists in the database with the same email
                 $query = "SELECT id FROM Book WHERE bookCode = '" . $getData[0] . "'";
-
+ 
                 $check = mysqli_query($conn, $query);
-
+ 
                 if ($check->num_rows > 0)
                 {
-                    mysqli_query($conn, "UPDATE Book SET bookTitle = '".$bookTitke."', categoryId = '".$categoryId."', authorName = '".$authorName."', printId = '".$printId."', publishYear = '".$publishYear."', price = '".$price."', status = '".$status."', createdAt = NOW() WHERE bookCode = '" . $bookCode . "'");
+                    mysqli_query($conn, "UPDATE Book SET bookTitle = '" . $bookTitle . "', authorName = '" . $authorName . "', printId = '" . $printId . "', publishYear = '". $publishYear ."', price = '". $price ."', categoryId = '". $categoryId ."', status = '". $status ."' WHERE bookCode = '" . $bookCode . "'");
                 }
-
                 else
                 {
-                    mysqli_query($conn, "INSERT INTO Book (bookCode, bookTitle, authorName, printId, publishYear, price, categoryId, status, createdAt) VALUES ('" . $bookCode . "', '" . $bookTitke . "', '" . $authorName. "', '" . $printId. "', '" . $publishYear. "', '" . $price. "', '" . $categoryId. "', '" . $status. "', NOW() )");
-
+                     mysqli_query($conn, "INSERT INTO Book (bookCode,bookTitle,authorName,printId, publishYear, price, categoryId, status) VALUES ('" . $bookCode . "', '" . $bookTitle . "', '" . $authorName. "','" . $printId. "', '". $publishYear ."', '". $price ."', '". $categoryId ."', '". $status ."' )");
  
                 }
             }

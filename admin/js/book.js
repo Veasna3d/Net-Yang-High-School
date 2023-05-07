@@ -204,8 +204,17 @@ function registerCustomButtonHandlers() {
                 });
                 btn2.append('Unavailable');
     
+                var btn3 = $('<button>').attr({
+                    id: 'btnImport',
+                    type: 'button',
+                    class: 'btn btn-info',
+                    'data-toggle': 'modal',
+                    'data-target': '#myImport'
+                });
+                btn3.append('Import');
+    
                 // Add the custom button to the DataTables toolbar
-                $('#btn-container').append(btn1, btn2);
+                $('#btn-container').append(btn1, btn2, btn3);
                 $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
     
     
@@ -213,7 +222,7 @@ function registerCustomButtonHandlers() {
                 registerCustomButtonHandlers();
     
                 // Move the custom button to the left of the other buttons
-                $('.dt-buttons').prepend(btn1, btn2);
+                $('.dt-buttons').prepend(btn3, btn1, btn2);
                 $('.dt-buttons').prepend($('#btnAdd'));
     
     
@@ -314,8 +323,17 @@ function registerCustomButtonHandlers() {
                 });
                 btn2.append('Unavailable');
     
+                var btn3 = $('<button>').attr({
+                    id: 'btnImport',
+                    type: 'button',
+                    class: 'btn btn-info',
+                    'data-toggle': 'modal',
+                    'data-target': '#myImport'
+                });
+                btn3.append('Import');
+    
                 // Add the custom button to the DataTables toolbar
-                $('#btn-container').append(btn1, btn2);
+                $('#btn-container').append(btn1, btn2, btn3);
                 $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
     
     
@@ -323,7 +341,7 @@ function registerCustomButtonHandlers() {
                 registerCustomButtonHandlers();
     
                 // Move the custom button to the left of the other buttons
-                $('.dt-buttons').prepend(btn1, btn2);
+                $('.dt-buttons').prepend(btn3, btn1, btn2);
                 $('.dt-buttons').prepend($('#btnAdd'));
     
     
@@ -781,7 +799,7 @@ $(document).ready(function(){
                     toastr.success("CSV file data has been imported").css("margin-top", "2rem");
                       // alert("CSV file data has been imported");  
                       $('#upload_csv_form')[0].reset();
-                      alert(data);
+                    //   alert(data);
                       $("#myImport").modal("hide");
                       displayData();
                      

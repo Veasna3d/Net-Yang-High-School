@@ -72,8 +72,6 @@ if ($_GET['data'] == 'get_byid') {
             $row["name"],
             $row["image"],
             $row["facebook"],
-            $row["telegram"],
-            $row["youtube"],
             $row["phone"],
             $row["email"],
             $row["createdAt"]
@@ -122,7 +120,7 @@ if($_GET['data'] == 'update_brand'){
         } else {
 
             // Update the image file and user data in the database
-            $sql = "UPDATE User SET name=:name, image=:image, address=:address, facebook=:facebook, phone=:phone, email=:email  where id=:id;";
+            $sql = "UPDATE Brand SET name=:name, image=:image, address=:address, facebook=:facebook, phone=:phone, email=:email  where id=:id;";
             $update = $conn->prepare($sql);
             $update->bindParam(':name', $name);
             $update->bindParam(':image', $image);
