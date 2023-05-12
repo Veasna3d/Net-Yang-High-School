@@ -133,14 +133,24 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="r_import.php" class="nav-link">
+                          <a href="r_book.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>ការនាំចូល​​​​​​​​​​​​​​​​​​​​​</p>
+                                  <p>បញ្ជីសារពើភណ្ឌ</p>
                               </a>
-                              <a href="r_borrow.php" class="nav-link">
+                              <a href="r_read.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>ការខ្ចីសៀវភៅ​​​​​​​​​​​​​​​​​​​​​</p>
+                                  <p>អានសៀវភៅ</p>
                               </a>
+                              <a href="sr_borrow.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>សិស្ស</p>
+                              </a>
+                              <a href="tr_borrow.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>គ្រូ</p>
+                              </a>
+
+                    
                           </li>
                       </ul>
                   </li>

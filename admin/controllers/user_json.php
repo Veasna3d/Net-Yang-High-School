@@ -18,17 +18,6 @@ if ($_GET["data"] == "get_user") {
 	echo json_encode($user);
 }
 
-// if ($_GET['data'] == 'check_username') {
-// 	$name = $_POST['name'];
-// 	$query = "SELECT COUNT(*) as count FROM user WHERE username = :name";
-// 	$statement = $conn->prepare($query);
-// 	$statement->bindValue(':name', $name);
-// 	$statement->execute();
-// 	$row = $statement->fetch(PDO::FETCH_ASSOC);
-// 	$count = $row['count'];
-// 	echo json_encode(['exists' => $count > 0]);
-// 	exit;
-// }
 
 //add_user
 if ($_GET["data"] == "add_user") {
