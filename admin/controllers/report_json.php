@@ -27,7 +27,7 @@ if ($_GET["data"] == "get_reader") {
 }
 
     //4 Get Teacher Borrow
-    if ($_GET["data"] == "get_seacherBorrow") {
+    if ($_GET["data"] == "get_teacherBorrow") {
       $date1 = $_GET["date1"];
       $date2 = $_GET["date2"];
       $new_date1 = date('Y-m-d', strtotime($date1)); // convert string to date format
