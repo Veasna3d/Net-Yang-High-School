@@ -30,8 +30,7 @@ function displayData() {
                     alldata[i][0] +
                     ")'><i class='fa fa-id-card'></i> </button> | <button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
-                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button>";
+                    ")'><i class='fa fa-edit'></i> </button> ";
 
                 data.push([
                     alldata[i][0],
@@ -170,7 +169,7 @@ function editData(id) {
 //Delete teacher
 function deleteData(id) {
     Swal.fire({
-        title: "តើអ្នកចង់លុបសិស្សនេះចេញពីប្រព័ន្ធ?",
+        title: "តើអ្នកចង់លុបទិន្នន័យនេះចេញពីប្រព័ន្ធ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -207,6 +206,7 @@ function deleteData(id) {
     });
 }
 
+//disabled teacher
 function disabledData(id) {
     Swal.fire({
         title: "ប្រសិនបើអ្នកពាក្យថា Inactive នោះ User មិនអាចប្រើប្រាស់ក្នុងប្រព័ន្ធបានទៀតទេ!",
@@ -245,6 +245,8 @@ function disabledData(id) {
         }
     });
 }
+
+
 
 
 

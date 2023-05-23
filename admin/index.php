@@ -55,7 +55,8 @@ include 'includes/timezone.php';
                         <div class="icon">
                             <i class="fa fa-book"></i>
                         </div>
-                        <a href="import.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="import.php" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -75,7 +76,8 @@ include 'includes/timezone.php';
                         <div class="icon">
                             <i class="fa fa-server"></i>
                         </div>
-                        <a href="category.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="category.php" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -97,7 +99,8 @@ include 'includes/timezone.php';
                         <div class="icon">
                             <i class="fa fa-users"></i>
                         </div>
-                        <a href="student.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="student.php" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -119,7 +122,8 @@ include 'includes/timezone.php';
                         <div class="icon">
                             <i class="fa fa-users"></i>
                         </div>
-                        <a href="teacher.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="teacher.php" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -134,10 +138,10 @@ include 'includes/timezone.php';
                             <div class="form-group me-2">
                                 <label for="select_year">Select Year:</label>
                                 <select class="form-control" id="select_year">
-                                    <?php for ($i = 2022; $i <= 2025; $i++) { ?>
-                                        <?php $selected = ($i == $year) ? 'selected' : ''; ?>
-                                        <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
-                                        </option>
+                                    <?php for ($i = 2023; $i <= 2026; $i++) { ?>
+                                    <?php $selected = ($i == $year) ? 'selected' : ''; ?>
+                                    <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -146,7 +150,8 @@ include 'includes/timezone.php';
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        <canvas id="barChart"
+                            style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -163,29 +168,29 @@ include 'includes/timezone.php';
 
 <?php include 'includes/footer.php' ?>
 <?php
-$and = 'AND YEAR(date) = :year';
-$months = array();
-$return = array();
-$borrow = array();
-for ($m = 1; $m <= 12; $m++) {
-    $month = str_pad($m, 2, 0, STR_PAD_LEFT);
-    $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(returnDate) = :month AND YEAR(returnDate) = :year AND status=1";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute(['month' => $month, 'year' => $year]);
-    array_push($return, $stmt->rowCount());
+    $and = 'AND YEAR(date) = :year';
+    $months = array();
+    $return = array();
+    $borrow = array();
+    for ($m = 1; $m <= 12; $m++) {
+        $month = str_pad($m, 2, 0, STR_PAD_LEFT);
+        $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(createdAt) = :month AND YEAR(createdAt) = :year AND status=1";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['month' => $month, 'year' => $year]);
+        array_push($return, $stmt->rowCount());
 
-    $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(borrowDate) = :month AND YEAR(borrowDate) = :year AND status=0";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute(['month' => $month, 'year' => $year]);
-    array_push($borrow, $stmt->rowCount());
+        $sql = "SELECT id, bookId, studentId FROM borrow WHERE MONTH(createdAt) = :month AND YEAR(createdAt) = :year AND status=0";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['month' => $month, 'year' => $year]);
+        array_push($borrow, $stmt->rowCount());
 
-    $month_name = date('M', mktime(0, 0, 0, $m, 1));
-    array_push($months, $month_name);
-}
+        $month_name = date('M', mktime(0, 0, 0, $m, 1));
+        array_push($months, $month_name);
+    }
 
-$months = json_encode($months);
-$return = json_encode($return);
-$borrow = json_encode($borrow);
+    $months = json_encode($months);
+    $return = json_encode($return);
+    $borrow = json_encode($borrow);
 ?>
 
 <!-- End Chart Data -->
@@ -195,16 +200,16 @@ $borrow = json_encode($borrow);
         var areaChartData = {
             labels: <?php echo $months; ?>,
             datasets: [{
-                    label: 'Borrow',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
+                    label: 'បានសង',
+                    backgroundColor: 'rgba(53, 240, 195, 0.8)',
+                    borderColor: 'rgba(255, 161, 0, 1)',
                     data: [10, 20, 30, 40, 50, 60, 70],
                     data: <?php echo $borrow; ?>
                 },
                 {
-                    label: 'Return',
-                    backgroundColor: 'rgba(210, 214, 222, 1)',
-                    borderColor: 'rgba(210, 214, 222, 1)',
+                    label: 'បានខ្ចី',
+                    backgroundColor: 'rgba(3, 189, 66, 0.8)',
+                    borderColor: 'rgba(255, 161, 0, 1)',
                     data: [30, 50, 20, 60, 40, 80, 10],
                     data: <?php echo $return; ?>
                 }

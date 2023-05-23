@@ -211,7 +211,7 @@ function editData(id) {
 //Delete Student
 function deleteData(id) {
     Swal.fire({
-        title: "តើអ្នកចង់លុបសិស្សនេះចេញពីប្រព័ន្ធ?",
+        title: "តើអ្នកចង់លុបទិន្នន័យនេះចេញពីប្រព័ន្ធ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

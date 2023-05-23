@@ -110,8 +110,10 @@
                     </div>
                     <div class="form-group">
                         <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file d-none">
+                        <input type="file" name="image" id="image" class="form-control-file d-none"
+                            onchange="previewImage(event)">
                     </div>
+                    <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
@@ -155,4 +157,15 @@ $(function() {
         yearRange: "c-10:c+10" // Optional, limits the year range available to select
     });
 });
+
+//Preview Image
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var img = document.getElementById('image-preview');
+        img.src = reader.result;
+        img.classList.remove('d-none');
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
 </script>

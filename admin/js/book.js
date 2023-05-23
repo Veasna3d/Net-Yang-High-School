@@ -30,11 +30,11 @@ function displayData() {
             var data = [];
             var option = '';
             for (var i in alldata) {
-                option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+                option = "<div style='display: flex;'><button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
                     alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='notAvailable(" +
-                    alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
+                    alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button></div>";
                 data.push(
                     [
                         //alldata[i][0],
@@ -555,7 +555,7 @@ function editData(id) {
 //Delete Book
 function deleteData(id) {
     Swal.fire({
-        title: "តើអ្នកចង់លុបសិស្សនេះចេញពីប្រព័ន្ធ?",
+        title: "តើអ្នកចង់លុបទិន្នន័យនេះចេញពីប្រព័ន្ធ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

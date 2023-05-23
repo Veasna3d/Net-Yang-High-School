@@ -90,15 +90,17 @@
 
                     <div class="form-floating">
                         <label class="form-label">អាសយដ្ឋាន</label>
-                        <textarea class="form-control" placeholder="កំណត់សម្គាល់" name="address" id="address"
+                        <textarea class="form-control" placeholder="អាសយដ្ឋាន" name="address" id="address"
                             style="height: 100px"></textarea>
                         <!-- <label for="floatingTextarea2">Comments</label> -->
                     </div>
 
                     <div class="form-group pt-2">
-                        <label for="image" class="btn btn-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file" hidden>
+                        <label for="image" class="btn btn-outline-primary">រូបភាព</label>
+                        <input type="file" name="image" id="image" class="form-control-file d-none"
+                            onchange="previewImage(event)">
                     </div>
+                    <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
 
 
                     <div class="modal-footer">
@@ -110,7 +112,20 @@
             </div>
         </div>
     </div>
+</div>
 
 
-    <?php include 'includes/footer.php' ?>
-    <script src="./js/brand.js"></script>
+<?php include 'includes/footer.php' ?>
+<script src="./js/brand.js"></script>
+<script>
+//Preview Image
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var img = document.getElementById('image-preview');
+        img.src = reader.result;
+        img.classList.remove('d-none');
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>

@@ -154,7 +154,7 @@
                           </li>
                       </ul>
                   </li>
-                  <li class="nav-header">សុវត្ថិភាណ</li>
+                  <li class="nav-header">សុវត្ថិភាព</li>
                   <li class="nav-item">
                       <a href="user.php" class="nav-link">
                       <i class="fa fa-lock"></i>
