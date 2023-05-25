@@ -7,8 +7,8 @@ function displayData() {
         success: function(alldata) {
             var columns = [
                 {title: 'ល.រ'},
-                {title: 'ប្រភេទកូដ'},
-                {title: 'ប្រភេទឈ្មោះ'},
+                {title: 'កូដ'},
+                {title: 'ឈ្មោះ'},
                 {title: 'សកម្មភាព'}
             ];
             var data = [];

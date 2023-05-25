@@ -207,44 +207,6 @@ function deleteData(id) {
 }
 
 //disabled teacher
-// function disabledData(id) {
-//     Swal.fire({
-//         title: "ប្រសិនបើអ្នកពាក្យថា Inactive នោះ User មិនអាចប្រើប្រាស់ក្នុងប្រព័ន្ធបានទៀតទេ!",
-//         icon: "warning",
-//         showCancelButton: true,
-//         confirmButtonColor: "#d33",
-//         cancelButtonColor: "#3085d6",
-//         cancelButtonText: "No",
-//         confirmButtonText: "Inactive!",
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             $.ajax({
-//                 type: "GET",
-//                 url: "./controllers/teacher_json.php?data=disable_teacher&id=" + id,
-//                 dataType: "json",
-//                 success: function (data) {
-//                     Swal.fire({
-//                         title: "ជោគជ័យ",
-//                         icon: "success",
-//                         showConfirmButton: false,
-//                         timer: 2000,
-//                     });
-//                     displayData();
-//                 },
-//                 error: function (ex) {
-//                     Swal.fire({
-//                         title: "បរាជ័យ",
-//                         text: ex.responseText,
-//                         icon: "error",
-//                         showConfirmButton: false,
-//                         timer: 2000,
-//                     });
-//                     console.log(ex.responseText);
-//                 },
-//             });
-//         }
-//     });
-// }
 function disabledData(id) {
     // Make an AJAX request to retrieve the teacher data
     $.ajax({
@@ -293,12 +255,42 @@ function disabledData(id) {
                     }
                 });
             } else {
-                // Display a message indicating that the teacher is already disabled
                 Swal.fire({
-                    title: "User ត្រូវបាន Disabled!",
-                    icon: "info",
-                    showConfirmButton: false,
-                    timer: 2000,
+                    title: "ដំណើរការ User ឡើងវិញ!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "",
+                    cancelButtonColor: "#3085d6",
+                    cancelButtonText: "No",
+                    confirmButtonText: "Active!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Make an AJAX request to disable the teacher
+                        $.ajax({
+                            type: "GET",
+                            url: "./controllers/teacher_json.php?data=active_teacher&id=" + id,
+                            dataType: "json",
+                            success: function () {
+                                Swal.fire({
+                                    title: "ជោគជ័យ",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                                displayData();
+                            },
+                            error: function (ex) {
+                                Swal.fire({
+                                    title: "បរាជ័យ",
+                                    text: ex.responseText,
+                                    icon: "error",
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                                console.log(ex.responseText);
+                            },
+                        });
+                    }
                 });
             }
         },

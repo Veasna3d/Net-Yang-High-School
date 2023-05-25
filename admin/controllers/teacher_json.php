@@ -165,6 +165,24 @@ if($_GET['data'] == 'disable_teacher'){
         echo json_encode("Return Faild");
     }
 }
+
+//active
+if($_GET['data'] == 'active_teacher'){
+        
+    $id = $_GET['id'];
+    $status = 1;
+    $sql = "UPDATE Teacher SET status=:status WHERE id=:id;";
+    $update = $conn->prepare($sql);
+
+    $update->bindParam(':status', $status);
+    $update->bindParam(':id', $id);
+
+    if($update->execute()){
+        echo json_encode("Return Success");
+    }else{
+        echo json_encode("Return Faild");
+    }
+}
 ?>
 
 

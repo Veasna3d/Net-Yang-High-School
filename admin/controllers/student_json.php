@@ -195,6 +195,24 @@ if($_GET["data"] == "add_student"){
         }
     }
 
+    //active
+    if($_GET['data'] == 'active_student'){
+        
+        $id = $_GET['id'];
+        $status = 1;
+        $sql = "UPDATE Student SET status=:status WHERE id=:id;";
+        $update = $conn->prepare($sql);
+    
+        $update->bindParam(':status', $status);
+        $update->bindParam(':id', $id);
+    
+        if($update->execute()){
+            echo json_encode("Return Success");
+        }else{
+            echo json_encode("Return Faild");
+        }
+    }
+
     		// view student
 	if($_GET['data'] == 'view_student'){
         $result = $conn->prepare("SELECT * FROM vStudent WHERE id=:id");
