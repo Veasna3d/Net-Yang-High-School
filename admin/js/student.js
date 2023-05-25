@@ -69,9 +69,9 @@ function displayData() {
                 autoWidth: false,
                 buttons: ['icon pfd'],
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-5'i><'col-md-7'p>>" +
-                "<'row'<'col-md-5'l><'#btn-container'>>",
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>" +
+                    "<'row'<'col-md-5'l><'#btn-container'>>",
             });
             // Add the custom button to the DataTables toolbar
             $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
@@ -125,7 +125,7 @@ $("#btnSave").click(function () {
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
 
     if ($("#btnSave").text() == "រក្សាទុក") {
-        
+
         //Insert
         $.ajax({
             type: "POST",
@@ -251,84 +251,106 @@ function deleteData(id) {
 function viewStudentModal(id) {
     $.ajax({
         type: "GET",
-        url: "./controllers/student_json.php?data=view_student&id=" + id,
+        url: "./controllers/student_json.php?data=get_byid&id=" + id,
         dataType: "json",
         success: function (data) {
-            var student = data[0]; // extract the student information from the JSON response
-            var modalContent = "<div class='container'>" +
-                "<div class='row d-flex justify-content-center'>" +
-                "<div class='col-md-12'>" +
-                "<div class='card p-2 text-center'>" +
-                "<div class='row'>" +
-                "<div class='col-md-12 border-right no-gutters'>" +
-                " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
-                " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
-                "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
-                "<hr>" +
-                "<div class='stats'>" +
-                "<table class='table table-borderless'>" +
-                "<tbody> " +
-                "<tr> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
-                "<tr> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ភេទ</b></span> <span class='text-left bottom'>" + student[5] + "</span></div></td> <td>" +
-                "<div class='d-flex flex-column'> <span class='text-left head'><b>ស្ថានភាព</b></span> <span class='text-left bottom'>" + student[8] + "</span> </div></td> </tr>" +
-                "</tbody></table></div></div> </div></div> </div></div></div></div>";
+            var student = data[0];
+            if (student[8] === 1) {
+                $.ajax({
+                    type: "GET",
+                    url: "./controllers/student_json.php?data=view_student&id=" + id,
+                    dataType: "json",
+                    success: function (data) {
+                        var student = data[0];
+                        // extract the student information from the JSON response
+                        var modalContent = "<div class='container'>" +
+                            "<div class='row d-flex justify-content-center'>" +
+                            "<div class='col-md-12'>" +
+                            "<div class='card p-2 text-center'>" +
+                            "<div class='row'>" +
+                            "<div class='col-md-12 border-right no-gutters'>" +
+                            " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
+                            " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
+                            "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
+                            "<hr>" +
+                            "<div class='stats'>" +
+                            "<table class='table table-borderless'>" +
+                            "<tbody> " +
+                            "<tr> <td>" +
+                            "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្ងៃខែឆ្នាំកំណើត</b></span> <span class='text-left bottom'>" + student[7] + "</span></div></td> <td>" +
+                            "<div class='d-flex flex-column'> <span class='text-left head'><b>ថ្នាក់</b></span> <span class='text-left bottom'>" + student[6] + "</span> </div></td> </tr>" +
+                            "<tr> <td>" +
+                            "<div class='d-flex flex-column'> <span class='text-left head'><b>ភេទ</b></span> <span class='text-left bottom'>" + student[5] + "</span></div></td> <td>" +
+                            "<div class='d-flex flex-column'> <span class='text-left head'><b>ស្ថានភាព</b></span> <span class='text-left bottom'>" + student[8] + "</span> </div></td> </tr>" +
+                            "</tbody></table></div></div> </div></div> </div></div></div></div>";
 
-            // Check if the disable_student data is equal to 0
-            Swal.fire({
-                title: "ព័ត៌មានសិស្ស",
-                html: modalContent,
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                cancelButtonText: "No",
-                confirmButtonText: "Inactive!",
+                        // Check if the disable_student data is equal to 0
+                        Swal.fire({
+                            title: "ព័ត៌មានសិស្ស",
+                            html: modalContent,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#3085d6",
+                            cancelButtonText: "No",
+                            confirmButtonText: "Inactive!",
 
-                onBeforeOpen: () => {
-                    const confirmButton = Swal.getConfirmButton();
-                    if (student[8] == 0) {
-                        confirmButton.disabled = true;
-                    } else {
-                        confirmButton.disabled = false;
-                    }
-                },
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "GET",
-                        url: "./controllers/student_json.php?data=disable_student&id=" + id,
-                        dataType: "json",
-                        success: function (data) {
-                            Swal.fire({
-                                title: "ជោគជ័យ",
-                                icon: "success",
-                                timer: 2000,
-                            });
-                            displayData();
-                        },
-                        error: function (ex) {
-                            Swal.fire({
-                                title: "បរាជ័យ",
-                                text: ex.responseText,
-                                icon: "error",
-                                timer: 2000,
-                            });
-                            console.log(ex.responseText);
-                        },
-                    });
-                }
-            });
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "./controllers/student_json.php?data=disable_student&id=" + id,
+                                    dataType: "json",
+                                    success: function (data) {
+                                        Swal.fire({
+                                            title: "ជោគជ័យ",
+                                            icon: "success",
+                                            timer: 2000,
+                                        });
+                                        displayData();
+                                    },
+                                    error: function (ex) {
+                                        Swal.fire({
+                                            title: "បរាជ័យ",
+                                            text: ex.responseText,
+                                            icon: "error",
+                                            timer: 2000,
+                                        });
+                                        console.log(ex.responseText);
+                                    },
+                                });
+                            }
+                        });
+                    },
+                    error: function (ex) {
+                        Swal.fire({
+                            title: "Error",
+                            text: ex.responseText,
+                            icon: "error",
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
+                        console.log(ex.responseText);
+                    },
+                });
+            } else {
+                Swal.fire({
+                    title: "User ត្រូវបាន Disabled!",
+                    icon: "info",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+
+
         },
         error: function (ex) {
             Swal.fire({
-                title: "Error",
+                title: "បរាជ័យ",
                 text: ex.responseText,
                 icon: "error",
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 2000,
             });
             console.log(ex.responseText);
         },

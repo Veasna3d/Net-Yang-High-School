@@ -62,7 +62,7 @@ if ($_GET['data'] == 'get_byid') {
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $teacher[] = array(
             $row['id'], $row["teacherName"], $row["image"],
-            $row['gender'], $row['phone'], $row['createdAt']
+            $row['gender'], $row['phone'], $row["status"], $row['createdAt']
         );
     }
     echo json_encode($teacher);
@@ -165,21 +165,6 @@ if($_GET['data'] == 'disable_teacher'){
         echo json_encode("Return Faild");
     }
 }
-
-//get status
-if ($_GET['data'] == 'get_teacher_status') {
-    $id = $_GET['id'];
-    
-    // Assuming you have a database connection established, and $conn represents that connection.
-    $sql = "SELECT status FROM Teacher WHERE id = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $status = $result['status'];
-    
-    echo json_encode($status);
-}
+?>
 
 

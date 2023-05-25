@@ -213,4 +213,21 @@ if($_GET["data"] == "add_student"){
 
         }
         echo json_encode($student);
+
+
+        //get status
+        if ($_GET["data"] == "get_student_detail") {
+            $result = $conn->prepare("SELECT * FROM Student WHERE id=:id");
+            $result->bindParam(':id', $_GET['id']);
+            $result->execute();
+            $student = [];
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        
+                $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
+                    $row['image'],  $row['gender'],$row['className'],
+                    $row["birthday"],$status, $row['createdAt']);
+            }
+            
+            echo json_encode($student);
+        }
 }
