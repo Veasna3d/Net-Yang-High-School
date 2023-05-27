@@ -12,7 +12,7 @@ function displayData() {
             }, {
                 title: "សៀវភៅ"
             }, {
-                title: "ម្នាស់អំណោយ"
+                title: "ម្ចាស់អំណោយ"
             },
             {
                 title: "ចំនួនសៀវភៅ"

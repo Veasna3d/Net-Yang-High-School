@@ -12,7 +12,7 @@
             if ($row['status'] == 1) {
                 $status = "<span class='badge badge-pill badge-primary'>Active</span>";
             } else {
-                $status = "<span class='badge badge-pill badge-danger'>Inactive</span>";
+                $status = "<span class='badge badge-pill badge-danger'>Disabled</span>";
             }
 
             $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 
@@ -222,7 +222,7 @@ if($_GET["data"] == "add_student"){
             if ($row['status'] == 1) {
                 $status = "<span class='badge badge-pill badge-primary'>Active</span>";
             } else {
-                $status = "<span class='badge badge-pill badge-danger'>Inactive</span>";
+                $status = "<span class='badge badge-pill badge-danger'>Disabled</span>";
             }
 
             $student[] = array($row['id'], $row['startYear'],$row['endYear'], $row["studentName"], 

@@ -88,6 +88,22 @@ $(document).ready(function () {
 
 //btnSave
 $("#btnSave").click(function () {
+    
+    var teacherName = $('#txtTeacherName');
+    var gender = $('#ddlGender');
+    var phone = $('#txtPhone');
+
+    if (teacherName.val() == "") {
+        teacherName.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }else if (gender.val() == "") {
+        gender.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }else if (phone.val() == "") {
+        phone.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }
+
 
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
     if ($("#btnSave").text() == "រក្សាទុក") {
@@ -218,13 +234,13 @@ function disabledData(id) {
             // Check if the status of the teacher is 0
             if (teacher[5] === 1) {
                 Swal.fire({
-                    title: "ប្រសិនបើអ្នកពាក្យថា Inactive នោះ User មិនអាចប្រើប្រាស់ក្នុងប្រព័ន្ធបានទៀតទេ!",
+                    title: "ប្រសិនបើអ្នកពាក្យថា Disable នោះ User មិនអាចប្រើប្រាស់ក្នុងប្រព័ន្ធបានទៀតទេ!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
                     cancelButtonColor: "#3085d6",
                     cancelButtonText: "No",
-                    confirmButtonText: "Inactive!",
+                    confirmButtonText: "Disable",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Make an AJAX request to disable the teacher
@@ -262,7 +278,7 @@ function disabledData(id) {
                     confirmButtonColor: "",
                     cancelButtonColor: "#3085d6",
                     cancelButtonText: "No",
-                    confirmButtonText: "Active!",
+                    confirmButtonText: "Active",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Make an AJAX request to disable the teacher

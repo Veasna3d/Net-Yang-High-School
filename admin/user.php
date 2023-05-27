@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">អ្នកប្រើប្រាស់</li>
                     </ol>
                 </div>
@@ -83,10 +83,14 @@
                         <input type="email" name="txtEmail" id="txtEmail" class="form-control" required>
                     </div>
 
+
                     <div class="form-group">
-                        <label for="image">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file">
+                        <label for="image" class="btn btn-outline-primary">រូបភាព</label>
+                        <input type="file" name="image" id="image" class="form-control-file d-none"
+                            onchange="previewImage(event)">
                     </div>
+                    <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
+
 
 
                     <div class="modal-footer">
@@ -102,3 +106,16 @@
 
 <?php include 'includes/footer.php' ?>
 <script src="./js/user.js"></script>
+
+<script>
+//Preview Image
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var img = document.getElementById('image-preview');
+        img.src = reader.result;
+        img.classList.remove('d-none');
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>

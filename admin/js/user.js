@@ -101,17 +101,17 @@ $("#btnSave").click(function () {
       processData: false, // Set to false to prevent jQuery from processing data (i.e. no stringifying)
       success: function (data) {
         if (data === "User already exists") {
-            toastr.warning("User already exists").css("margin-top", "2rem");
-            $("#txtUsername").focus(); // Focus on the username box
-            return;
+          toastr.warning("User already exists").css("margin-top", "2rem");
+          $("#txtUsername").focus(); // Focus on the username box
+          return;
         } else {
-            toastr.success("Action completed").css("margin-top", "2rem");
-            displayData();
-            $("#myModal").modal("hide");
+          toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+          displayData();
+          $("#myModal").modal("hide");
         }
-    },
+      },
       error: function (ex) {
-        toastr.error("Action incomplete").css("margin-top", "2rem");
+        toastr.error("បរាជ័យ").css("margin-top", "2rem");
         console.log(ex.responseText);
       },
     });
@@ -148,11 +148,11 @@ $("#btnSave").click(function () {
           toastr.warning("Username already exists!").css("margin-top", "2rem");
           $("#txtUsername").focus(); // Focus on the username box
           return;
-      } else {
+        } else {
           toastr.success("Action completed").css("margin-top", "2rem");
           displayData();
           $("#myModal").modal("hide");
-      }
+        }
       },
       error: function (ex) {
         toastr.error("Action incomplete").css("margin-top", "2rem");
@@ -215,13 +215,25 @@ function deleteData(id) {
         url: "./controllers/user_json.php?data=delete_user&id=" + id,
         dataType: "json",
         success: function (data) {
-          Swal.fire({
-            title: "ជោគជ័យ",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-          displayData();
+          if (data === "cannot delete") {
+            // Alert a message if user tries to delete their own username
+            Swal.fire({
+              title: "Warning",
+              text: "អ្នកមិនអាចលុប User ដែលកំពុងប្រើប្រាស់បានទេ!",
+              icon: "warning",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            return;
+          } else {
+            Swal.fire({
+              title: "ជោគជ័យ",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            displayData();
+          }
         },
         error: function (ex) {
           Swal.fire({

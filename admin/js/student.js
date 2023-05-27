@@ -122,6 +122,31 @@ $(document).ready(function () {
 //btnSave
 $("#btnSave").click(function () {
 
+    var start = $('#txtStartYear');
+    var end = $('#txtEndYear');
+    var studentName = $('#txtStudentName');
+    var gender = $('#ddlGender');
+    var classId = $('#ddlClass');
+
+
+    if (start.val() == "") {
+        start.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }else if (end.val() == "") {
+        end.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }else if (studentName.val() == "") {
+        studentName.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }else if (gender.val() == "") {
+        gender.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }else if (classId.val() == "") {
+        classId.focus();
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
+    }
+
+
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
 
     if ($("#btnSave").text() == "រក្សាទុក") {
@@ -293,7 +318,7 @@ function viewStudentModal(id) {
                             confirmButtonColor: "#d33",
                             cancelButtonColor: "#3085d6",
                             cancelButtonText: "No",
-                            confirmButtonText: "Inactive!",
+                            confirmButtonText: "Disable",
 
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -371,7 +396,7 @@ function viewStudentModal(id) {
                             confirmButtonColor: "",
                             cancelButtonColor: "#3085d6",
                             cancelButtonText: "No",
-                            confirmButtonText: "Active!",
+                            confirmButtonText: "Active",
 
                         }).then((result) => {
                             if (result.isConfirmed) {

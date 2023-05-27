@@ -12,7 +12,7 @@ if ($_GET["data"] == "get_teacher") {
         if ($row['status'] == 1) {
             $status = "<span class='badge badge-pill badge-primary'>Active</span>";
         } else {
-            $status = "<span class='badge badge-pill badge-danger'>Inactive</span>";
+            $status = "<span class='badge badge-pill badge-danger'>Disabled</span>";
         }
 
         $teacher[] = array(

@@ -155,26 +155,35 @@ if($_GET['data'] == 'update_user'){
 
 
 //5 delete_user
+// Assuming the logged-in username is stored in a session variable named 'username'
+session_start();
+
 if ($_GET['data'] == 'delete_user') {
-	$id = $_GET['id'];
-	$stmt = $conn->prepare("SELECT image FROM User WHERE id=:id;");
-	$stmt->bindParam(':id', $id);
-	$stmt->execute();
-	$result = $stmt->fetch(PDO::FETCH_ASSOC);
-	$image = $result['image'];
+    $id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT username, image FROM User WHERE id=:id;");
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $username = $result['username'];
+    $image = $result['image'];
 
-	$delete = $conn->prepare("DELETE FROM User WHERE id=:id;");
-	$delete->bindParam(':id', $id);
+    if ($username != $_SESSION['username']) {
+        $delete = $conn->prepare("DELETE FROM User WHERE id=:id;");
+        $delete->bindParam(':id', $id);
 
-	if ($delete->execute()) {
-		// delete image from folder
-		$target_file = "upload/" . $image;
-		if (file_exists($target_file)) {
-			unlink($target_file);
-		}
+        if ($delete->execute()) {
+            // delete image from folder
+            $target_file = "../upload/" . $image;
+            if (file_exists($target_file)) {
+                unlink($target_file);
+            }
 
-		echo json_encode("Delete Success");
-	} else {
-		echo json_encode("Delete Failed");
-	}
+            echo json_encode("Delete Success");
+        } else {
+            echo json_encode("Delete Failed");
+        }
+    } else {
+        echo json_encode("cannot delete");
+    }
 }
+
