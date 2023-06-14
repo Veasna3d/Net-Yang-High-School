@@ -113,7 +113,7 @@ $('#btnSave').click(function () {
         });
     }
 })
-    
+
 
 
 
@@ -161,13 +161,24 @@ function deleteData(id) {
                 url: "./controllers/print_json.php?data=delete_print&id=" + id,
                 dataType: "json",
                 success: function (data) {
-                    Swal.fire({
-                        title: "ជោគជ័យ",
-                        icon: "success",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    displayData();
+                    if (data === "Cannot delete it exists in the Book table") {
+                        Swal.fire({
+                            title: "Warning",
+                            text: "ទិន្នន័យត្រូវបានប្រើប្រាស់!",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        return;
+                    } else {
+                        Swal.fire({
+                            title: "ជោគជ័យ",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        displayData();
+                    }
                 },
                 error: function (ex) {
                     Swal.fire({

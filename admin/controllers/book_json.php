@@ -204,33 +204,75 @@ if ($_GET['data'] == 'update_book') {
 }
 
 //Delete Book
+// if ($_GET['data'] == 'delete_book') {
+//     $id = $_GET['id'];
+//     $stmt = $conn->prepare("SELECT image FROM Book WHERE id=:id;");
+//     $stmt->bindParam(':id', $id);
+//     $stmt->execute();
+//     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+//     $image = $result['image'];
+
+//     $delete = $conn->prepare("DELETE FROM Book WHERE id=:id;");
+//     $delete->bindParam(':id', $id);
+
+//     if ($delete->execute()) {
+//         // delete image from folder
+//         $target_file = "../upload/" . $image;
+//         if (file_exists($target_file)) {
+//             unlink($target_file);
+//         }
+
+//         echo json_encode("Delete Success");
+//     } else {
+//         echo json_encode("Delete Failed");
+//     }
+// }
 if ($_GET['data'] == 'delete_book') {
     $id = $_GET['id'];
-    $stmt = $conn->prepare("SELECT image FROM Book WHERE id=:id;");
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $image = $result['image'];
 
-    $delete = $conn->prepare("DELETE FROM Book WHERE id=:id;");
-    $delete->bindParam(':id', $id);
+    // Check if the book record exists in Import, Reader, or Borrow tables
+    $checkStmt = $conn->prepare("
+        SELECT NULL AS col FROM Import WHERE bookId = :id
+        UNION ALL
+        SELECT NULL AS col FROM Reader WHERE bookId = :id
+        UNION ALL
+        SELECT NULL AS col FROM Borrow WHERE bookId = :id
+    ");
+    $checkStmt->bindParam(':id', $id);
+    $checkStmt->execute();
 
-    if ($delete->execute()) {
-        // delete image from folder
-        $target_file = "../upload/" . $image;
-        if (file_exists($target_file)) {
-            unlink($target_file);
-        }
-
-        echo json_encode("Delete Success");
+    if ($checkStmt->rowCount() > 0) {
+        echo json_encode("Cannot delete it is referenced by another table");
     } else {
-        echo json_encode("Delete Failed");
+        $stmt = $conn->prepare("SELECT image FROM Book WHERE id=:id;");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $image = $result['image'];
+
+        $delete = $conn->prepare("DELETE FROM Book WHERE id=:id;");
+        $delete->bindParam(':id', $id);
+
+        if ($delete->execute()) {
+            // delete image from folder
+            $target_file = "../upload/" . $image;
+            if (file_exists($target_file)) {
+                unlink($target_file);
+            }
+
+            echo json_encode("Delete Success");
+        } else {
+            echo json_encode("Delete Failed");
+        }
     }
 }
 
+
+
+
 //Not available 
-if($_GET['data'] == 'is_not_available'){
-        
+if ($_GET['data'] == 'is_not_available') {
+
     $id = $_GET['id'];
     $status = 0;
     $sql = "UPDATE Book SET status=:status WHERE id=:id;";
@@ -239,16 +281,16 @@ if($_GET['data'] == 'is_not_available'){
     $update->bindParam(':status', $status);
     $update->bindParam(':id', $id);
 
-    if($update->execute()){
+    if ($update->execute()) {
         echo json_encode("Success");
-    }else{
+    } else {
         echo json_encode("Faild");
     }
 }
 
 //available 
-if($_GET['data'] == 'is_available'){
-        
+if ($_GET['data'] == 'is_available') {
+
     $id = $_GET['id'];
     $status = 1;
     $sql = "UPDATE Book SET status=:status WHERE id=:id;";
@@ -257,9 +299,9 @@ if($_GET['data'] == 'is_available'){
     $update->bindParam(':status', $status);
     $update->bindParam(':id', $id);
 
-    if($update->execute()){
+    if ($update->execute()) {
         echo json_encode("Success");
-    }else{
+    } else {
         echo json_encode("Faild");
     }
 }
@@ -277,10 +319,10 @@ if ($_GET['data'] == 'view_book_detail') {
             $status = "<span class='badge badge-pill badge-danger'>Unavailable</span>";
         }
         $book[] = array(
-            $row["id"],$row["bookTitle"], $row["authorName"], $row["publishingHouse"],
+            $row["id"], $row["bookTitle"], $row["authorName"], $row["publishingHouse"],
             $row["publishYear"], $row["price"], $row["categoryCode"], $row["image"],
-            $status, $row["times_borrowed"],$row["qty"] );
+            $status, $row["times_borrowed"], $row["qty"]
+        );
     }
     echo json_encode($book);
 }
-

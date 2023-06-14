@@ -94,14 +94,26 @@ if($_GET['data'] == 'update_category'){
 }
 
 //4-delete
-if($_GET['data'] == 'delete_category'){
+if ($_GET['data'] == 'delete_category') {
     $id = $_GET['id'];
-    $delete = $conn->prepare("DELETE FROM category WHERE id=:id;");
-    $delete->bindParam(':id', $id);
-    if($delete->execute()){
-        echo json_encode("Delete Success");
-    }else{
-        echo json_encode("Delete Faild");
+
+    // Check if the category exists in the "Book" table
+    $checkCategory = $conn->prepare("SELECT COUNT(*) FROM Book WHERE categoryId=:id");
+    $checkCategory->bindParam(':id', $id);
+    $checkCategory->execute();
+    $categoryExists = $checkCategory->fetchColumn();
+
+    if ($categoryExists) {
+        echo json_encode("Cannot delete it exists in the Book table");
+    } else {
+        $delete = $conn->prepare("DELETE FROM Category WHERE id=:id;");
+        $delete->bindParam(':id', $id);
+        if ($delete->execute()) {
+            echo json_encode("Delete Success");
+        } else {
+            echo json_encode("Delete Failed");
+        }
     }
 }
+
 ?>

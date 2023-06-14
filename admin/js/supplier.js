@@ -158,6 +158,16 @@ function deleteData(id) {
                 url: "./controllers/supplier_json.php?data=delete_supplier&id=" + id,
                 dataType: "json",
                 success: function (data) {
+                    if(data === "Cannot delete it exists in the Import table"){
+                        Swal.fire({
+                            title: "Warning",
+                            text: "ទិន្នន័យត្រូវបានប្រើប្រាស់!",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                          });
+                          return;
+                    }else{
                     Swal.fire({
                         title: "ជោគជ័យ",
                         icon: "success",
@@ -165,6 +175,7 @@ function deleteData(id) {
                         timer: 2000,
                     });
                     displayData();
+                }
                 },
                 error: function (ex) {
                     Swal.fire({

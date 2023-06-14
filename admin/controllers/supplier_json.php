@@ -68,14 +68,26 @@ if($_GET['data'] == 'update_supplier'){
 }
 
 //4-delete
-if($_GET['data'] == 'delete_supplier'){
+if ($_GET['data'] == 'delete_supplier') {
     $id = $_GET['id'];
-    $delete = $conn->prepare("DELETE FROM supplier WHERE id=:id;");
-    $delete->bindParam(':id', $id);
-    if($delete->execute()){
-        echo json_encode("Delete Success");
-    }else{
-        echo json_encode("Delete Faild");
+
+    // Check if the class exists in the "Student" table
+    $checkSup = $conn->prepare("SELECT COUNT(*) FROM Import WHERE supplierId=:id");
+    $checkSup->bindParam(':id', $id);
+    $checkSup->execute();
+    $supExists = $checkSup->fetchColumn();
+
+    if ($supExists) {
+        echo json_encode("Cannot delete it exists in the Import table");
+    } else {
+        $delete = $conn->prepare("DELETE FROM Supplier WHERE id=:id;");
+        $delete->bindParam(':id', $id);
+        if ($delete->execute()) {
+            echo json_encode("Delete Success");
+        } else {
+            echo json_encode("Delete Failed");
+        }
     }
 }
+
 ?>

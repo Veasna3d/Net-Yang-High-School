@@ -87,14 +87,25 @@
     }
 
     //4-delete
-    if($_GET['data'] == 'delete_class'){
+    if ($_GET['data'] == 'delete_class') {
         $id = $_GET['id'];
-        $delete = $conn->prepare("DELETE FROM Class WHERE id=:id;");
-        $delete->bindParam(':id', $id);
-        if($delete->execute()){
-            echo json_encode("Delete Success");
-        }else{
-            echo json_encode("Delete Faild");
+    
+        // Check if the class exists in the "Student" table
+        $checkClass = $conn->prepare("SELECT COUNT(*) FROM Student WHERE classId=:id");
+        $checkClass->bindParam(':id', $id);
+        $checkClass->execute();
+        $classExists = $checkClass->fetchColumn();
+    
+        if ($classExists) {
+            echo json_encode("Cannot delete it exists in the Student table");
+        } else {
+            $delete = $conn->prepare("DELETE FROM Class WHERE id=:id;");
+            $delete->bindParam(':id', $id);
+            if ($delete->execute()) {
+                echo json_encode("Delete Success");
+            } else {
+                echo json_encode("Delete Failed");
+            }
         }
     }
 ?>

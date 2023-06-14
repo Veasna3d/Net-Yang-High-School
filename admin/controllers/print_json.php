@@ -62,14 +62,25 @@
     }
 
     //4-delete
-    if($_GET['data'] == 'delete_print'){
+    if ($_GET['data'] == 'delete_print') {
         $id = $_GET['id'];
-        $delete = $conn->prepare("DELETE FROM print WHERE id=:id;");
-        $delete->bindParam(':id', $id);
-        if($delete->execute()){
-            echo json_encode("Delete Success");
-        }else{
-            echo json_encode("Delete Faild");
+    
+        // Check if the class exists in the "Student" table
+        $checkPrint = $conn->prepare("SELECT COUNT(*) FROM Book WHERE printId=:id");
+        $checkPrint->bindParam(':id', $id);
+        $checkPrint->execute();
+        $printExists = $checkPrint->fetchColumn();
+    
+        if ($printExists) {
+            echo json_encode("Cannot delete it exists in the Book table");
+        } else {
+            $delete = $conn->prepare("DELETE FROM print WHERE id=:id;");
+            $delete->bindParam(':id', $id);
+            if ($delete->execute()) {
+                echo json_encode("Delete Success");
+            } else {
+                echo json_encode("Delete Failed");
+            }
         }
     }
 ?>

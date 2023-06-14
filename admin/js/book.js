@@ -189,21 +189,21 @@ function registerCustomButtonHandlers() {
                         "<'row'<'col-md-5'i><'col-md-7'p>>" +
                         "<'row'<'col-md-5'l><'#btn-container'>>",
                 });
-    
+
                 var btn1 = $('<button>').attr({
                     id: 'btnAvailable',
                     type: 'button',
                     class: 'btn btn-success'
                 });
                 btn1.append('Available');
-    
+
                 var btn2 = $('<button>').attr({
                     id: 'btnNotAvailable',
                     type: 'button',
                     class: 'btn btn-danger'
                 });
                 btn2.append('Unavailable');
-    
+
                 var btn3 = $('<button>').attr({
                     id: 'btnImport',
                     type: 'button',
@@ -212,23 +212,23 @@ function registerCustomButtonHandlers() {
                     'data-target': '#myImport'
                 });
                 btn3.append('Import');
-    
+
                 // Add the custom button to the DataTables toolbar
                 $('#btn-container').append(btn1, btn2, btn3);
                 $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
-    
-    
+
+
                 // Register event handlers for custom buttons
                 registerCustomButtonHandlers();
-    
+
                 // Move the custom button to the left of the other buttons
                 $('.dt-buttons').prepend(btn3, btn1, btn2);
                 $('.dt-buttons').prepend($('#btnAdd'));
-    
-    
+
+
                 // Adjust the margins of the custom button
                 $('#btnAdd').css('margin-right', '5px');
-    
+
             },
             error: function (e) {
                 console.log(e.responseText);
@@ -308,21 +308,21 @@ function registerCustomButtonHandlers() {
                         "<'row'<'col-md-5'i><'col-md-7'p>>" +
                         "<'row'<'col-md-5'l><'#btn-container'>>",
                 });
-    
+
                 var btn1 = $('<button>').attr({
                     id: 'btnAvailable',
                     type: 'button',
                     class: 'btn btn-success'
                 });
                 btn1.append('Available');
-    
+
                 var btn2 = $('<button>').attr({
                     id: 'btnNotAvailable',
                     type: 'button',
                     class: 'btn btn-danger'
                 });
                 btn2.append('Unavailable');
-    
+
                 var btn3 = $('<button>').attr({
                     id: 'btnImport',
                     type: 'button',
@@ -331,23 +331,23 @@ function registerCustomButtonHandlers() {
                     'data-target': '#myImport'
                 });
                 btn3.append('Import');
-    
+
                 // Add the custom button to the DataTables toolbar
                 $('#btn-container').append(btn1, btn2, btn3);
                 $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
-    
-    
+
+
                 // Register event handlers for custom buttons
                 registerCustomButtonHandlers();
-    
+
                 // Move the custom button to the left of the other buttons
                 $('.dt-buttons').prepend(btn3, btn1, btn2);
                 $('.dt-buttons').prepend($('#btnAdd'));
-    
-    
+
+
                 // Adjust the margins of the custom button
                 $('#btnAdd').css('margin-right', '5px');
-    
+
             },
             error: function (e) {
                 console.log(e.responseText);
@@ -569,13 +569,26 @@ function deleteData(id) {
                 url: "./controllers/book_json.php?data=delete_book&id=" + id,
                 dataType: "json",
                 success: function (data) {
-                    Swal.fire({
-                        title: "ជោគជ័យ",
-                        icon: "success",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
-                    displayData();
+                    if (data === "Cannot delete it is referenced by another table") {
+                        Swal.fire({
+                            title: "Warning",
+                            text: "សៀវភៅត្រូវបានប្រើប្រាស់!",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        return;
+                    } else {
+
+
+                        Swal.fire({
+                            title: "ជោគជ័យ",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                        displayData();
+                    }
                 },
                 error: function (ex) {
                     Swal.fire({
@@ -773,43 +786,39 @@ function isAvailable(id) {
 }
 
 //Import 
-$(document).ready(function(){  
-    $('#upload_csv_form').on("submit", function(e){  
-         e.preventDefault(); //form will not submitted  
-         $.ajax({  
-              url:"importBook.php",  
-              method:"POST",  
-              data:new FormData(this),  
-              contentType:false,          // The content type used when sending data to the server.  
-              cache:false,                // To unable request pages to be cached  
-              processData:false,          // To send DOMDocument or non processed data file it is set to false  
-              success: function(data){  
-                   if(data=='Error1')  
-                   {  
+$(document).ready(function () {
+    $('#upload_csv_form').on("submit", function (e) {
+        e.preventDefault(); //form will not submitted  
+        $.ajax({
+            url: "importBook.php",
+            method: "POST",
+            data: new FormData(this),
+            contentType: false,          // The content type used when sending data to the server.  
+            cache: false,                // To unable request pages to be cached  
+            processData: false,          // To send DOMDocument or non processed data file it is set to false  
+            success: function (data) {
+                if (data == 'Error1') {
                     toastr.warning("Invalid File").css("margin-top", "2rem");
-                        // alert("Invalid File");  
-                   }  
-                   else if(data == "Error2")  
-                   {  
+                    // alert("Invalid File");  
+                }
+                else if (data == "Error2") {
                     toastr.warning("Please Select File").css("margin-top", "2rem");
-                        // alert("Please Select File");  
-                   }                           
-                   else if(data == "Success")  
-                   {  
+                    // alert("Please Select File");  
+                }
+                else if (data == "Success") {
                     toastr.success("CSV file data has been imported").css("margin-top", "2rem");
-                      // alert("CSV file data has been imported");  
-                      $('#upload_csv_form')[0].reset();
+                    // alert("CSV file data has been imported");  
+                    $('#upload_csv_form')[0].reset();
                     //   alert(data);
-                      $("#myImport").modal("hide");
-                      displayData();
-                     
-                      //  $('#table_id').html(data); 
-                   }  
-                   else  
-                   {  
-                       // $('#employee_table').html(data);  
-                   }  
-              }  
-         })  
-    });  
+                    $("#myImport").modal("hide");
+                    displayData();
+
+                    //  $('#table_id').html(data); 
+                }
+                else {
+                    // $('#employee_table').html(data);  
+                }
+            }
+        })
+    });
 });
