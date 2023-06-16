@@ -54,7 +54,7 @@ $("#btnsearch").click(function () {
             alldata[i][5],
             alldata[i][6],
             alldata[i][7],
-            alldata[i][8],
+            parseInt(alldata[i][8]).toLocaleString() + " ៛", 
             alldata[i][9] + " ក្បាល",
             alldata[i][10],
           ]);

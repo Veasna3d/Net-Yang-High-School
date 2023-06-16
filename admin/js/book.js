@@ -1,4 +1,3 @@
-
 function displayData() {
     $.ajax({
         url: './controllers/book_json.php?data=get_book',
@@ -58,6 +57,7 @@ function displayData() {
                 destroy: true,
                 data: data,
                 columns: columns,
+                order: [[0, 'desc']], 
                 pageLength: 10,
                 language: {
                     info: 'Showing _START_ to _END_ of _TOTAL_ entries',
@@ -179,6 +179,7 @@ function registerCustomButtonHandlers() {
                     destroy: true,
                     data: data,
                     columns: columns,
+                    order: [[0, 'desc']], 
                     pageLength: 10,
                     language: {
                         info: 'Showing _START_ to _END_ of _TOTAL_ entries',
@@ -300,6 +301,7 @@ function registerCustomButtonHandlers() {
                     destroy: true,
                     data: data,
                     columns: columns,
+                    order: [[0, 'desc']], 
                     pageLength: 10,
                     language: {
                         info: 'Showing _START_ to _END_ of _TOTAL_ entries',
