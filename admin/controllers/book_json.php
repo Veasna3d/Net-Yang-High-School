@@ -227,6 +227,7 @@ if ($_GET['data'] == 'update_book') {
 //         echo json_encode("Delete Failed");
 //     }
 // }
+
 if ($_GET['data'] == 'delete_book') {
     $id = $_GET['id'];
 
@@ -256,14 +257,13 @@ if ($_GET['data'] == 'delete_book') {
         if ($delete->execute()) {
             // delete image from folder
             $target_file = "../upload/" . $image;
-            if (file_exists($target_file)) {
-                unlink($target_file);
-            }
-
+            @unlink($target_file); // Suppress the error if the file does not exist
+        
             echo json_encode("Delete Success");
         } else {
             echo json_encode("Delete Failed");
         }
+        
     }
 }
 

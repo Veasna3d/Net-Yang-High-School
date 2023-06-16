@@ -25,6 +25,8 @@ function displayData() {
             var data = [];
             var option = "";
             for (var i in alldata) {
+                // Check if the record has an image
+                var imageSrc = alldata[i][2] ? "upload/" + alldata[i][2] : "upload/user_cover.png";
                 option =
                     "<button class='btn btn-info btn-sm edit btn-flat' onclick='disabledData(" +
                     alldata[i][0] +
@@ -35,7 +37,7 @@ function displayData() {
                 data.push([
                     alldata[i][0],
                     alldata[i][1],
-                    "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][2] + "'>",
+                    "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
                     alldata[i][3],
                     alldata[i][4],
                     alldata[i][5],
@@ -88,7 +90,7 @@ $(document).ready(function () {
 
 //btnSave
 $("#btnSave").click(function () {
-    
+
     var teacherName = $('#txtTeacherName');
     var gender = $('#ddlGender');
     var phone = $('#txtPhone');
@@ -96,10 +98,10 @@ $("#btnSave").click(function () {
     if (teacherName.val() == "") {
         teacherName.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
-    }else if (gender.val() == "") {
+    } else if (gender.val() == "") {
         gender.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
-    }else if (phone.val() == "") {
+    } else if (phone.val() == "") {
         phone.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
     }

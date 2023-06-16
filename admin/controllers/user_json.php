@@ -175,7 +175,7 @@ if ($_GET['data'] == 'delete_user') {
             // delete image from folder
             $target_file = "../upload/" . $image;
             if (file_exists($target_file)) {
-                unlink($target_file);
+                @unlink($target_file); // Suppress the error if the file does not exist
             }
 
             echo json_encode("Delete Success");
@@ -186,4 +186,3 @@ if ($_GET['data'] == 'delete_user') {
         echo json_encode("cannot delete");
     }
 }
-

@@ -30,6 +30,9 @@ function displayData() {
             var data = [];
             var option = '';
             for (var i in alldata) {
+                // Check if the record has an image
+                var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
+
                 option = "<div style='display: flex;'><button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
                     ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
@@ -45,7 +48,7 @@ function displayData() {
                         alldata[i][5],
                         parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
                         alldata[i][7],
-                        "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
+                        "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
                         alldata[i][9],
                         option
                     ]);
@@ -149,6 +152,8 @@ function registerCustomButtonHandlers() {
                 var data = [];
                 var option = '';
                 for (var i in alldata) {
+                    // Check if the record has an image
+                    var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
                     option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                         alldata[i][0] +
                         ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
@@ -164,7 +169,7 @@ function registerCustomButtonHandlers() {
                             alldata[i][5],
                             parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
                             alldata[i][7],
-                            "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
+                            "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
                             alldata[i][9],
                             option
                         ]);
@@ -268,6 +273,8 @@ function registerCustomButtonHandlers() {
                 var option = '';
 
                 for (var i in alldata) {
+                    // Check if the record has an image
+                    var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
                     option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                         alldata[i][0] +
                         ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
@@ -283,7 +290,7 @@ function registerCustomButtonHandlers() {
                             alldata[i][5],
                             parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
                             alldata[i][7],
-                            "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][8] + "'>",
+                            "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
                             alldata[i][9],
                             option
                         ]);
@@ -579,8 +586,6 @@ function deleteData(id) {
                         });
                         return;
                     } else {
-
-
                         Swal.fire({
                             title: "ជោគជ័យ",
                             icon: "success",
@@ -614,13 +619,14 @@ function notAvailable(id) {
         success: function (data) {
             var book = data[0];
             var formattedPrice = parseInt(book[5]).toLocaleString();
+            var imageSrc = book[7] ? 'upload/' + book[7] : 'upload/book_cover.png';
             var modalContent =
                 '<div>' +
                 '<div class="d-flex">' +
 
                 '<div class="col-6">' +
 
-                '<img src="upload/' + book[7] + '" width="100" class="card-img-top">' +
+                '<img src="' + imageSrc + '" width="100" class="card-img-top">' +
 
                 '</div>' +
                 '<div class="col-6">' +
@@ -700,13 +706,14 @@ function isAvailable(id) {
         success: function (data) {
             var book = data[0];
             var formattedPrice = parseInt(book[5]).toLocaleString();
+            var imageSrc = book[7] ? 'upload/' + book[7] : 'upload/book_cover.png';
             var modalContent =
                 '<div>' +
                 '<div class="d-flex">' +
 
                 '<div class="col-6">' +
 
-                '<img src="upload/' + book[7] + '" width="100" class="card-img-top">' +
+                '<img src="' + imageSrc + '" width="100" class="card-img-top">' +
 
                 '</div>' +
                 '<div class="col-6">' +

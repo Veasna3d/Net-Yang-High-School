@@ -15,6 +15,10 @@ function displayData() {
       var data = [];
       var option = '';
       for (var i in alldata) {
+
+        // Check if the record has an image
+        var imageSrc = alldata[i][3] ? "upload/" + alldata[i][3] : "upload/user_cover.png";
+
         option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
           alldata[i][0] +
           ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
@@ -23,7 +27,7 @@ function displayData() {
           alldata[i][0],
           alldata[i][1],
           "***" + alldata[i][2].slice(-2),
-          "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][3] + "'>",
+          "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
           alldata[i][4],
           option]);
       }

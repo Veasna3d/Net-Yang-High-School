@@ -33,6 +33,8 @@ function displayData() {
             var data = [];
             var option = "";
             for (var i in alldata) {
+                // Check if the record has an image
+                var imageSrc = alldata[i][4] ? "upload/" + alldata[i][4] : "upload/user_cover.png";
                 option =
                     "<button class='btn btn-info btn-sm btn-flat' onclick='viewStudentModal(" +
                     alldata[i][0] +
@@ -44,7 +46,7 @@ function displayData() {
                     alldata[i][0],
                     alldata[i][1] + "-" + alldata[i][2], // combine alldata[i][1] and alldata[i][2] with a space in between
                     alldata[i][3],
-                    "<img style='width: 50px; height: 50px;' src='upload/" + alldata[i][4] + "'>",
+                    "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
                     alldata[i][5],
                     alldata[i][6],
                     alldata[i][7],
@@ -132,16 +134,16 @@ $("#btnSave").click(function () {
     if (start.val() == "") {
         start.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
-    }else if (end.val() == "") {
+    } else if (end.val() == "") {
         end.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
-    }else if (studentName.val() == "") {
+    } else if (studentName.val() == "") {
         studentName.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
-    }else if (gender.val() == "") {
+    } else if (gender.val() == "") {
         gender.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
-    }else if (classId.val() == "") {
+    } else if (classId.val() == "") {
         classId.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
     }
@@ -287,6 +289,7 @@ function viewStudentModal(id) {
                     dataType: "json",
                     success: function (data) {
                         var student = data[0];
+                        var imageSrc = student[4] ? 'upload/' + student[4] : 'upload/user_cover.png';
                         // extract the student information from the JSON response
                         var modalContent = "<div class='container'>" +
                             "<div class='row d-flex justify-content-center'>" +
@@ -294,7 +297,7 @@ function viewStudentModal(id) {
                             "<div class='card p-2 text-center'>" +
                             "<div class='row'>" +
                             "<div class='col-md-12 border-right no-gutters'>" +
-                            " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
+                            " <div class='py-3'><img src='" + imageSrc + "' width='100'>" + // add the student image as the card image
                             " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
                             "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
                             "<hr>" +
@@ -366,13 +369,14 @@ function viewStudentModal(id) {
                     success: function (data) {
                         var student = data[0];
                         // extract the student information from the JSON response
+                        var imageSrc = student[4] ? 'upload/' + student[4] : 'upload/user_cover.png';
                         var modalContent = "<div class='container'>" +
                             "<div class='row d-flex justify-content-center'>" +
                             "<div class='col-md-12'>" +
                             "<div class='card p-2 text-center'>" +
                             "<div class='row'>" +
                             "<div class='col-md-12 border-right no-gutters'>" +
-                            " <div class='py-3'><img src='upload/" + student[4] + "' width='100'>" + // add the student image as the card image
+                            " <div class='py-3'><img src='" + imageSrc + "' width='100'>" + // add the student image as the card image
                             " <div class='allergy pt-2'>ឆ្នាំសិក្សា​ <span>" + student[1] + "-" + student[2] + "</span></div>'" +
                             "<h4 class='text-secondary'>ឈ្មោះ " + student[3] + "</h4>" +
                             "<hr>" +

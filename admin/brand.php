@@ -1,9 +1,5 @@
-<?php
-    session_start();
-    if (!isset($_SESSION["username"])) {
-        header('Location: ../404.php');
-    }
-?>
+<?php include 'controllers/brand_json.php' ?>
+
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
 
@@ -31,101 +27,112 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="tableId" class="table table-bordered table-hover">
-                            </table>
+                            <div class="container rounded bg-white">
+                                <?php
+                                $brandId = 1;
+
+                                $sql = "SELECT * FROM Brand WHERE id = :id";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->bindParam(':id', $brandId);
+                                $stmt->execute();
+                                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                if ($stmt->rowCount() > 0) {
+                                    foreach ($result as $row) {
+                                ?>
+                                        <form id="recordForm" method="POST" enctype="multipart/form-data">
+                                            <input type="hidden" name="brandId" value="<?php echo $brandId; ?>">
+                                            <input type="hidden" name="oldImage" value="<?php echo $row['image']; ?>"> <!-- Added this line to store the old image value -->
+                                            <div class="row">
+                                                <div class="col-md-3 border-right">
+                                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                                        <img id="previewImage" class="rounded mt-5" width="150px" src="./upload/<?php echo $row['image']; ?>">
+                                                        <img id="imagePreview" class="rounded mt-5" width="150px" style="display: none;">
+                                                        <label for="image" class="btn btn-outline-primary mt-2">ផ្លាស់ប្ដូររូបភាព</label>
+                                                        <input type="file" name="image" id="image" class="form-control-file d-none" onchange="previewImage(event)">
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-md-9 border-right">
+                                                    <div class="p-3 py-5">
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <h4 class="text-right">Profile Settings</h4>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-6">
+                                                                <label class="labels">ឈ្មោះ</label>
+                                                                <input type="text" name="name" value="<?php echo $row['name'] ?>" id="name" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="labels">លេខទូរស័ព្ទ</label>
+                                                                <input type="text" name="phone" value="<?php echo $row['phone'] ?>" id="phone" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-12 mt-2">
+                                                                <label class="labels">អាសយដ្ឋាន</label>
+                                                                <textarea name="address" id="address" class="form-control" id="" rows="5"><?php echo $row['address'] ?></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-6">
+                                                                <label class="labels">អ៊ីមែល (Optional)</label>
+                                                                <input type="text" name="email" value="<?php echo $row['email'] ?>" id="email" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="labels">ហ្វេសប៊ុក​ (Optional)</label>
+                                                                <input type="text" name="facebook" value="<?php echo $row['facebook'] ?>" id="facebook" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-5">
+                                                            <button class="btn btn-primary" type="submit" name="updateProfile">Update Profile</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </div>
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal Insert & Update -->
-<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">ឈ្មោះសាលា</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="form">
-
-                    <div class="form-group">
-                        <label class="form-label">ឈ្មោះ</label>
-                        <input type="text" name="name" id="name" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">ហ្វេបុក</label>
-                        <input type="" name="facebook" id="facebook" class="form-control" />
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="form-label">លេខទូរស័ព្ទ</label>
-                        <input type="" name="phone" id="phone" class="form-control" />
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="form-label">អ៊ីម៊ែល</label>
-                        <input type="Email" name="email" id="email" class="form-control" />
-                    </div>
-
-                    <div class="form-floating">
-                        <label class="form-label">អាសយដ្ឋាន</label>
-                        <textarea class="form-control" placeholder="អាសយដ្ឋាន" name="address" id="address"
-                            style="height: 100px"></textarea>
-                        <!-- <label for="floatingTextarea2">Comments</label> -->
-                    </div>
-
-                    <div class="form-group pt-2">
-                        <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                        <input type="file" name="image" id="image" class="form-control-file d-none"
-                            onchange="previewImage(event)">
-                    </div>
-                    <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
-                        <button type="button" class="btn btn-primary" id="btnSave">រក្សាទុក</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <?php include 'includes/footer.php' ?>
-<script src="./js/brand.js"></script>
 <script>
-//Preview Image
-function previewImage(event) {
-    var reader = new FileReader();
-    reader.onload = function() {
-        var img = document.getElementById('image-preview');
-        img.src = reader.result;
-        img.classList.remove('d-none');
+    function previewImage(event) {
+        var input = event.target;
+        var previewImage = document.getElementById('previewImage');
+        var imagePreview = document.getElementById('imagePreview');
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Hide the old image
+                previewImage.style.display = 'none';
+
+                // Display the preview of the new image
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            // If no new image is selected, show the old image
+            previewImage.style.display = 'block';
+
+            // Hide the preview of the new image
+            imagePreview.style.display = 'none';
+        }
     }
-    reader.readAsDataURL(event.target.files[0]);
-}
 </script>
