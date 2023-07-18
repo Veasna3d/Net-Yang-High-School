@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (!isset($_SESSION["username"])) {
-        header('Location: ../404.php');
-    }
+session_start();
+if (!isset($_SESSION["username"])) {
+    header('Location: ../404.php');
+}
 ?>
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">ទំព័រដើម</a></li>
                         <li class="breadcrumb-item active">ការនាំចូល</li>
                     </ol>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="col-12">
 
                     <div class="card">
-                        
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="tableId" class="table table-bordered table-hover">
@@ -54,8 +54,7 @@
 <!-- /.content-wrapper -->
 
 <!-- Modal Insert & Update -->
-<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,24 +65,33 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="form">
-                    <div class="form-group">
+                    <div class="col-12 form-group">
                         <label for="txtReceivedDate">ថ្ងៃខែឆ្នាំទទួល</label>
                         <input type="text" name="txtReceivedDate" class="form-control" id="txtReceivedDate">
                     </div>
-                    <div class="form-group">
-                        <label for="ddlBook">ឈ្មោះសៀវភៅ</label>
-                        <select id="ddlBook" name="ddlBook" class="form-control">
-                            <option selected>ជ្រើសរើស</option>
-                        </select>
+                    <div class="form-group d-flex">
+                        <div class="col-11">
+                            <label for="ddlBook">ឈ្មោះសៀវភៅ</label>
+                            <select id="ddlBook" name="ddlBook" class="form-control">
+                                <option selected>ជ្រើសរើស</option>
+                            </select>
+                        </div>
+                        <div class="col-1 pt-3 mt-3">
+                            <a href="./book.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ddlSupplier">ម្ចាស់អំណោយ</label>
-                        <select id="ddlSupplier" name="ddlSupplier" class="form-control"
-                            aria-label="Default select example">
-                            <option selected>ជ្រើសរើស</option>
-                        </select>
+                    <div class="form-group d-flex">
+                        <div class="col-11">
+                            <label for="ddlSupplier">ម្ចាស់អំណោយ</label>
+                            <select id="ddlSupplier" name="ddlSupplier" class="form-control" aria-label="Default select example">
+                                <option selected>ជ្រើសរើស</option>
+                            </select>
+                        </div>
+                        <div class="col-1 pt-3 mt-3">
+                            <a href="./supplier.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="col-12 form-group">
                         <label for="txtQty">ចំនួនសៀវភៅ</label>
                         <input type="number" name="txtQty" class="form-control" id="txtQty">
                     </div>
@@ -103,16 +111,14 @@
 <?php include 'includes/footer.php' ?>
 <script src="./js/import.js"></script>
 <script>
-$("#txtReceivedDate").datepicker({
-  dateFormat: "dd-MM-yy",
-  changeMonth: true,
-  changeYear: true,
-  showButtonPanel: true,
-  yearRange: "2020:2030",
-  defaultDate: new Date() // Set the default date to today's date
-});
+    $("#txtReceivedDate").datepicker({
+        dateFormat: "dd-MM-yy",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "2020:2030",
+        defaultDate: new Date() // Set the default date to today's date
+    });
 
-// Set the datepicker to today's date
-$("#txtReceivedDate").datepicker("setDate", new Date());
-
+    // Set the datepicker to today's date
+    $("#txtReceivedDate").datepicker("setDate", new Date());
 </script>

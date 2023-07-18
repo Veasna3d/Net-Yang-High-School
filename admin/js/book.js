@@ -458,26 +458,26 @@ $("#btnSave").click(function () {
         return toastr.warning("Field Require!").css("margin-top", "2rem");
     } else if (bookTitle.val() == "") {
         bookTitle.focus();
-        return toastr.warning("Book Title Require!").css("margin-top", "2rem");
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
     } else if (author.val() == "") {
         author.focus();
-        return toastr.warning("Author Require!").css("margin-top", "2rem");
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
     }
     else if (print.val() == "") {
         print.focus();
-        return toastr.warning("Print Require!").css("margin-top", "2rem");
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
     }
     else if (publishYear.val() == "") {
         publishYear.focus();
-        return toastr.warning("Student Name Require!").css("margin-top", "2rem");
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
     }
 
     else if (price.val() == "") {
         price.focus();
-        return toastr.warning("Birthday Require!").css("margin-top", "2rem");
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
     } else if (category.val() == "") {
         category.focus();
-        return toastr.warning("Birthday Require!").css("margin-top", "2rem");
+        return toastr.warning("Field Require!").css("margin-top", "2rem");
     }
 
     var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
@@ -494,6 +494,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -513,6 +514,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -709,6 +711,9 @@ function isAvailable(id) {
             var book = data[0];
             var formattedPrice = parseInt(book[5]).toLocaleString();
             var imageSrc = book[7] ? 'upload/' + book[7] : 'upload/book_cover.png';
+            var categoryId = book[6] ? book[6] : 'គ្មាន';
+
+
             var modalContent =
                 '<div>' +
                 '<div class="d-flex">' +
@@ -723,7 +728,7 @@ function isAvailable(id) {
                 '<p class="card-title pt-2">អ្នកនិពន្ធ : <b>' + book[2] + '</b></p>' +
                 '<p class="card-title pt-2">ឆ្នាំបោះពុម្ភ : <b>' + book[4] + '</b></p>' +
                 '<p class="card-title pt-2">តម្លៃ : <b>' + formattedPrice + '៛</b></p>' +
-                '<p class="card-title pt-2">លេខបញ្ចី : <b>' + book[6] + '</b></p>' +
+                '<p class="card-title pt-2">លេខបញ្ចី : <b>' + categoryId + '</b></p>' +
                 '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[8] + '</b></p>' +
                 '<p class="card-title pt-2">ចំនួនសៀវភៅ : <b>' + book[10] + '</b>ក្បាល</p>' +
                 '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[9] + '</b>នាក់</p>' +
@@ -792,6 +797,17 @@ function isAvailable(id) {
             console.log(ex.responseText);
         },
     });
+}
+
+//Clear textbox
+function clearTextbox() {
+    $("#txtBookTitle").val("");
+    $("#txtAuthor").val("");
+    $("#ddlPrint").val("");
+    $("#ddlCategory").val("");
+    $("#txtPublishYear").val("");
+    $("#txtPrice").val("");
+    $("#image").val("");
 }
 
 //Import 

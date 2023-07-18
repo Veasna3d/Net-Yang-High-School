@@ -180,6 +180,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -198,6 +199,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -213,6 +215,12 @@ $("#btnAdd").click(function () {
     $("#ddlBook").val("");
     $("#btnSave").text("រក្សាទុក");
 });
+
+function clearTextbox(){
+    $("#ddlStudent").val("");
+    $("#txtDate").val("");
+    $("#ddlBook").val("");
+}
 
 var read_id;
 

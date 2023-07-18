@@ -26,7 +26,7 @@ function displayData() {
         destroy: true,
         data: data,
         columns: columns,
-        order: [[0, 'desc']], 
+        order: [[0, 'desc']],
         pageLength: 10,
         language: {
           info: 'Showing _START_ to _END_ of _TOTAL_ entries',
@@ -94,6 +94,7 @@ $("#btnSave").click(function () {
           displayData();
           $("#myModal").modal("hide");
         }
+        $("#txtName").val("");
       },
       error: function (ex) {
         toastr.error("Action incomplete").css("margin-top", "2rem");
@@ -127,6 +128,7 @@ $("#btnSave").click(function () {
           displayData();
           $("#myModal").modal("hide");
         }
+        $("#txtName").val("");
       },
       error: function (ex) {
         toastr.error("Action incomplete").css("margin-top", "2rem");
@@ -139,7 +141,7 @@ $("#btnSave").click(function () {
 
 
 $('#btnAdd').click(function () {
-  $('#txtName').val("");
+  $('#txtName').val('');
   $('#btnSave').text("រក្សាទុក");
 });
 

@@ -162,6 +162,7 @@ $('#btnSave').click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $('#myModal').modal('hide');
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -179,6 +180,7 @@ $('#btnSave').click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $('#myModal').modal('hide');
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -195,6 +197,13 @@ $('#btnAdd').click(function () {
     $('#txtQty').val("");
     $('#btnSave').text("រក្សាទុក");
 });
+
+function clearTextbox(){
+    $('#txtReceivedDate').val("");
+    $('#ddlBook').val("");
+    $('#ddlSupplier').val("");
+    $('#txtQty').val("");
+}
 
 var import_id;
 
@@ -217,7 +226,6 @@ function editData(id) {
         }
     });
 }
-
 
 //Delete
 function deleteData(id) {

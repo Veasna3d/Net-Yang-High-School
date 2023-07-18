@@ -50,7 +50,7 @@
             $sql = "Update print set publishingHouse=:publishingHouse,printingHouse=:printingHouse where id=:id;";
             $update = $conn->prepare($sql);
 
-            $update->bindParam(':publishingHouse', $printingHouse);
+            $update->bindParam(':publishingHouse', $publishingHouse);
             $update->bindParam(':printingHouse', $printingHouse);
             $update->bindParam(':id', $id);
             if($update->execute()){

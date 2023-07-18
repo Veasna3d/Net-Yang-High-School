@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (!isset($_SESSION["username"])) {
-        header('Location: ../404.php');
-    }
+session_start();
+if (!isset($_SESSION["username"])) {
+    header('Location: ../404.php');
+}
 ?>
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
@@ -54,8 +54,7 @@
 <!-- /.content-wrapper -->
 
 <!-- Modal Insert & Update -->
-<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -68,54 +67,72 @@
                 <form method="post" id="form">
                     <div class="d-flex">
                         <div class="col-6">
-                            <div class="form-group">
-                                <label for="txtBookTitle">ឈ្មោះសៀវភៅ</label>
-                                <input type="text" name="txtBookTitle" class="form-control" id="txtBookTitle">
-                            </div>
-                            <div class="form-group">
-                                <label for="ddlPrint">គ្រឹះស្ថាន នឹង​ ទីតាំងបោះពុម្ភ</label>
-                                <select id="ddlPrint" name="ddlPrint" class="form-control">
-                                    <option selected>ជ្រើសរើស</option>
-                                </select>
+                            <div class="col-12 form-group">
+                                <label for="txtBookNumber">សារពើភណ្ឌ</label>
+                                <input type="number" name="txtBookNumber" class="form-control" id="txtBookNumber">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group d-flex">
+                                <div class="col-10">
+                                    <label for="ddlPrint">គ្រឹះស្ថាន នឹង​ ទីតាំងបោះពុម្ភ</label>
+                                    <select id="ddlPrint" name="ddlPrint" class="form-control">
+                                        <option selected>ជ្រើសរើស</option>
+                                    </select>
+                                </div>
+                                <div class="col-2 pt-3 mt-3">
+                                    <a href="./print.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group">
                                 <label for="txtPublishYear">ឆ្នាំបោះពុម្ភ</label>
-                                <input type="text" name="txtPublishYear" class="form-control" id="txtPublishYear">
+                                <select name="txtPublishYear" class="form-control" id="txtPublishYear">
+                                    <!-- Generate options for years from 1900 to 2023 -->
+                                    <?php
+                                    $currentYear = date("Y");
+                                    for ($year = 1900; $year <= $currentYear; $year++) {
+                                        echo "<option value=\"$year\">$year</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-12 form-group">
+                                <label for="txtPrice">តម្លៃ</label>
+                                <input type="number" name="txtPrice" class="form-control" id="txtPrice">
                             </div>
 
                         </div>
                         <div class="col-6">
-
-                            <div class="form-group">
+                            <div class="col-12 form-group">
+                                <label for="txtBookTitle">ឈ្មោះសៀវភៅ</label>
+                                <input type="text" name="txtBookTitle" class="form-control" id="txtBookTitle">
+                            </div>
+                            <div class="form-group d-flex">
+                                <div class="col-10">
+                                    <label for="ddlCategory">លេខបញ្ជី</label>
+                                    <select id="ddlCategory" name="ddlCategory" class="form-control" aria-label="Default select example">
+                                        <option selected>ជ្រើសរើស</option>
+                                    </select>
+                                </div>
+                                <div class="col-2 pt-3 mt-3">
+                                    <a href="./category.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                                </div>
+                            </div>
+                            <div class="col-12 form-group">
                                 <label for="txtAuthor">អ្នកនិពន្ធ</label>
                                 <input type="text" name="txtAuthor" class="form-control" id="txtAuthor">
                             </div>
-                            <div class="form-group">
-                                <label for="txtPrice">តម្លៃ</label>
-                                <input type="number" name="txtPrice" class="form-control" id="txtPrice">
+
+
+                            <div class="col-12 form-group pt-4 mt-4">
+                                <label for="image" class="btn btn-outline-primary">រូបភាព</label>
+                                <input type="file" name="image" id="image" class="form-control-file d-none" onchange="previewImage(event)">
                             </div>
-                            <div class="form-group">
-                                <label for="ddlCategory">លេខបញ្ជី</label>
-                                <select id="ddlCategory" name="ddlCategory" class="form-control"
-                                    aria-label="Default select example">
-                                    <option selected>ជ្រើសរើស</option>
-                                </select>
-                            </div>
+                            <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
+
                         </div>
 
                     </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="image" class="btn btn-outline-primary">រូបភាព</label>
-                            <input type="file" name="image" id="image" class="form-control-file d-none"
-                                onchange="previewImage(event)">
-                        </div>
-                        <img style="height: 200px; width:150px;" id="image-preview" class="d-none">
-                    </div>
-
-
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
                         <button type="button" class="btn btn-primary" id="btnSave">រក្សាទុក</button>
@@ -128,8 +145,7 @@
 </div>
 
 <!-- Modal Import -->
-<div class="modal fade" id="myImport" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myImport" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -161,22 +177,14 @@
 <script src="./js/book.js"></script>
 
 <script>
-$("#txtPublishYear").datepicker({
-    dateFormat: "yy",
-    changeMonth: true,
-    changeYear: true,
-    showButtonPanel: true,
-    yearRange: "1999:2030" // Sets the year range to 1999-2050
-});
-
-//Preview Image
-function previewImage(event) {
-    var reader = new FileReader();
-    reader.onload = function() {
-        var img = document.getElementById('image-preview');
-        img.src = reader.result;
-        img.classList.remove('d-none');
+    //Preview Image
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var img = document.getElementById('image-preview');
+            img.src = reader.result;
+            img.classList.remove('d-none');
+        }
+        reader.readAsDataURL(event.target.files[0]);
     }
-    reader.readAsDataURL(event.target.files[0]);
-}
 </script>

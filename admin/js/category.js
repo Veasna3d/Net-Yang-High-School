@@ -98,6 +98,7 @@ $("#btnSave").click(function () {
           displayData();
           $("#myModal").modal("hide");
         }
+        clearTextbox();
       },
       error: function (ex) {
         toastr.error("Action incomplete").css("margin-top", "2rem");
@@ -135,6 +136,7 @@ $("#btnSave").click(function () {
           displayData();
           $("#myModal").modal("hide");
         }
+        clearTextbox();
       },
       error: function (ex) {
         toastr.error("Action incomplete").css("margin-top", "2rem");
@@ -150,6 +152,11 @@ $('#btnAdd').click(function () {
   $('#categoryName').val("");
   $('#btnSave').text("រក្សាទុក");
 });
+
+function clearTextbox(){
+  $('#categoryCode').val("");
+  $('#categoryName').val("");
+}
 
 var category_id;
 

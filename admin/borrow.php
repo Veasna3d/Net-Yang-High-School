@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (!isset($_SESSION["username"])) {
-        header('Location: ../404.php');
-    }
+session_start();
+if (!isset($_SESSION["username"])) {
+    header('Location: ../404.php');
+}
 ?>
 <?php include 'includes/topbar.php' ?>
 <?php include 'includes/sidebar.php' ?>
@@ -53,8 +53,7 @@
 <!-- /.content-wrapper -->
 
 <!-- Modal Insert & Update -->
-<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,44 +65,57 @@
             <div class="modal-body">
                 <form method="post" id="form">
                     <div class="d-flex">
-                        
+
                         <div class="col-6">
-                            <div class="form-group">
-                                <label for="ddlStudent">សិស្ស</label>
-                                <select id="ddlStudent" name="ddlStudent" class="form-control">
-                                    <option selected>ជ្រើសរើស</option>
-                                </select>
+                            <div class="form-group d-flex">
+                                <div class="col-10">
+                                    <label for="ddlStudent">សិស្ស</label>
+                                    <select id="ddlStudent" name="ddlStudent" class="form-control">
+                                        <option selected>ជ្រើសរើស</option>
+                                    </select>
+                                </div>
+                                <div class="col-2 pt-3 mt-3">
+                                    <a href="./student.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                                </div>
                             </div>
 
                         </div>
                         <div class="col-6">
-                            <div class="form-group">
-                                <label for="ddlTeacher">គ្រូ</label>
-                                <select id="ddlTeacher" name="ddlTeacher" class="form-control">
-                                    <option selected>ជ្រើសរើស</option>
-                                </select>
+                            <div class="form-group d-flex">
+                                <div class="col-10">
+                                    <label for="ddlTeacher">គ្រូ</label>
+                                    <select id="ddlTeacher" name="ddlTeacher" class="form-control">
+                                        <option selected>ជ្រើសរើស</option>
+                                    </select>
+                                </div>
+                                <div class="col-2 pt-3 mt-3">
+                                    <a href="./teacher.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="form-group">
-                            <label for="ddlBook">សៀវភៅ</label>
-                            <select id="ddlBook" name="ddlBook" class="form-control"
-                                aria-label="Default select example">
-                                <option selected>ជ្រើសរើស</option>
-                            </select>
+                        <div class="form-group d-flex">
+                            <div class="col-11">
+                                <label for="ddlBook">សៀវភៅ</label>
+                                <select id="ddlBook" name="ddlBook" class="form-control">
+                                    <option selected>ជ្រើសរើស</option>
+                                </select>
+                            </div>
+                            <div class="col-1 pt-3 mt-3">
+                                <a href="./book.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="col-12 form-group">
                             <label for="txtBorrowDate">ថ្ងៃខែឆ្នាំខ្ចី</label>
                             <input type="text" name="txtBorrowDate" class="form-control" id="txtBorrowDate">
                         </div>
-                        <div class="form-group">
+                        <div class="col-12 form-group">
                             <label for="txtReturnDate">ថ្ងៃខែឆ្នាំសង</label>
                             <input type="text" name="txtReturnDate" class="form-control" id="txtReturnDate">
                         </div>
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="កំណត់សម្គាល់" name="txtRemark" id="txtRemark"
-                                style="height: 100px"></textarea>
+                        <div class="col-12 form-floating">
+                            <textarea class="form-control" placeholder="កំណត់សម្គាល់" name="txtRemark" id="txtRemark" style="height: 100px"></textarea>
                             <!-- <label for="floatingTextarea2">Comments</label> -->
                         </div>
                     </div>
@@ -123,44 +135,59 @@
 <?php include 'includes/footer.php' ?>
 <script src="./js/borrow.js"></script>
 <script>
+  var currentDate = new Date();
+
 $("#txtBorrowDate").datepicker({
     dateFormat: "dd-MM-yy",
     changeMonth: true,
     changeYear: true,
-    showButtonPanel: true,
     yearRange: "2023:2030",
-    defaultDate: new Date() // Set the default date to today's date
+    minDate: currentDate,
+    maxDate: currentDate
+}).datepicker("setDate", currentDate) // Auto-select the current date
+.on("change", function() {
+    $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
+    $(this).attr("readonly", true);
 });
+
+
+
+var returnDate = new Date(currentDate);
+returnDate.setDate(returnDate.getDate() + 7);
+
 $("#txtReturnDate").datepicker({
     dateFormat: "dd-MM-yy",
     changeMonth: true,
     changeYear: true,
-    showButtonPanel: true,
     yearRange: "2023:2030",
-    defaultDate: new Date() // Set the default date to today's date
+    minDate: currentDate
+}).datepicker("setDate", returnDate) // Auto-select the date that is 7 days after the current date
+.on("change", function() {
+    $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
+    $(this).attr("readonly", true);
 });
 
-$(document).ready(function() {
-    // get references to the select elements
-    const ddlStudent = $("#ddlStudent");
-    const ddlTeacher = $("#ddlTeacher");
+    $(document).ready(function() {
+        // get references to the select elements
+        const ddlStudent = $("#ddlStudent");
+        const ddlTeacher = $("#ddlTeacher");
 
-    // listen for changes on ddlStudent
-    ddlStudent.change(function() {
-        if (ddlStudent.val()) {
-            ddlTeacher.prop("disabled", true);
-        } else {
-            ddlTeacher.prop("disabled", false);
-        }
-    });
+        // listen for changes on ddlStudent
+        ddlStudent.change(function() {
+            if (ddlStudent.val()) {
+                ddlTeacher.prop("disabled", true);
+            } else {
+                ddlTeacher.prop("disabled", false);
+            }
+        });
 
-    // listen for changes on ddlTeacher
-    ddlTeacher.change(function() {
-        if (ddlTeacher.val()) {
-            ddlStudent.prop("disabled", true);
-        } else {
-            ddlStudent.prop("disabled", false);
-        }
+        // listen for changes on ddlTeacher
+        ddlTeacher.change(function() {
+            if (ddlTeacher.val()) {
+                ddlStudent.prop("disabled", true);
+            } else {
+                ddlStudent.prop("disabled", false);
+            }
+        });
     });
-});
 </script>

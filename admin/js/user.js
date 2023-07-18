@@ -114,6 +114,7 @@ $("#btnSave").click(function () {
           displayData();
           $("#myModal").modal("hide");
         }
+        clearTextbox();
       },
       error: function (ex) {
         toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -158,6 +159,7 @@ $("#btnSave").click(function () {
           displayData();
           $("#myModal").modal("hide");
         }
+        clearTextbox();
       },
       error: function (ex) {
         toastr.error("Action incomplete").css("margin-top", "2rem");
@@ -167,9 +169,6 @@ $("#btnSave").click(function () {
   }
 })
 
-
-
-
 $("#btnAdd").click(function () {
   $("#txtUsername").val("");
   $("#txtPassword").val("");
@@ -178,10 +177,17 @@ $("#btnAdd").click(function () {
   $("#btnSave").text("Insert");
 });
 
+function clearTextbox(){
+  $("#txtUsername").val("");
+  $("#txtPassword").val("");
+  $("#txtEmail").val("");
+  $("#image").val("");
+}
+
 var user_id;
 
 function editData(id) {
-  $("#btnSave").text("Update");
+  $("#btnSave").text("កែប្រែ");
   user_id = id;
   $.ajax({
     url: "./controllers/user_json.php?data=get_byid",
@@ -201,7 +207,6 @@ function editData(id) {
     },
   });
 }
-
 
 //Delete Student
 function deleteData(id) {

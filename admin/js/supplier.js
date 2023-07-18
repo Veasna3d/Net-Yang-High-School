@@ -58,7 +58,6 @@ function displayData() {
     });
 }
 
-
 //Load
 $(document).ready(function () {
     displayData();
@@ -86,6 +85,7 @@ $('#btnSave').click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $('#myModal').modal('hide');
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -103,6 +103,7 @@ $('#btnSave').click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $('#myModal').modal('hide');
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -112,13 +113,18 @@ $('#btnSave').click(function () {
     }
 });
 
-
 $('#btnAdd').click(function () {
     $('#supplierName').val("");
     $('#phone').val("");
     $('#email').val("");
     $('#btnSave').text("រក្សាទុក");
 });
+
+function clearTextbox(){
+    $('#supplierName').val("");
+    $('#phone').val("");
+    $('#email').val("");
+}
 
 var supplier_id;
 

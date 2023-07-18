@@ -66,21 +66,31 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="form">
-                    <div class="form-group">
+                    <div class="form-group d-flex">
+                        <div class="col-11">
                         <label for="ddlStudent">សិស្ស</label>
                         <select id="ddlStudent" name="ddlStudent" class="form-control">
                             <option selected>ជ្រើសរើសសិស្ស</option>
                         </select>
+                        </div>
+                        <div class="col-1 pt-3 mt-3">
+                            <a href="./student.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="col-12 form-group">
                         <label for="txtDate">កាលបរិច្ឆេទ</label>
                         <input type="text" name="txtDate" class="form-control" id="txtDate">
                     </div>
-                    <div class="form-group">
-                        <label for="ddlBook">សៀវភៅ</label>
-                        <select id="ddlBook" name="ddlBook" class="form-control" aria-label="Default select example">
-                            <option selected>ជ្រើសរើសសៀវភៅ</option>
-                        </select>
+                    <div class="form-group d-flex">
+                        <div class="col-11">
+                            <label for="ddlBook">ឈ្មោះសៀវភៅ</label>
+                            <select id="ddlBook" name="ddlBook" class="form-control">
+                                <option selected>ជ្រើសរើស</option>
+                            </select>
+                        </div>
+                        <div class="col-1 pt-3 mt-3">
+                            <a href="./book.php" class="btn btn-sm btn-info">បន្ថែម</a>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
@@ -97,8 +107,24 @@
 <?php include 'includes/footer.php' ?>
 <script src="./js/read.js"></script>
 <script>
-jQuery(document).ready(function() {
-    'use strict';
-    jQuery('#txtDate').datetimepicker();
-});
+ jQuery(document).ready(function() {
+            'use strict';
+
+            // Get the current date and time
+            var currentDate = new Date();
+
+            // Format the date and time as needed for the datetimepicker
+            var formattedDate = currentDate.getFullYear() + "-" + 
+                               ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + 
+                               ("0" + currentDate.getDate()).slice(-2) + " " + 
+                               ("0" + currentDate.getHours()).slice(-2) + ":" + 
+                               ("0" + currentDate.getMinutes()).slice(-2) + " " + 
+                               (currentDate.getHours() >= 12 ? "PM" : "AM");
+
+            // Set the initial value of the "txtDate" input field to the current date and time
+            jQuery('#txtDate').val(formattedDate);
+
+            // Initialize the datetimepicker on the "txtDate" input field
+            jQuery('#txtDate').datetimepicker();
+        });
 </script>

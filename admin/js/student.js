@@ -70,20 +70,34 @@ function displayData() {
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
-                buttons: ['icon pfd'],
+                buttons: ['icon pfd'], // remove 'pdf' and 'excel'
                 dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
                     "<'row'<'col-md-12'tr>>" +
                     "<'row'<'col-md-5'i><'col-md-7'p>>" +
                     "<'row'<'col-md-5'l><'#btn-container'>>",
             });
+
+            var btn3 = $('<button>').attr({
+                id: 'btnImport',
+                type: 'button',
+                class: 'btn btn-info',
+                'data-toggle': 'modal',
+                'data-target': '#myImport'
+            });
+            btn3.append('Import');
+
             // Add the custom button to the DataTables toolbar
+            $('#btn-container').append(btn3);
             $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
 
             // Move the custom button to the left of the other buttons
+            $('.dt-buttons').prepend(btn3);
             $('.dt-buttons').prepend($('#btnAdd'));
+
 
             // Adjust the margins of the custom button
             $('#btnAdd').css('margin-right', '5px');
+
         },
         error: function (e) {
             console.log(e.responseText);
@@ -166,6 +180,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -186,6 +201,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -205,6 +221,16 @@ $("#btnAdd").click(function () {
     $("#image").val("");
     $("#btnSave").text("រក្សាទុក");
 });
+
+function clearTextbox(){
+    $("#txtStartYear").val("");
+    $("#txtEndYear").val("");
+    $("#txtStudentName").val("");
+    $("#ddlGender").val("");
+    $("#ddlClass").val("");
+    $("#txtBirthday").val("");
+    $("#image").val("");
+}
 
 var student_id;
 
@@ -458,13 +484,40 @@ function viewStudentModal(id) {
     });
 }
 
+//Import 
+$(document).ready(function () {
+    $('#upload_csv_form').on("submit", function (e) {
+        e.preventDefault(); //form will not submitted  
+        $.ajax({
+            url: "importBook.php",
+            method: "POST",
+            data: new FormData(this),
+            contentType: false,          // The content type used when sending data to the server.  
+            cache: false,                // To unable request pages to be cached  
+            processData: false,          // To send DOMDocument or non processed data file it is set to false  
+            success: function (data) {
+                if (data == 'Error1') {
+                    toastr.warning("Invalid File").css("margin-top", "2rem");
+                    // alert("Invalid File");  
+                }
+                else if (data == "Error2") {
+                    toastr.warning("Please Select File").css("margin-top", "2rem");
+                    // alert("Please Select File");  
+                }
+                else if (data == "Success") {
+                    toastr.success("CSV file data has been imported").css("margin-top", "2rem");
+                    // alert("CSV file data has been imported");  
+                    $('#upload_csv_form')[0].reset();
+                    //   alert(data);
+                    $("#myImport").modal("hide");
+                    displayData();
 
-
-
-
-
-
-
-
-
-
+                    //  $('#table_id').html(data); 
+                }
+                else {
+                    // $('#employee_table').html(data);  
+                }
+            }
+        })
+    });
+});

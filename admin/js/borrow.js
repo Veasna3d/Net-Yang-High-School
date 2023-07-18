@@ -461,6 +461,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -479,6 +480,7 @@ $("#btnSave").click(function () {
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $("#myModal").modal("hide");
+                clearTextbox();
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -497,6 +499,16 @@ $("#btnAdd").click(function () {
     $("#txtRemark").val("");
     $("#btnSave").text("រក្សាទុក");
 });
+
+
+function clearTextbox(){
+    $("#ddlStudent").val("");
+    $("#ddlTeacher").val("");
+    $("#ddlBook").val("");
+    $("#txtBorrowDate").val("");
+    $("#txtReturnDate").val("");
+    $("#txtRemark").val("");
+}
 
 var borrow_id;
 
