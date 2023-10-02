@@ -81,7 +81,7 @@ if ($_GET['data'] == "get_teacher") {
 
 //Get Book
 if ($_GET['data'] == "get_book") {
-    $sql = "SELECT * FROM vBook WHERE status = 1";
+    $sql = "SELECT * FROM vbookavailable";
     $result = $conn->prepare($sql);
     $result->execute();
     $book = [];
@@ -98,6 +98,32 @@ if ($_GET['data'] == "get_book") {
 }
 
 //Add Borrow
+// if ($_GET["data"] == "add_borrow") {
+//     $student = !empty($_POST["ddlStudent"]) ? $_POST["ddlStudent"] : null;
+//     $teacher = !empty($_POST["ddlTeacher"]) ? $_POST["ddlTeacher"] : null;
+//     $book = !empty($_POST["ddlBook"]) ? $_POST["ddlBook"] : null;
+//     $borrowDate = !empty($_POST["txtBorrowDate"]) ? $_POST["txtBorrowDate"] : null;
+//     $returnDate = !empty($_POST["txtReturnDate"]) ? $_POST["txtReturnDate"] : null;
+//     $remark = !empty($_POST["txtRemark"]) ? $_POST["txtRemark"] : null;
+
+//     $sql = "INSERT INTO Borrow (studentId, teacherId, bookId, borrowDate, returnDate, remark) 
+//             VALUES (:studentId, :teacherId, :bookId, :borrowDate, :returnDate, :remark)";
+//     $insert = $conn->prepare($sql);
+//     $insert->bindParam(':studentId', $student, PDO::PARAM_INT);
+//     $insert->bindParam(':teacherId', $teacher, PDO::PARAM_INT);
+//     $insert->bindParam(':bookId', $book, PDO::PARAM_INT);
+//     $insert->bindParam(':borrowDate', $borrowDate, PDO::PARAM_STR);
+//     $insert->bindParam(':returnDate', $returnDate, PDO::PARAM_STR);
+//     $insert->bindParam(':remark', $remark, PDO::PARAM_STR);
+
+//     if ($insert->execute()) {
+//         echo json_encode("Insert Success");
+//     } else {
+//         echo json_encode("Insert Failed");
+//     }
+// }
+
+// Add Borrow
 if ($_GET["data"] == "add_borrow") {
     $student = !empty($_POST["ddlStudent"]) ? $_POST["ddlStudent"] : null;
     $teacher = !empty($_POST["ddlTeacher"]) ? $_POST["ddlTeacher"] : null;
@@ -106,22 +132,45 @@ if ($_GET["data"] == "add_borrow") {
     $returnDate = !empty($_POST["txtReturnDate"]) ? $_POST["txtReturnDate"] : null;
     $remark = !empty($_POST["txtRemark"]) ? $_POST["txtRemark"] : null;
 
-    $sql = "INSERT INTO Borrow (studentId, teacherId, bookId, borrowDate, returnDate, remark) 
-            VALUES (:studentId, :teacherId, :bookId, :borrowDate, :returnDate, :remark)";
-    $insert = $conn->prepare($sql);
-    $insert->bindParam(':studentId', $student, PDO::PARAM_INT);
-    $insert->bindParam(':teacherId', $teacher, PDO::PARAM_INT);
-    $insert->bindParam(':bookId', $book, PDO::PARAM_INT);
-    $insert->bindParam(':borrowDate', $borrowDate, PDO::PARAM_STR);
-    $insert->bindParam(':returnDate', $returnDate, PDO::PARAM_STR);
-    $insert->bindParam(':remark', $remark, PDO::PARAM_STR);
+    // Check book quantity from the "Import" table before inserting
+    $bookQuantityQuery = "SELECT qty FROM Import WHERE bookId = :bookId";
+    $bookQuantityStmt = $conn->prepare($bookQuantityQuery);
+    $bookQuantityStmt->bindParam(':bookId', $book, PDO::PARAM_INT);
+    $bookQuantityStmt->execute();
+    $bookQuantity = $bookQuantityStmt->fetchColumn();
 
-    if ($insert->execute()) {
-        echo json_encode("Insert Success");
+    if ($bookQuantity === false) {
+        echo json_encode("Book not found");
     } else {
-        echo json_encode("Insert Failed");
+        if ($bookQuantity > 0) {
+            // Book quantity is greater than 0, proceed with adding the borrow record
+            $sql = "INSERT INTO Borrow (studentId, teacherId, bookId, borrowDate, returnDate, remark) 
+                    VALUES (:studentId, :teacherId, :bookId, :borrowDate, :returnDate, :remark)";
+            $insert = $conn->prepare($sql);
+            $insert->bindParam(':studentId', $student, PDO::PARAM_INT);
+            $insert->bindParam(':teacherId', $teacher, PDO::PARAM_INT);
+            $insert->bindParam(':bookId', $book, PDO::PARAM_INT);
+            $insert->bindParam(':borrowDate', $borrowDate, PDO::PARAM_STR);
+            $insert->bindParam(':returnDate', $returnDate, PDO::PARAM_STR);
+            $insert->bindParam(':remark', $remark, PDO::PARAM_STR);
+
+            if ($insert->execute()) {
+                // Reduce the book quantity in the "Import" table after successful borrow
+                $updateQuantityQuery = "UPDATE Import SET qty = qty - 1 WHERE bookId = :bookId";
+                $updateQuantityStmt = $conn->prepare($updateQuantityQuery);
+                $updateQuantityStmt->bindParam(':bookId', $book, PDO::PARAM_INT);
+                $updateQuantityStmt->execute();
+
+                echo json_encode("Insert Success");
+            } else {
+                echo json_encode("Insert Failed");
+            }
+        } else {
+            echo json_encode("Book quantity is 0");
+        }
     }
 }
+
 
 
 //2-get_byID
@@ -174,18 +223,34 @@ if ($_GET['data'] == 'update_borrow') {
 //4-delete
 if ($_GET['data'] == 'delete_borrow') {
     $id = $_GET['id'];
+
+    // Fetch the bookId from the Borrow table before deletion
+    $fetchBookIdSql = "SELECT bookId FROM Borrow WHERE id=:id";
+    $fetchBookIdStmt = $conn->prepare($fetchBookIdSql);
+    $fetchBookIdStmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $fetchBookIdStmt->execute();
+    $bookId = $fetchBookIdStmt->fetchColumn();
+
     $delete = $conn->prepare("DELETE FROM Borrow WHERE id=:id;");
     $delete->bindParam(':id', $id);
     if ($delete->execute()) {
+        if ($bookId !== false) {
+            // Increase the book quantity in the Import table after deletion
+            $increaseQtySql = "UPDATE Import SET qty = qty + 1 WHERE bookId = :bookId";
+            $increaseQtyStmt = $conn->prepare($increaseQtySql);
+            $increaseQtyStmt->bindParam(':bookId', $bookId, PDO::PARAM_INT);
+            $increaseQtyStmt->execute();
+        }
+
         echo json_encode("Delete Success");
     } else {
-        echo json_encode("Delete Faild");
+        echo json_encode("Delete Failed");
     }
 }
 
+
 //return 
-if($_GET['data'] == 'return_borrow'){
-        
+if ($_GET['data'] == 'return_borrow') {
     $id = $_GET['id'];
     $status = 0;
     $sql = "UPDATE Borrow SET status=:status WHERE id=:id;";
@@ -194,12 +259,36 @@ if($_GET['data'] == 'return_borrow'){
     $update->bindParam(':status', $status);
     $update->bindParam(':id', $id);
 
-    if($update->execute()){
+    $increaseQty = false; // A flag to indicate whether the book quantity should be increased
+
+    // Fetch the bookId from the Borrow table before updating the status
+    $fetchBookIdSql = "SELECT bookId FROM Borrow WHERE id=:id";
+    $fetchBookIdStmt = $conn->prepare($fetchBookIdSql);
+    $fetchBookIdStmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $fetchBookIdStmt->execute();
+    $bookId = $fetchBookIdStmt->fetchColumn();
+
+    // Check if the bookId was fetched successfully
+    if ($bookId !== false) {
+        $increaseQty = true; // BookId found, set the flag to true
+    }
+
+    // Execute the update to mark the book as returned
+    if ($update->execute()) {
+        if ($increaseQty) {
+            // Increase the book quantity in the Import table
+            $increaseQtySql = "UPDATE Import SET qty = qty + 1 WHERE bookId = :bookId";
+            $increaseQtyStmt = $conn->prepare($increaseQtySql);
+            $increaseQtyStmt->bindParam(':bookId', $bookId, PDO::PARAM_INT);
+            $increaseQtyStmt->execute();
+        }
+
         echo json_encode("Return Success");
-    }else{
-        echo json_encode("Return Faild");
+    } else {
+        echo json_encode("Return Failed");
     }
 }
+
 
 //Get Borrow Detail
 if ($_GET["data"] == "get_borrow_detail") {

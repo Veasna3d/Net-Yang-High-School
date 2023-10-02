@@ -431,12 +431,69 @@ $(document).ready(function () {
     );
 });
 
-$("#btnSave").click(function () {
+// $("#btnSave").click(function () {
 
+//     var book = $("#ddlBook");
+//     var borrowDate = $("#txtBorrowDate");
+//     var returnDate = $("#txtReturnDate");
+
+
+//     if (book.val() == "") {
+//         book.focus();
+//         return toastr.warning("បញ្ចូលទិន្នន័យ!").css("margin-top", "2rem");
+//     } else if (borrowDate.val() == "") {
+//         borrowDate.focus();
+//         return toastr.warning("ថ្ងៃខែឆ្នាំខ្ចី!").css("margin-top", "2rem");
+//     } else if (returnDate.val() == "") {
+//         returnDate.focus();
+//         return toastr.warning("ថ្ងៃខែឆ្នាំសង!").css("margin-top", "2rem");
+//     }
+
+//     var form_data = $("#form").serialize();
+//     if ($("#btnSave").text() == "រក្សាទុក") {
+//         // Insert
+//         $.ajax({
+//             type: "POST",
+//             url: "./controllers/borrow_json.php?data=add_borrow",
+//             data: form_data,
+//             dataType: "json",
+//             success: function (data) {
+//                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+//                 displayData();
+//                 $("#myModal").modal("hide");
+//                 clearTextbox();
+//             },
+//             error: function (ex) {
+//                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
+//                 console.log(ex.responseText);
+//             },
+//         });
+//     } else {
+//         // Update
+//         $.ajax({
+//             type: "POST",
+//             url:
+//                 "./controllers/borrow_json.php?data=update_borrow&id=" + borrow_id,
+//             data: form_data,
+//             dataType: "json",
+//             success: function (data) {
+//                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+//                 displayData();
+//                 $("#myModal").modal("hide");
+//                 clearTextbox();
+//             },
+//             error: function (ex) {
+//                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
+//                 console.log(ex.responseText);
+//             },
+//         });
+//     }
+// });
+
+$("#btnSave").click(function () {
     var book = $("#ddlBook");
     var borrowDate = $("#txtBorrowDate");
     var returnDate = $("#txtReturnDate");
-
 
     if (book.val() == "") {
         book.focus();
@@ -458,10 +515,16 @@ $("#btnSave").click(function () {
             data: form_data,
             dataType: "json",
             success: function (data) {
-                toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                displayData();
-                $("#myModal").modal("hide");
-                clearTextbox();
+                if (data === "Book not found") {
+                    toastr.error("សៀវភៅមិនទាន់ធ្វើការនាំចូល!").css("margin-top", "2rem");
+                } else if (data === "Book quantity is 0") {
+                    toastr.error("សៀវភៅមិនមាននៅក្នុងបណ្ណាល័យ!").css("margin-top", "2rem");
+                } else {
+                    toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+                    displayData();
+                    $("#myModal").modal("hide");
+                    clearTextbox();
+                }
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -472,15 +535,20 @@ $("#btnSave").click(function () {
         // Update
         $.ajax({
             type: "POST",
-            url:
-                "./controllers/borrow_json.php?data=update_borrow&id=" + borrow_id,
+            url: "./controllers/borrow_json.php?data=update_borrow&id=" + borrow_id,
             data: form_data,
             dataType: "json",
             success: function (data) {
-                toastr.success("ជោគជ័យ").css("margin-top", "2rem");
-                displayData();
-                $("#myModal").modal("hide");
-                clearTextbox();
+                if (data === "Book not found") {
+                    toastr.error("សៀវភៅមិនទាន់ធ្វើការនាំចូល!").css("margin-top", "2rem");
+                } else if (data === "Book quantity is 0") {
+                    toastr.error("សៀវភៅមិនមាននៅក្នុងបណ្ណាល័យ!").css("margin-top", "2rem");
+                } else {
+                    toastr.success("ជោគជ័យ").css("margin-top", "2rem");
+                    displayData();
+                    $("#myModal").modal("hide");
+                    clearTextbox();
+                }
             },
             error: function (ex) {
                 toastr.error("បរាជ័យ").css("margin-top", "2rem");
@@ -489,6 +557,7 @@ $("#btnSave").click(function () {
         });
     }
 });
+
 
 $("#btnAdd").click(function () {
     $("#ddlStudent").val("");

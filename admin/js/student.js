@@ -487,37 +487,37 @@ function viewStudentModal(id) {
 //Import 
 $(document).ready(function () {
     $('#upload_csv_form').on("submit", function (e) {
-        e.preventDefault(); //form will not submitted  
+        e.preventDefault();
         $.ajax({
-            url: "importBook.php",
+            url: "importStudent.php",
             method: "POST",
             data: new FormData(this),
-            contentType: false,          // The content type used when sending data to the server.  
-            cache: false,                // To unable request pages to be cached  
-            processData: false,          // To send DOMDocument or non processed data file it is set to false  
+            contentType: false,
+            cache: false,
+            processData: false,
             success: function (data) {
                 if (data == 'Error1') {
                     toastr.warning("Invalid File").css("margin-top", "2rem");
-                    // alert("Invalid File");  
                 }
                 else if (data == "Error2") {
                     toastr.warning("Please Select File").css("margin-top", "2rem");
-                    // alert("Please Select File");  
                 }
                 else if (data == "Success") {
                     toastr.success("CSV file data has been imported").css("margin-top", "2rem");
-                    // alert("CSV file data has been imported");  
                     $('#upload_csv_form')[0].reset();
-                    //   alert(data);
                     $("#myImport").modal("hide");
                     displayData();
-
-                    //  $('#table_id').html(data); 
                 }
                 else {
-                    // $('#employee_table').html(data);  
+                    // Display an alert error message with the error details
+                    alert("CSV file import failed. Error: " + data);
                 }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle AJAX request error here
+                alert("An error occurred during the AJAX request: " + textStatus + " - " + errorThrown);
             }
-        })
+        });
     });
 });
+

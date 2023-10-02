@@ -3,15 +3,15 @@
 require '../includes/dbConnection.php';
 //Get Book
 if ($_GET["data"] == "get_book") {
-    $sql = "SELECT * from vBook WHERE status = 1";
+    $sql = "SELECT * from vBook";
     $result = $conn->prepare($sql);
     $result->execute();
     $book = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        if ($row['status'] == 1) {
+        if ($row['status'] == "Available") {
             $status = "<span class='badge badge-pill badge-success'>Available</span>";
         } else {
-            $status = "<span class='badge badge-pill badge-danger'>Unvailable</span>";
+            $status = "<span class='badge badge-pill badge-danger'>Unavailable</span>";
         }
         $book[] = array(
             $row["id"], $row["bookCode"],
@@ -79,27 +79,15 @@ if ($_GET['data'] == "get_category") {
 }
 if ($_GET["data"] == "add_book") {
 
-    //Get the last bookCode value from the database
-    $sql = "SELECT MAX(bookCode) as maxBookCode FROM Book";
-    $result = $conn->query($sql);
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    $maxBookCode = $row['maxBookCode'];
-
-    //Increment the value by 1 to generate the next bookCode
-    if ($maxBookCode == NULL) {
-        $bookCode = 10000001;
-    } else {
-        $bookCode = $maxBookCode + 1;
-    }
-
-    //Retrieve other form data
-    $bookTitle = $_POST["txtBookTitle"];
-    $print = $_POST["ddlPrint"];
-    $author = $_POST["txtAuthor"];
-    $category = $_POST["ddlCategory"];
-    $publishYear = $_POST["txtPublishYear"];
-    $price = $_POST["txtPrice"];
-    $image = $_FILES['image']['name'];
+      // Retrieve form data
+      $bookCode = $_POST["txtBookNumber"];
+      $bookTitle = $_POST["txtBookTitle"];
+      $print = $_POST["ddlPrint"];
+      $author = $_POST["txtAuthor"];
+      $category = $_POST["ddlCategory"];
+      $publishYear = $_POST["txtPublishYear"];
+      $price = $_POST["txtPrice"];
+      $image = $_FILES['image']['name'];
 
 
     //Move the uploaded image file to the specified folder
@@ -136,7 +124,7 @@ if ($_GET['data'] == 'get_byid') {
             $row["id"], $row["bookCode"],
             $row["bookTitle"], $row["authorName"], $row["printId"],
             $row["publishYear"], $row["price"], $row["categoryId"], $row["image"],
-            $row['status'], $row["createdAt"]
+            $row["createdAt"]
         );
     }
     echo json_encode($book);
@@ -150,6 +138,7 @@ if ($_GET['data'] == 'update_book') {
     } else {
 
         $id = $_GET['id'];
+        $bookCode = $_POST["txtBookNumber"];
         $bookTitle = $_POST["txtBookTitle"];
         $print = $_POST["ddlPrint"];
         $author = $_POST["txtAuthor"];
@@ -174,10 +163,11 @@ if ($_GET['data'] == 'update_book') {
         }
 
         // Update the image file and user data in the database
-        $sql = "UPDATE Book SET bookTitle=:bookTitle, authorName=:authorName, printId=:printId,
+        $sql = "UPDATE Book SET bookCode=:bookCode, bookTitle=:bookTitle, authorName=:authorName, printId=:printId,
              publishYear=:publishYear, price=:price, categoryId=:categoryId, image=:image where id=:id;";
         $update = $conn->prepare($sql);
         $update->bindParam(':image', $image);
+        $update->bindParam(':bookCode', $bookCode);
         $update->bindParam(':bookTitle', $bookTitle);
         $update->bindParam(':authorName', $author);
         $update->bindParam(':printId', $print);
@@ -313,15 +303,16 @@ if ($_GET['data'] == 'view_book_detail') {
     $result->execute();
     $book = [];
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        if ($row['status'] == 1) {
-            $status = "<span class='badge badge-pill badge-success'>Available</span>";
-        } else {
-            $status = "<span class='badge badge-pill badge-danger'>Unavailable</span>";
-        }
+
+        // if ($row['status'] == "Available") {
+        //     $status = "<span class='badge badge-pill badge-success'>Available</span>";
+        // } else {
+        //     $status = "<span class='badge badge-pill badge-danger'>Unavailable</span>";
+        // }
         $book[] = array(
             $row["id"], $row["bookTitle"], $row["authorName"], $row["publishingHouse"],
             $row["publishYear"], $row["price"], $row["categoryCode"], $row["image"],
-            $status, $row["times_borrowed"], $row["qty"]
+            $row["times_borrowed"], $row["qty"]
         );
     }
     echo json_encode($book);

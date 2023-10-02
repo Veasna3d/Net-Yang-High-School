@@ -100,6 +100,7 @@ $('#btnSave').click(function () {
             data: form_data,
             dataType: 'json',
             success: function (data) {
+                // alert(data);
                 toastr.success("ជោគជ័យ").css("margin-top", "2rem");
                 displayData();
                 $('#myModal').modal('hide');

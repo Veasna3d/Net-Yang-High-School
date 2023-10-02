@@ -159,13 +159,13 @@ $("#btnSave").click(function () {
 
     if (student.val() == "") {
         student.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
+        return toastr.warning("Field Required!").css("margin-top", "2rem");
     } else if (date.val() == "") {
         date.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
+        return toastr.warning("Field Required!").css("margin-top", "2rem");
     } else if (book.val() == "") {
         book.focus();
-        return toastr.warning("សូមបញ្ចូលឈ្មោះថ្នាក់!").css("margin-top", "2rem");
+        return toastr.warning("Field Required!").css("margin-top", "2rem");
     }
 
     var form_data = $("#form").serialize();

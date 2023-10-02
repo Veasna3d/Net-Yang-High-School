@@ -156,7 +156,7 @@ if (!isset($_SESSION["username"])) {
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="importBook.php" enctype="multipart/form-data" id="upload_csv_form">
+                <form method="POST" action="importStudent.php" enctype="multipart/form-data" id="upload_csv_form">
                     <div class="form-group">
                         <label for="file" class="form-control btn btn-info">Upload File (CSV)</label>
                         <input type="file" name="file" id="file" class="form-control" hidden>

@@ -74,19 +74,19 @@ function displayData() {
                     "<'row'<'col-md-5'l><'#btn-container'>>",
             });
 
-            var btn1 = $('<button>').attr({
-                id: 'btnAvailable',
-                type: 'button',
-                class: 'btn btn-success'
-            });
-            btn1.append('Available');
+            // var btn1 = $('<button>').attr({
+            //     id: 'btnAvailable',
+            //     type: 'button',
+            //     class: 'btn btn-success'
+            // });
+            // btn1.append('Available');
 
-            var btn2 = $('<button>').attr({
-                id: 'btnNotAvailable',
-                type: 'button',
-                class: 'btn btn-danger'
-            });
-            btn2.append('Unavailable');
+            // var btn2 = $('<button>').attr({
+            //     id: 'btnNotAvailable',
+            //     type: 'button',
+            //     class: 'btn btn-danger'
+            // });
+            // btn2.append('Unavailable');
 
             var btn3 = $('<button>').attr({
                 id: 'btnImport',
@@ -98,15 +98,15 @@ function displayData() {
             btn3.append('Import');
 
             // Add the custom button to the DataTables toolbar
-            $('#btn-container').append(btn1, btn2, btn3);
+            $('#btn-container').append(btn3);
             $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
 
 
             // Register event handlers for custom buttons
-            registerCustomButtonHandlers();
+            // registerCustomButtonHandlers();
 
             // Move the custom button to the left of the other buttons
-            $('.dt-buttons').prepend(btn3, btn1, btn2);
+            $('.dt-buttons').prepend(btn3);
             $('.dt-buttons').prepend($('#btnAdd'));
 
 
@@ -120,250 +120,250 @@ function displayData() {
     });
 }
 
-function registerCustomButtonHandlers() {
-    $('#btnAvailable').on('click', function () {
-        $.ajax({
-            url: './controllers/book_json.php?data=get_book',
-            type: 'GET',
-            dataType: 'json',
-            success: function (alldata) {
-                var columns = [{
-                    title: "សារពើភណ្ឌ"
-                }, {
-                    title: "ចំណងជើង"
-                }, {
-                    title: "ឈ្មោះអ្នកនិពន្ធ"
-                }, {
-                    title: "គ្រឹះស្ថានបោះពុម្ភ"
-                }, {
-                    title: "ឆ្នាំបោះពុម្ភ"
-                }, {
-                    title: "តម្លៃ"
-                }, {
-                    title: "លេខបញ្ជី"
-                },
-                {
-                    title: "រូបភាព"
-                }, {
-                    title: "ស្ថានភាព"
-                }, {
-                    title: "សកម្មភាព"
-                }];
-                var data = [];
-                var option = '';
-                for (var i in alldata) {
-                    // Check if the record has an image
-                    var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
-                    option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
-                        alldata[i][0] +
-                        ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-                        alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='notAvailable(" +
-                        alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
-                    data.push(
-                        [
-                            //alldata[i][0],
-                            alldata[i][1],
-                            alldata[i][2],
-                            alldata[i][3],
-                            alldata[i][4],
-                            alldata[i][5],
-                            parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
-                            alldata[i][7],
-                            "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
-                            alldata[i][9],
-                            option
-                        ]);
-                }
-                console.log(data);
-                $('#tableId').DataTable({
-                    destroy: true,
-                    data: data,
-                    columns: columns,
-                    order: [[0, 'desc']], 
-                    pageLength: 10,
-                    language: {
-                        info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-                        infoEmpty: 'Showing 0 entries',
-                        infoFiltered: '(filtered from _MAX_ total entries)'
-                    },
-                    responsive: true,
-                    lengthChange: false,
-                    autoWidth: false,
-                    buttons: ['icon pfd'], // remove 'pdf' and 'excel'
-                    dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                        "<'row'<'col-md-12'tr>>" +
-                        "<'row'<'col-md-5'i><'col-md-7'p>>" +
-                        "<'row'<'col-md-5'l><'#btn-container'>>",
-                });
+// function registerCustomButtonHandlers() {
+//     $('#btnAvailable').on('click', function () {
+//         $.ajax({
+//             url: './controllers/book_json.php?data=get_book',
+//             type: 'GET',
+//             dataType: 'json',
+//             success: function (alldata) {
+//                 var columns = [{
+//                     title: "សារពើភណ្ឌ"
+//                 }, {
+//                     title: "ចំណងជើង"
+//                 }, {
+//                     title: "ឈ្មោះអ្នកនិពន្ធ"
+//                 }, {
+//                     title: "គ្រឹះស្ថានបោះពុម្ភ"
+//                 }, {
+//                     title: "ឆ្នាំបោះពុម្ភ"
+//                 }, {
+//                     title: "តម្លៃ"
+//                 }, {
+//                     title: "លេខបញ្ជី"
+//                 },
+//                 {
+//                     title: "រូបភាព"
+//                 }, {
+//                     title: "ស្ថានភាព"
+//                 }, {
+//                     title: "សកម្មភាព"
+//                 }];
+//                 var data = [];
+//                 var option = '';
+//                 for (var i in alldata) {
+//                     // Check if the record has an image
+//                     var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
+//                     option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+//                         alldata[i][0] +
+//                         ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+//                         alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='notAvailable(" +
+//                         alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
+//                     data.push(
+//                         [
+//                             //alldata[i][0],
+//                             alldata[i][1],
+//                             alldata[i][2],
+//                             alldata[i][3],
+//                             alldata[i][4],
+//                             alldata[i][5],
+//                             parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
+//                             alldata[i][7],
+//                             "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
+//                             alldata[i][9],
+//                             option
+//                         ]);
+//                 }
+//                 console.log(data);
+//                 $('#tableId').DataTable({
+//                     destroy: true,
+//                     data: data,
+//                     columns: columns,
+//                     order: [[0, 'desc']], 
+//                     pageLength: 10,
+//                     language: {
+//                         info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+//                         infoEmpty: 'Showing 0 entries',
+//                         infoFiltered: '(filtered from _MAX_ total entries)'
+//                     },
+//                     responsive: true,
+//                     lengthChange: false,
+//                     autoWidth: false,
+//                     buttons: ['icon pfd'], // remove 'pdf' and 'excel'
+//                     dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+//                         "<'row'<'col-md-12'tr>>" +
+//                         "<'row'<'col-md-5'i><'col-md-7'p>>" +
+//                         "<'row'<'col-md-5'l><'#btn-container'>>",
+//                 });
 
-                var btn1 = $('<button>').attr({
-                    id: 'btnAvailable',
-                    type: 'button',
-                    class: 'btn btn-success'
-                });
-                btn1.append('Available');
+//                 var btn1 = $('<button>').attr({
+//                     id: 'btnAvailable',
+//                     type: 'button',
+//                     class: 'btn btn-success'
+//                 });
+//                 btn1.append('Available');
 
-                var btn2 = $('<button>').attr({
-                    id: 'btnNotAvailable',
-                    type: 'button',
-                    class: 'btn btn-danger'
-                });
-                btn2.append('Unavailable');
+//                 var btn2 = $('<button>').attr({
+//                     id: 'btnNotAvailable',
+//                     type: 'button',
+//                     class: 'btn btn-danger'
+//                 });
+//                 btn2.append('Unavailable');
 
-                var btn3 = $('<button>').attr({
-                    id: 'btnImport',
-                    type: 'button',
-                    class: 'btn btn-info',
-                    'data-toggle': 'modal',
-                    'data-target': '#myImport'
-                });
-                btn3.append('Import');
+//                 var btn3 = $('<button>').attr({
+//                     id: 'btnImport',
+//                     type: 'button',
+//                     class: 'btn btn-info',
+//                     'data-toggle': 'modal',
+//                     'data-target': '#myImport'
+//                 });
+//                 btn3.append('Import');
 
-                // Add the custom button to the DataTables toolbar
-                $('#btn-container').append(btn1, btn2, btn3);
-                $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
-
-
-                // Register event handlers for custom buttons
-                registerCustomButtonHandlers();
-
-                // Move the custom button to the left of the other buttons
-                $('.dt-buttons').prepend(btn3, btn1, btn2);
-                $('.dt-buttons').prepend($('#btnAdd'));
+//                 // Add the custom button to the DataTables toolbar
+//                 $('#btn-container').append(btn1, btn2, btn3);
+//                 $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
 
 
-                // Adjust the margins of the custom button
-                $('#btnAdd').css('margin-right', '5px');
+//                 // Register event handlers for custom buttons
+//                 registerCustomButtonHandlers();
 
-            },
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        });
-    });
-
-    $('#btnNotAvailable').on('click', function () {
-        $.ajax({
-            url: './controllers/book_json.php?data=not_available',
-            type: 'GET',
-            dataType: 'json',
-            success: function (alldata) {
-                var columns = [{
-                    title: "សារពើភណ្ឌ"
-                }, {
-                    title: "ចំណងជើង"
-                }, {
-                    title: "ឈ្មោះអ្នកនិពន្ធ"
-                }, {
-                    title: "គ្រឹះស្ថានបោះពុម្ភ"
-                }, {
-                    title: "ឆ្នាំបោះពុម្ភ"
-                }, {
-                    title: "តម្លៃ"
-                }, {
-                    title: "លេខបញ្ជី"
-                },
-                {
-                    title: "រូបភាព"
-                }, {
-                    title: "ស្ថានភាព"
-                }, {
-                    title: "សកម្មភាព"
-                }];
-                var data = [];
-                var option = '';
-
-                for (var i in alldata) {
-                    // Check if the record has an image
-                    var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
-                    option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
-                        alldata[i][0] +
-                        ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-                        alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='isAvailable(" +
-                        alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
-                    data.push(
-                        [
-                            //alldata[i][0],
-                            alldata[i][1],
-                            alldata[i][2],
-                            alldata[i][3],
-                            alldata[i][4],
-                            alldata[i][5],
-                            parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
-                            alldata[i][7],
-                            "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
-                            alldata[i][9],
-                            option
-                        ]);
-                }
-                console.log(data);
-                $('#tableId').DataTable({
-                    destroy: true,
-                    data: data,
-                    columns: columns,
-                    order: [[0, 'desc']], 
-                    pageLength: 10,
-                    language: {
-                        info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-                        infoEmpty: 'Showing 0 entries',
-                        infoFiltered: '(filtered from _MAX_ total entries)'
-                    },
-                    responsive: true,
-                    lengthChange: false,
-                    autoWidth: false,
-                    buttons: ['icon pfd'], // remove 'pdf' and 'excel'
-                    dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
-                        "<'row'<'col-md-12'tr>>" +
-                        "<'row'<'col-md-5'i><'col-md-7'p>>" +
-                        "<'row'<'col-md-5'l><'#btn-container'>>",
-                });
-
-                var btn1 = $('<button>').attr({
-                    id: 'btnAvailable',
-                    type: 'button',
-                    class: 'btn btn-success'
-                });
-                btn1.append('Available');
-
-                var btn2 = $('<button>').attr({
-                    id: 'btnNotAvailable',
-                    type: 'button',
-                    class: 'btn btn-danger'
-                });
-                btn2.append('Unavailable');
-
-                var btn3 = $('<button>').attr({
-                    id: 'btnImport',
-                    type: 'button',
-                    class: 'btn btn-info',
-                    'data-toggle': 'modal',
-                    'data-target': '#myImport'
-                });
-                btn3.append('Import');
-
-                // Add the custom button to the DataTables toolbar
-                $('#btn-container').append(btn1, btn2, btn3);
-                $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+//                 // Move the custom button to the left of the other buttons
+//                 $('.dt-buttons').prepend(btn3, btn1, btn2);
+//                 $('.dt-buttons').prepend($('#btnAdd'));
 
 
-                // Register event handlers for custom buttons
-                registerCustomButtonHandlers();
+//                 // Adjust the margins of the custom button
+//                 $('#btnAdd').css('margin-right', '5px');
 
-                // Move the custom button to the left of the other buttons
-                $('.dt-buttons').prepend(btn3, btn1, btn2);
-                $('.dt-buttons').prepend($('#btnAdd'));
+//             },
+//             error: function (e) {
+//                 console.log(e.responseText);
+//             }
+//         });
+//     });
+
+//     $('#btnNotAvailable').on('click', function () {
+//         $.ajax({
+//             url: './controllers/book_json.php?data=not_available',
+//             type: 'GET',
+//             dataType: 'json',
+//             success: function (alldata) {
+//                 var columns = [{
+//                     title: "សារពើភណ្ឌ"
+//                 }, {
+//                     title: "ចំណងជើង"
+//                 }, {
+//                     title: "ឈ្មោះអ្នកនិពន្ធ"
+//                 }, {
+//                     title: "គ្រឹះស្ថានបោះពុម្ភ"
+//                 }, {
+//                     title: "ឆ្នាំបោះពុម្ភ"
+//                 }, {
+//                     title: "តម្លៃ"
+//                 }, {
+//                     title: "លេខបញ្ជី"
+//                 },
+//                 {
+//                     title: "រូបភាព"
+//                 }, {
+//                     title: "ស្ថានភាព"
+//                 }, {
+//                     title: "សកម្មភាព"
+//                 }];
+//                 var data = [];
+//                 var option = '';
+
+//                 for (var i in alldata) {
+//                     // Check if the record has an image
+//                     var imageSrc = alldata[i][8] ? "upload/" + alldata[i][8] : "upload/book_cover.png";
+//                     option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+//                         alldata[i][0] +
+//                         ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+//                         alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> | <button class='btn btn-info btn-sm delete btn-flat' onclick='isAvailable(" +
+//                         alldata[i][0] + ")'><i class='fa fa-info-circle'></i> </button>";
+//                     data.push(
+//                         [
+//                             //alldata[i][0],
+//                             alldata[i][1],
+//                             alldata[i][2],
+//                             alldata[i][3],
+//                             alldata[i][4],
+//                             alldata[i][5],
+//                             parseInt(alldata[i][6]).toLocaleString() + " ៛", // format price value
+//                             alldata[i][7],
+//                             "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
+//                             alldata[i][9],
+//                             option
+//                         ]);
+//                 }
+//                 console.log(data);
+//                 $('#tableId').DataTable({
+//                     destroy: true,
+//                     data: data,
+//                     columns: columns,
+//                     order: [[0, 'desc']], 
+//                     pageLength: 10,
+//                     language: {
+//                         info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+//                         infoEmpty: 'Showing 0 entries',
+//                         infoFiltered: '(filtered from _MAX_ total entries)'
+//                     },
+//                     responsive: true,
+//                     lengthChange: false,
+//                     autoWidth: false,
+//                     buttons: ['icon pfd'], // remove 'pdf' and 'excel'
+//                     dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+//                         "<'row'<'col-md-12'tr>>" +
+//                         "<'row'<'col-md-5'i><'col-md-7'p>>" +
+//                         "<'row'<'col-md-5'l><'#btn-container'>>",
+//                 });
+
+//                 var btn1 = $('<button>').attr({
+//                     id: 'btnAvailable',
+//                     type: 'button',
+//                     class: 'btn btn-success'
+//                 });
+//                 btn1.append('Available');
+
+//                 var btn2 = $('<button>').attr({
+//                     id: 'btnNotAvailable',
+//                     type: 'button',
+//                     class: 'btn btn-danger'
+//                 });
+//                 btn2.append('Unavailable');
+
+//                 var btn3 = $('<button>').attr({
+//                     id: 'btnImport',
+//                     type: 'button',
+//                     class: 'btn btn-info',
+//                     'data-toggle': 'modal',
+//                     'data-target': '#myImport'
+//                 });
+//                 btn3.append('Import');
+
+//                 // Add the custom button to the DataTables toolbar
+//                 $('#btn-container').append(btn1, btn2, btn3);
+//                 $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
 
 
-                // Adjust the margins of the custom button
-                $('#btnAdd').css('margin-right', '5px');
+//                 // Register event handlers for custom buttons
+//                 registerCustomButtonHandlers();
 
-            },
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        });
-    });
-}
+//                 // Move the custom button to the left of the other buttons
+//                 $('.dt-buttons').prepend(btn3, btn1, btn2);
+//                 $('.dt-buttons').prepend($('#btnAdd'));
+
+
+//                 // Adjust the margins of the custom button
+//                 $('#btnAdd').css('margin-right', '5px');
+
+//             },
+//             error: function (e) {
+//                 console.log(e.responseText);
+//             }
+//         });
+//     });
+// }
 
 
 function setDataToSelect(myselect, myjson, caption) {
@@ -446,6 +446,7 @@ $(document).ready(function () {
 
 //btnSave
 $("#btnSave").click(function () {
+    var bookCode = $("#txtBookNumber")
     var bookTitle = $("#txtBookTitle");
     var author = $("#txtAuthor");
     var print = $("#ddlPrint");
@@ -453,8 +454,8 @@ $("#btnSave").click(function () {
     var price = $("#txtPrice")
     var category = $("#ddlCategory")
 
-    if (bookTitle.val() == "") {
-        bookTitle.focus();
+    if (bookCode.val() == "") {
+        bookCode.focus();
         return toastr.warning("Field Require!").css("margin-top", "2rem");
     } else if (bookTitle.val() == "") {
         bookTitle.focus();
@@ -525,6 +526,7 @@ $("#btnSave").click(function () {
 });
 
 $("#btnAdd").click(function () {
+    $("#txtBookNumber").val("");
     $("#txtBookTitle").val("");
     $("#txtAuthor").val("");
     $("#ddlPrint").val("");
@@ -549,6 +551,7 @@ function editData(id) {
         contentType: false,
         processData: false,
         success: function (data) {
+            $("#txtBookNumber").val(data[0][1]);
             $("#txtBookTitle").val(data[0][2]);
             $("#txtAuthor").val(data[0][3]);
             $("#ddlPrint").val(data[0][4]);
@@ -639,9 +642,9 @@ function notAvailable(id) {
                 '<p class="card-title pt-2">ឆ្នាំបោះពុម្ភ : <b>' + book[4] + '</b></p>' +
                 '<p class="card-title pt-2">តម្លៃ : <b>' + formattedPrice + '៛</b></p>' +
                 '<p class="card-title pt-2">លេខបញ្ចី : <b>' + book[6] + '</b></p>' +
-                '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[8] + '</b></p>' +
-                '<p class="card-title pt-2">ចំនួនសៀវភៅ : <b>' + book[10] + '</b>ក្បាល</p>' +
-                '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[9] + '</b>នាក់</p>' +
+                // '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[8] + '</b></p>' +
+                '<p class="card-title pt-2">ចំនួនសៀវភៅ : <b>' + book[9] + '</b>ក្បាល</p>' +
+                '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[8] + '</b>នាក់</p>' +
 
                 '</div>' +
                 '</div>' +
@@ -654,38 +657,8 @@ function notAvailable(id) {
                 title: 'ព័ត៌មានសៀវភៅ',
                 html: modalContent,
                 showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                cancelButtonText: "No",
-                confirmButtonText: "Unavailable!",
+                 showConfirmButton: false, // Remove the OK button
                 with: 1000,
-
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "GET",
-                        url: "./controllers/book_json.php?data=is_not_available&id=" + id,
-                        dataType: "json",
-                        success: function (data) {
-                            Swal.fire({
-                                title: "ជោគជ័យ",
-                                icon: "success",
-                                timer: 1500,
-                            });
-                            displayData();
-                        },
-                        error: function (ex) {
-                            Swal.fire({
-                                title: "បរាជ័យ",
-                                text: ex.responseText,
-                                icon: "error",
-                                timer: 1500,
-                            });
-                            console.log(ex.responseText);
-                        },
-                    });
-                }
             });
         },
         error: function (ex) {
@@ -702,105 +675,68 @@ function notAvailable(id) {
 }
 
 //Available
-function isAvailable(id) {
-    $.ajax({
-        type: "GET",
-        url: "./controllers/book_json.php?data=view_book_detail&id=" + id,
-        dataType: "json",
-        success: function (data) {
-            var book = data[0];
-            var formattedPrice = parseInt(book[5]).toLocaleString();
-            var imageSrc = book[7] ? 'upload/' + book[7] : 'upload/book_cover.png';
-            var categoryId = book[6] ? book[6] : 'គ្មាន';
+// function isAvailable(id) {
+//     $.ajax({
+//         type: "GET",
+//         url: "./controllers/book_json.php?data=view_book_detail&id=" + id,
+//         dataType: "json",
+//         success: function (data) {
+//             var book = data[0];
+//             var formattedPrice = parseInt(book[5]).toLocaleString();
+//             var imageSrc = book[7] ? 'upload/' + book[7] : 'upload/book_cover.png';
+//             var categoryId = book[6] ? book[6] : 'គ្មាន';
 
 
-            var modalContent =
-                '<div>' +
-                '<div class="d-flex">' +
+//             var modalContent =
+//                 '<div>' +
+//                 '<div class="d-flex">' +
 
-                '<div class="col-6">' +
+//                 '<div class="col-6">' +
 
-                '<img src="' + imageSrc + '" width="100" class="card-img-top">' +
+//                 '<img src="' + imageSrc + '" width="100" class="card-img-top">' +
 
-                '</div>' +
-                '<div class="col-6">' +
-                '<h5 class="card-header"><b>' + book[1] + '</b></h5>' +
-                '<p class="card-title pt-2">អ្នកនិពន្ធ : <b>' + book[2] + '</b></p>' +
-                '<p class="card-title pt-2">ឆ្នាំបោះពុម្ភ : <b>' + book[4] + '</b></p>' +
-                '<p class="card-title pt-2">តម្លៃ : <b>' + formattedPrice + '៛</b></p>' +
-                '<p class="card-title pt-2">លេខបញ្ចី : <b>' + categoryId + '</b></p>' +
-                '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[8] + '</b></p>' +
-                '<p class="card-title pt-2">ចំនួនសៀវភៅ : <b>' + book[10] + '</b>ក្បាល</p>' +
-                '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[9] + '</b>នាក់</p>' +
+//                 '</div>' +
+//                 '<div class="col-6">' +
+//                 '<h5 class="card-header"><b>' + book[1] + '</b></h5>' +
+//                 '<p class="card-title pt-2">អ្នកនិពន្ធ : <b>' + book[2] + '</b></p>' +
+//                 '<p class="card-title pt-2">ឆ្នាំបោះពុម្ភ : <b>' + book[4] + '</b></p>' +
+//                 '<p class="card-title pt-2">តម្លៃ : <b>' + formattedPrice + '៛</b></p>' +
+//                 '<p class="card-title pt-2">លេខបញ្ចី : <b>' + categoryId + '</b></p>' +
+//                 // '<p class="card-title pt-2">ស្ថានភាព : <b>' + book[8] + '</b></p>' +
+//                 '<p class="card-title pt-2">ចំនួនសៀវភៅ : <b>' + book[9] + '</b>ក្បាល</p>' +
+//                 '<p class="card-title pt-2">ចំនួនខ្ចី : <b>' + book[8] + '</b>នាក់</p>' +
 
-                '</div>' +
-                '</div>' +
-                '<div class="col-12 pt-4">' +
-                // '<p>គ្រឹះស្ថានបោះពុម្ភ : <b>' + book[3] + '</b></p>' +
-                '</div>' +
-                '</div>';
+//                 '</div>' +
+//                 '</div>' +
+//                 '<div class="col-12 pt-4">' +
+//                 // '<p>គ្រឹះស្ថានបោះពុម្ភ : <b>' + book[3] + '</b></p>' +
+//                 '</div>' +
+//                 '</div>';
 
-            Swal.fire({
-                title: 'ព័ត៌មានសៀវភៅ',
-                html: modalContent,
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonColor: "#32CD32",
-                cancelButtonColor: "#3085d6",
-                cancelButtonText: "No",
-                confirmButtonText: "Available!",
-                with: 1000,
-
-                onBeforeOpen: () => {
-                    const confirmButton = Swal.getConfirmButton();
-                    if (student[6] == 0) {
-                        confirmButton.disabled = true;
-                    } else {
-                        confirmButton.disabled = false;
-                    }
-                },
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "GET",
-                        url: "./controllers/book_json.php?data=is_available&id=" + id,
-                        dataType: "json",
-                        success: function (data) {
-                            Swal.fire({
-                                title: "ជោគជ័យ",
-                                icon: "success",
-                                timer: 1500,
-                            });
-                            displayData();
-                        },
-                        error: function (ex) {
-                            Swal.fire({
-                                title: "បរាជ័យ",
-                                text: ex.responseText,
-                                icon: "error",
-                                timer: 1500,
-                            });
-                            console.log(ex.responseText);
-                        },
-                    });
-                }
-            });
-        },
-        error: function (ex) {
-            Swal.fire({
-                title: "Error",
-                text: ex.responseText,
-                icon: "error",
-                showConfirmButton: false,
-                timer: 1000,
-            });
-            console.log(ex.responseText);
-        },
-    });
-}
+//             Swal.fire({
+//                 title: 'ព័ត៌មានសៀវភៅ',
+//                 html: modalContent,
+//                 showCloseButton: true,
+//                  showConfirmButton: false, // Remove the OK button
+//                 with: 1000,
+//             });
+//         },
+//         error: function (ex) {
+//             Swal.fire({
+//                 title: "Error",
+//                 text: ex.responseText,
+//                 icon: "error",
+//                 showConfirmButton: false,
+//                 timer: 1000,
+//             });
+//             console.log(ex.responseText);
+//         },
+//     });
+// }
 
 //Clear textbox
 function clearTextbox() {
+    $("#txtBookNumber").val("");
     $("#txtBookTitle").val("");
     $("#txtAuthor").val("");
     $("#ddlPrint").val("");
@@ -837,13 +773,41 @@ $(document).ready(function () {
                     //   alert(data);
                     $("#myImport").modal("hide");
                     displayData();
-
-                    //  $('#table_id').html(data); 
                 }
                 else {
-                    // $('#employee_table').html(data);  
+                    
                 }
             }
         })
     });
 });
+// $(document).ready(function() {
+//     $('#export_excel').on('submit', function(event) {
+//       event.preventDefault();
+//       var formData = new FormData(this);
+//       $.ajax({
+//         url: "export.php",
+//         method: "POST",
+//         data: formData,
+//         contentType: false,
+//         processData: false,
+//         success: function(data) {
+//           // Import success, close the modal
+//           $('#importModal').hide(); // Hide the modal
+//           toastr.success("Excel file data has been imported").css("margin-top", "2rem");
+//           displayData();
+//           $('#excel_file').val('');
+//         },
+//         error: function() {
+//           // Handle import error if necessary
+//           toastr.error("Error importing Excel file data");
+//         }
+//       });
+//     });
+  
+//     // Show the modal when the file input changes
+//     $('#excel_file').change(function() {
+//       $('#importModal').show(); // Show the modal
+//     });
+//   });
+  

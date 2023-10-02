@@ -43,7 +43,7 @@ if($_GET['data'] == 'get_byid'){
 
 //3-update
 if($_GET['data'] == 'update_supplier'){
-    if(empty($_POST['supplierName']) || empty($_POST['phone']) || empty($_POST['email'])){
+    if(empty($_POST['supplierName']) || empty($_POST['phone'])){
         echo json_encode("please check the empty field!");
     }else{
 
@@ -52,7 +52,7 @@ if($_GET['data'] == 'update_supplier'){
         $phone = $_POST['phone'];
         $email = $_POST['email'];
 
-        $sql = "Update supplier set supplierName=:supplierName,phone=:phone,email=:email where id=:id;";
+        $sql = "UPDATE supplier SET supplierName=:supplierName,phone=:phone,email=:email WHERE id=:id;";
         $update = $conn->prepare($sql);
 
         $update->bindParam(':supplierName',$supplierName);
