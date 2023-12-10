@@ -124,29 +124,62 @@ if ($_GET['data'] == 'update_teacher') {
 }
 
 //Delete Teacher
+// if ($_GET['data'] == 'delete_teacher') {
+//     $id = $_GET['id'];
+//     $stmt = $conn->prepare("SELECT image FROM Teacher WHERE id=:id;");
+//     $stmt->bindParam(':id', $id);
+//     $stmt->execute();
+//     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+//     $image = $result['image'];
+
+//     $delete = $conn->prepare("DELETE FROM Teacher WHERE id=:id;");
+//     $delete->bindParam(':id', $id);
+
+//     if ($delete->execute()) {
+//         // delete image from folder
+//         $target_file = "../upload/" . $image;
+//         if (file_exists($target_file)) {
+//             @unlink($target_file);
+//         }
+
+//         echo json_encode("Delete Success");
+//     } else {
+//         echo json_encode("Delete Failed");
+//     }
+// }
 if ($_GET['data'] == 'delete_teacher') {
     $id = $_GET['id'];
+
     $stmt = $conn->prepare("SELECT image FROM Teacher WHERE id=:id;");
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $image = $result['image'];
 
-    $delete = $conn->prepare("DELETE FROM Teacher WHERE id=:id;");
-    $delete->bindParam(':id', $id);
+    $conn->beginTransaction();
 
-    if ($delete->execute()) {
-        // delete image from folder
+    try {
+        $deleteBorrow = $conn->prepare("DELETE FROM borrow WHERE teacherId=:id;");
+        $deleteBorrow->bindParam(':id', $id);
+        $deleteBorrow->execute();
+
+        $deleteStudent = $conn->prepare("DELETE FROM Teacher WHERE id=:id;");
+        $deleteStudent->bindParam(':id', $id);
+        $deleteStudent->execute();
+
         $target_file = "../upload/" . $image;
         if (file_exists($target_file)) {
-            unlink($target_file);
+            @unlink($target_file);
         }
 
+        $conn->commit();
         echo json_encode("Delete Success");
-    } else {
+    } catch (PDOException $e) {
+        $conn->rollBack();
         echo json_encode("Delete Failed");
     }
 }
+
 
 //disable
 if($_GET['data'] == 'disable_teacher'){

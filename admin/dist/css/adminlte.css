@@ -53010,3 +53010,22 @@ a.text-muted:hover {
   border-color: #4b545c !important;
 }
 /*# sourceMappingURL=adminlte.css.map */
+.selectize-dropdown-content .option {
+  background-color: #fff;
+  color: #333;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.selectize-dropdown-content .option:last-child {
+  border-bottom: none;
+}
+
+.selectize-dropdown-content .option:hover {
+  background-color: #f5f5f5;
+}
+
+.selectize-dropdown-content .create {
+  display: none;
+}

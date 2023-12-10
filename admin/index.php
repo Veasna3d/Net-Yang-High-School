@@ -138,7 +138,7 @@ include 'includes/timezone.php';
                             <div class="form-group me-2">
                                 <label for="select_year">Select Year:</label>
                                 <select class="form-control" id="select_year">
-                                    <?php for ($i = 2023; $i <= 2026; $i++) { ?>
+                                    <?php for ($i = 2023; $i <= 2030; $i++) { ?>
                                     <?php $selected = ($i == $year) ? 'selected' : ''; ?>
                                     <option value="<?php echo $i ?>" <?php echo $selected ?>><?php echo $i ?>
                                     </option>

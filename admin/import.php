@@ -72,7 +72,7 @@ if (!isset($_SESSION["username"])) {
                     <div class="form-group d-flex">
                         <div class="col-11">
                             <label for="ddlBook">ឈ្មោះសៀវភៅ</label>
-                            <select id="ddlBook" name="ddlBook" class="form-control">
+                            <select id="ddlBook" name="ddlBook" class="">
                                 <option selected>ជ្រើសរើស</option>
                             </select>
                         </div>

@@ -139,15 +139,15 @@
                               </a>
                               <a href="r_read.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>អានសៀវភៅ</p>
+                                  <p>ការអានសៀវភៅ</p>
                               </a>
                               <a href="sr_borrow.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>សិស្ស</p>
+                                  <p>សិស្សខ្ចីសៀវភៅ</p>
                               </a>
                               <a href="tr_borrow.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>គ្រូ</p>
+                                  <p>គ្រូខ្ចីសៀវភៅ</p>
                               </a>
 
                     

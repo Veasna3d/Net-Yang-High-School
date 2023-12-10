@@ -32,7 +32,8 @@ function displayData() {
                     alldata[i][0] +
                     ")'><i class='fa fa-id-card'></i> </button> | <button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
                     alldata[i][0] +
-                    ")'><i class='fa fa-edit'></i> </button> ";
+                    ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
+                    alldata[i][0] + ")'><i class='fa fa-trash'></i> </button>";
 
                 data.push([
                     alldata[i][0],

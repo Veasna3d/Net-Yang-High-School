@@ -81,7 +81,7 @@ if (!isset($_SESSION["username"])) {
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        yearRange: "2023:2030",
+        yearRange: "2015:2030",
         defaultDate: new Date(),
         gotoCurrent: true
     });
@@ -90,7 +90,7 @@ if (!isset($_SESSION["username"])) {
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        yearRange: "2023:2030",
+        yearRange: "2015:2030",
         defaultDate: new Date(),
         gotoCurrent: true
     });

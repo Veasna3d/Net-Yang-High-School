@@ -75,8 +75,7 @@ if (!isset($_SESSION["username"])) {
                                 <select name="txtStartYear" class="form-control" id="txtStartYear">
                                     <!-- Generate options for years from 1900 to 2023 -->
                                     <?php
-                                    $currentYear = date("Y");
-                                    for ($year = 2000; $year <= $currentYear; $year++) {
+                                    for ($year = 2000; $year <= 2030; $year++) {
                                         echo "<option value=\"$year\">$year</option>";
                                     }
                                     ?>
@@ -89,8 +88,7 @@ if (!isset($_SESSION["username"])) {
                                 <select name="txtEndYear" class="form-control" id="txtEndYear">
                                     <!-- Generate options for years from 1900 to 2023 -->
                                     <?php
-                                    $currentYear = date("Y");
-                                    for ($year = 2000; $year <= $currentYear; $year++) {
+                                    for ($year = 2000; $year <= 2030; $year++) {
                                         echo "<option value=\"$year\">$year</option>";
                                     }
                                     ?>

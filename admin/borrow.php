@@ -65,12 +65,11 @@ if (!isset($_SESSION["username"])) {
             <div class="modal-body">
                 <form method="post" id="form">
                     <div class="d-flex">
-
                         <div class="col-6">
                             <div class="form-group d-flex">
                                 <div class="col-10">
                                     <label for="ddlStudent">សិស្ស</label>
-                                    <select id="ddlStudent" name="ddlStudent" class="form-control">
+                                    <select id="ddlStudent" name="ddlStudent" class="">
                                         <option selected>ជ្រើសរើស</option>
                                     </select>
                                 </div>
@@ -78,13 +77,13 @@ if (!isset($_SESSION["username"])) {
                                     <a href="./student.php" class="btn btn-sm btn-info">បន្ថែម</a>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="col-6">
                             <div class="form-group d-flex">
                                 <div class="col-10">
                                     <label for="ddlTeacher">គ្រូ</label>
-                                    <select id="ddlTeacher" name="ddlTeacher" class="form-control">
+                                    <select id="ddlTeacher" name="ddlTeacher" class="">
                                         <option selected>ជ្រើសរើស</option>
                                     </select>
                                 </div>
@@ -98,7 +97,7 @@ if (!isset($_SESSION["username"])) {
                         <div class="form-group d-flex">
                             <div class="col-11">
                                 <label for="ddlBook">សៀវភៅ</label>
-                                <select id="ddlBook" name="ddlBook" class="form-control">
+                                <select id="ddlBook" name="ddlBook" class="">
                                     <option selected>ជ្រើសរើស</option>
                                 </select>
                             </div>
@@ -135,37 +134,37 @@ if (!isset($_SESSION["username"])) {
 <?php include 'includes/footer.php' ?>
 <script src="./js/borrow.js"></script>
 <script>
-  var currentDate = new Date();
+    var currentDate = new Date();
 
-$("#txtBorrowDate").datepicker({
-    dateFormat: "dd-MM-yy",
-    changeMonth: true,
-    changeYear: true,
-    yearRange: "2023:2030",
-    minDate: currentDate,
-    maxDate: currentDate
-}).datepicker("setDate", currentDate) // Auto-select the current date
-.on("change", function() {
-    $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
-    $(this).attr("readonly", true);
-});
+    $("#txtBorrowDate").datepicker({
+            dateFormat: "dd-MM-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "2023:2030",
+            minDate: currentDate,
+            maxDate: currentDate
+        }).datepicker("setDate", currentDate) // Auto-select the current date
+        .on("change", function() {
+            $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
+            $(this).attr("readonly", true);
+        });
 
 
 
-var returnDate = new Date(currentDate);
-returnDate.setDate(returnDate.getDate() + 7);
+    var returnDate = new Date(currentDate);
+    returnDate.setDate(returnDate.getDate() + 7);
 
-$("#txtReturnDate").datepicker({
-    dateFormat: "dd-MM-yy",
-    changeMonth: true,
-    changeYear: true,
-    yearRange: "2023:2030",
-    minDate: currentDate
-}).datepicker("setDate", returnDate) // Auto-select the date that is 7 days after the current date
-.on("change", function() {
-    $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
-    $(this).attr("readonly", true);
-});
+    $("#txtReturnDate").datepicker({
+            dateFormat: "dd-MM-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "2023:2030",
+            minDate: currentDate
+        }).datepicker("setDate", returnDate) // Auto-select the date that is 7 days after the current date
+        .on("change", function() {
+            $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
+            $(this).attr("readonly", true);
+        });
 
     $(document).ready(function() {
         // get references to the select elements

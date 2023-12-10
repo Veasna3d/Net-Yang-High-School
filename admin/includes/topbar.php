@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100;300;400;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100;300;400;700&family=Roboto:wght@100;300;400;500;700&display=swap');
 
-    * {
-        font-family: 'Noto Sans Khmer', sans-serif;
-    }
+        * {
+            font-family: 'Noto Sans Khmer', sans-serif;
+        }
     </style>
 
 
@@ -30,13 +30,13 @@
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="./plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
-    <!-- datepicker -->
-
 
     <!-- Theme style -->
     <link rel="stylesheet" href="./dist/css/adminlte.min.css">
     <!-- datetimepicker -->
     <link rel="stylesheet" href="./dist/css/jquery.datetimepicker.css">
+    <!-- Include selectize.js CSS -->
+    <link rel="stylesheet" href="./dist/css/selectize.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -84,8 +84,7 @@
                             Change Passowrd
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="logout.php" class="dropdown-item dropdown-footer"><i
-                                class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                        <a href="logout.php" class="dropdown-item dropdown-footer"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
                     </div>
                 </li>
 

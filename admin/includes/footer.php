@@ -8,6 +8,7 @@
 
 <!-- jQuery -->
 <script src="./plugins/jquery/jquery.min.js"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="./plugins/jquery-ui/jquery-ui.js"></script>
 <!-- Bootstrap 4 -->
@@ -42,54 +43,55 @@
 <!-- datetimepicker -->
 <script src="./dist/js/jquery.datetimepicker.full.js"></script>
 <!-- Page specific script -->
+
+<!-- Include selectize.js JS -->
+<script src="dist/js/selectize.min.js"></script>
+
 <script>
-
-
-
-// $(function() {
-//     $.validator.setDefaults({
-//         submitHandler: function() {
-//             alert("Form successful submitted!");
-//         }
-//     });
-//     $('#form').validate({
-//         rules: {
-//             email: {
-//                 required: true,
-//                 email: true,
-//             },
-//             password: {
-//                 required: true,
-//                 minlength: 5
-//             },
-//             terms: {
-//                 required: true
-//             },
-//         },
-//         messages: {
-//             email: {
-//                 required: "Please enter a email address",
-//                 email: "Please enter a valid email address"
-//             },
-//             password: {
-//                 required: "Please provide a password",
-//                 minlength: "Your password must be at least 5 characters long"
-//             },
-//             terms: "Please accept our terms"
-//         },
-//         errorElement: 'span',
-//         errorPlacement: function(error, element) {
-//             error.addClass('invalid-feedback');
-//             element.closest('.form-group').append(error);
-//         },
-//         highlight: function(element, errorClass, validClass) {
-//             $(element).addClass('is-invalid');
-//         },
-//         unhighlight: function(element, errorClass, validClass) {
-//             $(element).removeClass('is-invalid');
-//         }
-//     });
-// });
+    // $(function() {
+    //     $.validator.setDefaults({
+    //         submitHandler: function() {
+    //             alert("Form successful submitted!");
+    //         }
+    //     });
+    //     $('#form').validate({
+    //         rules: {
+    //             email: {
+    //                 required: true,
+    //                 email: true,
+    //             },
+    //             password: {
+    //                 required: true,
+    //                 minlength: 5
+    //             },
+    //             terms: {
+    //                 required: true
+    //             },
+    //         },
+    //         messages: {
+    //             email: {
+    //                 required: "Please enter a email address",
+    //                 email: "Please enter a valid email address"
+    //             },
+    //             password: {
+    //                 required: "Please provide a password",
+    //                 minlength: "Your password must be at least 5 characters long"
+    //             },
+    //             terms: "Please accept our terms"
+    //         },
+    //         errorElement: 'span',
+    //         errorPlacement: function(error, element) {
+    //             error.addClass('invalid-feedback');
+    //             element.closest('.form-group').append(error);
+    //         },
+    //         highlight: function(element, errorClass, validClass) {
+    //             $(element).addClass('is-invalid');
+    //         },
+    //         unhighlight: function(element, errorClass, validClass) {
+    //             $(element).removeClass('is-invalid');
+    //         }
+    //     });
+    // });
 </script>
 </body>
 
