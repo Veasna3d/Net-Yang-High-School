@@ -23,7 +23,9 @@ function displayData() {
       ];
       var data = [];
       var option = "";
+      var number = 0;
       for (var i in alldata) {
+        number++;
         option =
           "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
           alldata[i][0] +
@@ -31,7 +33,7 @@ function displayData() {
           alldata[i][0] +
           ")'><i class='fa fa-trash'></i> </button> ";
         data.push([
-          alldata[i][0],
+          number,
           alldata[i][1],
           alldata[i][2],
           alldata[i][3],

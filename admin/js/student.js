@@ -32,7 +32,9 @@ function displayData() {
             ];
             var data = [];
             var option = "";
+            var number = 0;
             for (var i in alldata) {
+                number ++;
                 // Check if the record has an image
                 var imageSrc = alldata[i][4] ? "upload/" + alldata[i][4] : "upload/user_cover.png";
                 option =
@@ -44,7 +46,7 @@ function displayData() {
                     alldata[i][0] + ")'><i class='fa fa-trash'></i> </button>";
 
                 data.push([
-                    alldata[i][0],
+                    number,
                     alldata[i][1] + "-" + alldata[i][2], // combine alldata[i][1] and alldata[i][2] with a space in between
                     alldata[i][3],
                     "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",

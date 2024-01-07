@@ -35,7 +35,9 @@ function displayData() {
       ];
       var data = [];
       var option = "";
+      var number = 0;
       for (var i in alldata) {
+        number++;
         option =
           "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
           alldata[i][0] +
@@ -45,7 +47,7 @@ function displayData() {
           alldata[i][0] +
           ")'><i class='fa fa-reply'></i> </button>";
         data.push([
-          alldata[i][0],
+          number,
           alldata[i][1],
           alldata[i][2],
           alldata[i][3],
@@ -154,7 +156,9 @@ function registerCustomButtonHandlers() {
         ];
         var data = [];
         var option = "";
+        var number = 0;
         for (var i in alldata) {
+          number++;
           option =
             "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
             alldata[i][0] +
@@ -164,7 +168,7 @@ function registerCustomButtonHandlers() {
             alldata[i][0] +
             ")'><i class='fa fa-reply'></i> </button>";
           data.push([
-            alldata[i][0],
+            number,
             alldata[i][1],
             alldata[i][2],
             alldata[i][3],
@@ -271,13 +275,15 @@ function registerCustomButtonHandlers() {
         ];
         var data = [];
         var option = "";
+        var number = 0;
         for (var i in alldata) {
+          number++;
           option =
             "<button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
             alldata[i][0] +
             ")'><i class='fa fa-trash'></i> </button>";
           data.push([
-            alldata[i][0],
+            number,
             alldata[i][1],
             alldata[i][2],
             alldata[i][3],
@@ -507,17 +513,16 @@ $(document).ready(function () {
 
   var ddlStudentSelectize = $("#ddlStudent")[0].selectize;
   var ddlTeacherSelectize = $("#ddlTeacher")[0].selectize;
-  
-  ddlStudentSelectize.on('change', function () {
-      var ddlStudentValue = ddlStudentSelectize.getValue();
-      ddlTeacherSelectize.disable(!!ddlStudentValue); 
+
+  ddlStudentSelectize.on("change", function () {
+    var ddlStudentValue = ddlStudentSelectize.getValue();
+    ddlTeacherSelectize.disable(!!ddlStudentValue);
   });
-  
-  ddlTeacherSelectize.on('change', function () {
-      var ddlTeacherValue = ddlTeacherSelectize.getValue();
-      ddlStudentSelectize.disable(!!ddlTeacherValue); 
+
+  ddlTeacherSelectize.on("change", function () {
+    var ddlTeacherValue = ddlTeacherSelectize.getValue();
+    ddlStudentSelectize.disable(!!ddlTeacherValue);
   });
-  
 });
 
 // $("#btnSave").click(function () {
@@ -657,19 +662,18 @@ $("#btnAdd").click(function () {
 });
 
 function clearTextbox() {
-    var ddlStudentSelectize = $("#ddlStudent")[0].selectize;
-    var ddlTeacherSelectize = $("#ddlTeacher")[0].selectize;
-    var ddlBookSelectize = $("#ddlBook")[0].selectize;
+  var ddlStudentSelectize = $("#ddlStudent")[0].selectize;
+  var ddlTeacherSelectize = $("#ddlTeacher")[0].selectize;
+  var ddlBookSelectize = $("#ddlBook")[0].selectize;
 
-    ddlStudentSelectize.clear();
-    ddlTeacherSelectize.clear();
-    ddlBookSelectize.clear();
+  ddlStudentSelectize.clear();
+  ddlTeacherSelectize.clear();
+  ddlBookSelectize.clear();
 
-    $("#txtBorrowDate").val("");
-    $("#txtReturnDate").val("");
-    $("#txtRemark").val("");
+  $("#txtBorrowDate").val("");
+  $("#txtReturnDate").val("");
+  $("#txtRemark").val("");
 }
-
 
 var borrow_id;
 

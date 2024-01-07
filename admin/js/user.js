@@ -1,73 +1,81 @@
 function displayData() {
   $.ajax({
-    url: './controllers/user_json.php?data=get_user',
-    type: 'GET',
-    dataType: 'json',
+    url: "./controllers/user_json.php?data=get_user",
+    type: "GET",
+    dataType: "json",
     success: function (alldata) {
       var columns = [
-        { title: 'ល.រ' },
-        { title: 'ឈ្មោះ' },
-        { title: 'លេខសម្ងាត់' },
-        { title: 'រូបភាព' },
-        { title: 'អ៊ីមែល' },
-        { title: 'សកម្មភាព' }
+        { title: "ល.រ" },
+        { title: "ឈ្មោះ" },
+        { title: "លេខសម្ងាត់" },
+        { title: "រូបភាព" },
+        { title: "អ៊ីមែល" },
+        { title: "សកម្មភាព" },
       ];
       var data = [];
-      var option = '';
+      var option = "";
+      var number = 0;
       for (var i in alldata) {
-
+        number++;
         // Check if the record has an image
-        var imageSrc = alldata[i][3] ? "upload/" + alldata[i][3] : "upload/user_cover.png";
+        var imageSrc = alldata[i][3]
+          ? "upload/" + alldata[i][3]
+          : "upload/user_cover.png";
 
-        option = "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
+        option =
+          "<button class='btn btn-success btn-sm edit btn-flat' data-toggle='modal' data-target='#myModal' onclick='editData(" +
           alldata[i][0] +
           ")'><i class='fa fa-edit'></i> </button> | <button class='btn btn-danger btn-sm delete btn-flat' onclick='deleteData(" +
-          alldata[i][0] + ")'><i class='fa fa-trash'></i> </button> ";
+          alldata[i][0] +
+          ")'><i class='fa fa-trash'></i> </button> ";
         data.push([
-          alldata[i][0],
+          number,
           alldata[i][1],
           "***" + alldata[i][2].slice(-2),
           "<img style='width: 50px; height: 50px;' src='" + imageSrc + "'>",
           alldata[i][4],
-          option]);
+          option,
+        ]);
       }
       console.log(data);
-      $('#tableId').DataTable({
+      $("#tableId").DataTable({
         destroy: true,
         data: data,
         columns: columns,
-        order: [[0, 'desc']], 
+        order: [[0, "desc"]],
         pageLength: 10,
         language: {
-          info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-          infoEmpty: 'Showing 0 entries',
-          infoFiltered: '(filtered from _MAX_ total entries)'
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
+          infoEmpty: "Showing 0 entries",
+          infoFiltered: "(filtered from _MAX_ total entries)",
         },
         responsive: true,
         lengthChange: false,
         autoWidth: false,
-        buttons: ['icon pfd'],
-        dom: "<'row'<'col-md-5'B><'col-md-7'f>>" +
+        buttons: ["icon pfd"],
+        dom:
+          "<'row'<'col-md-5'B><'col-md-7'f>>" +
           "<'row'<'col-md-12'tr>>" +
           "<'row'<'col-md-5'i><'col-md-7'p>>" +
           "<'row'<'col-md-5'l><'#btn-container'>>",
       });
 
       // Add the custom button to the DataTables toolbar
-      $('#btn-container').append('<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>');
+      $("#btn-container").append(
+        '<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">បង្កើតថ្មី</button>'
+      );
 
       // Move the custom button to the left of the other buttons
-      $('.dt-buttons').prepend($('#btnAdd'));
+      $(".dt-buttons").prepend($("#btnAdd"));
 
       // Adjust the margins of the custom button
-      $('#btnAdd').css('margin-right', '5px');
+      $("#btnAdd").css("margin-right", "5px");
     },
     error: function (e) {
       console.log(e.responseText);
-    }
+    },
   });
 }
-
 
 //Load
 $(document).ready(function () {
@@ -76,7 +84,6 @@ $(document).ready(function () {
 
 //btnSave
 $("#btnSave").click(function () {
-
   var form_data = new FormData($("#form")[0]); // Use FormData object to include file data
   if ($("#btnSave").text() == "រក្សាទុក") {
     //Insert
@@ -93,9 +100,10 @@ $("#btnSave").click(function () {
     } else if (password.val() == "") {
       return toastr.warning("Password Require!").css("margin-top", "2rem");
     } else if (password.val().length < 4) {
-      return toastr.warning("Password must be at least 5 characters long!").css("margin-top", "2rem");
+      return toastr
+        .warning("Password must be at least 5 characters long!")
+        .css("margin-top", "2rem");
     }
-
 
     $.ajax({
       type: "POST",
@@ -138,7 +146,9 @@ $("#btnSave").click(function () {
       if (password.val() == "") {
         password = null; // Set password to null if field is empty
       } else if (password.val().length < 5) {
-        return toastr.warning("Password must be at least characters long!").css("margin-top", "2rem");
+        return toastr
+          .warning("Password must be at least characters long!")
+          .css("margin-top", "2rem");
       }
     }
 
@@ -167,7 +177,7 @@ $("#btnSave").click(function () {
       },
     });
   }
-})
+});
 
 $("#btnAdd").click(function () {
   $("#txtUsername").val("");
@@ -177,7 +187,7 @@ $("#btnAdd").click(function () {
   $("#btnSave").text("Insert");
 });
 
-function clearTextbox(){
+function clearTextbox() {
   $("#txtUsername").val("");
   $("#txtPassword").val("");
   $("#txtEmail").val("");
@@ -259,4 +269,3 @@ function deleteData(id) {
     }
   });
 }
-

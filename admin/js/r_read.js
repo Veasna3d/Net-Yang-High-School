@@ -29,9 +29,11 @@ $("#btnsearch").click(function () {
         },
       ];
       var data = [];
+      var number = 0;
       for (var i in alldata) {
+        number++;
         data.push([
-          alldata[i][0],
+          number,
           alldata[i][1],
           alldata[i][2],
           alldata[i][3],
