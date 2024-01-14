@@ -141,13 +141,13 @@ if (!isset($_SESSION["username"])) {
             changeMonth: true,
             changeYear: true,
             yearRange: "2023:2030",
-            minDate: currentDate,
-            maxDate: currentDate
+            // minDate: currentDate,
+            // maxDate: currentDate
         }).datepicker("setDate", currentDate) // Auto-select the current date
-        .on("change", function() {
-            $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
-            $(this).attr("readonly", true);
-        });
+        // .on("change", function() {
+        //     $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
+        //     $(this).attr("readonly", true);
+        // });
 
 
 
@@ -159,12 +159,12 @@ if (!isset($_SESSION["username"])) {
             changeMonth: true,
             changeYear: true,
             yearRange: "2023:2030",
-            minDate: currentDate
+            // minDate: currentDate
         }).datepicker("setDate", returnDate) // Auto-select the date that is 7 days after the current date
-        .on("change", function() {
-            $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
-            $(this).attr("readonly", true);
-        });
+        // .on("change", function() {
+        //     $(this).datepicker("option", "dateFormat", "dd-MM-yy").datepicker("setDate", $(this).datepicker("getDate"));
+        //     $(this).attr("readonly", true);
+        // });
 
     $(document).ready(function() {
         // get references to the select elements
